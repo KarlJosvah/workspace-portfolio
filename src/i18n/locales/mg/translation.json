@@ -1,0 +1,22 @@
+{
+  "getStarted": "Manomboka",
+  "editPrompt": "Ovay ny <1>src/App.tsx</1> ary tehirizo mba hitsapana ny <3>HMR</3>",
+  "count": "Ny isa dia {{count}}",
+  "docs": {
+    "title": "Torolalana",
+    "subtitle": "Ireo fanontanianao, voavaly",
+    "exploreVite": "Zahao ny Vite",
+    "learnMore": "Hamantatra bebe kokoa"
+  },
+  "social": {
+    "title": "Mifandraisa aminay",
+    "subtitle": "Midira ao amin'ny vondrom-piarahamonina Vite"
+  },
+  "language": {
+    "select": "Fiteny",
+    "en": "English",
+    "fr": "Français",
+    "ja": "日本語",
+    "mg": "Malagasy"
+  }
+}
