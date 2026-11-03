@@ -1,0 +1,22 @@
+{
+  "getStarted": "始めましょう",
+  "editPrompt": "<1>src/App.tsx</1> を編集して保存し、<3>HMR</3> をテストします",
+  "count": "カウント: {{count}}",
+  "docs": {
+    "title": "ドキュメント",
+    "subtitle": "あなたの質問に答えます",
+    "exploreVite": "Vite を探索する",
+    "learnMore": "詳細を見る"
+  },
+  "social": {
+    "title": "コミュニティに参加",
+    "subtitle": "Vite コミュニティに参加する"
+  },
+  "language": {
+    "select": "言語",
+    "en": "English",
+    "fr": "Français",
+    "ja": "日本語",
+    "mg": "Malagasy"
+  }
+}

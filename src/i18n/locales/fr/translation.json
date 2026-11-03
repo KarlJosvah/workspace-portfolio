@@ -1,0 +1,22 @@
+{
+  "getStarted": "Commencer",
+  "editPrompt": "Modifiez <1>src/App.tsx</1> et enregistrez pour tester le <3>HMR</3>",
+  "count": "Le compte est de {{count}}",
+  "docs": {
+    "title": "Documentation",
+    "subtitle": "Vos questions, nos réponses",
+    "exploreVite": "Explorer Vite",
+    "learnMore": "En savoir plus"
+  },
+  "social": {
+    "title": "Rejoignez-nous",
+    "subtitle": "Rejoignez la communauté Vite"
+  },
+  "language": {
+    "select": "Langue",
+    "en": "English",
+    "fr": "Français",
+    "ja": "日本語",
+    "mg": "Malagasy"
+  }
+}
