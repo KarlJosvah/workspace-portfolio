@@ -1,14 +1,14 @@
 import MenuButton from "../components/ui/MenuButton.tsx";
-import { MENU_ITEMS, MenuType } from "../constants/menuConfig.ts";
+import { MENU_ITEMS, type MenuType } from "../constants/menuConfig.ts";
 
 interface SideMenuProps {
 	activeSection: MenuType;
 	onSectionChange: (section: MenuType) => void;
 }
 
-function SideMenu({ activeSection, onSectionChange }: SideMenuProps) {
+export function SideMenu({ activeSection, onSectionChange }: SideMenuProps) {
 	return (
-		<div className="side-menu-container">
+		<aside className="side-menu-container" aria-label="Page Sections Navigation">
 			{MENU_ITEMS.map((item) => (
 				<MenuButton
 					key={item.id}
@@ -17,7 +17,7 @@ function SideMenu({ activeSection, onSectionChange }: SideMenuProps) {
 					onClick={() => onSectionChange(item.id)}
 				/>
 			))}
-		</div>
+		</aside>
 	);
 }
 

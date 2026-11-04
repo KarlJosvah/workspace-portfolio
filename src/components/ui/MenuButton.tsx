@@ -4,14 +4,17 @@ interface MenuButtonProps {
 	onClick: () => void;
 }
 
-function MenuButton({ label, isActive, onClick }: MenuButtonProps) {
+export function MenuButton({ label, isActive, onClick }: MenuButtonProps) {
 	return (
-		<div
+		<button
+			type="button"
 			className={`menu-button ${isActive ? "active" : ""}`}
 			onClick={onClick}
+			aria-pressed={isActive}
 		>
-			{label}
-		</div>
+			<span className="menu-button-glow" />
+			<span className="menu-button-label">{label}</span>
+		</button>
 	);
 }
 
