@@ -1,0 +1,24 @@
+import MenuButton from "../components/ui/MenuButton.tsx";
+import { MENU_ITEMS, MenuType } from "../constants/menuConfig.ts";
+
+interface SideMenuProps {
+	activeSection: MenuType;
+	onSectionChange: (section: MenuType) => void;
+}
+
+function SideMenu({ activeSection, onSectionChange }: SideMenuProps) {
+	return (
+		<div className="side-menu-container">
+			{MENU_ITEMS.map((item) => (
+				<MenuButton
+					key={item.id}
+					label={item.label}
+					isActive={activeSection === item.id}
+					onClick={() => onSectionChange(item.id)}
+				/>
+			))}
+		</div>
+	);
+}
+
+export default SideMenu;
