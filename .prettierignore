@@ -1,0 +1,2 @@
+# Ignore GitHub Actions workflows and config from Prettier formatting
+.github/
