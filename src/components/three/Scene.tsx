@@ -1,14 +1,11 @@
-import { Suspense, useRef } from "react";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import SmoothCameraController from "./SmoothCameraController.tsx";
 import Room from "./Room.tsx";
 
 const CAMERA_CONFIG = {
 	FOV: 45,
 	INITIAL_POSITION: [-0.7, 1.75, 3.8] as [number, number, number],
-	INITIAL_TARGET: [-0.7, 0.85, 0.4] as [number, number, number],
 	PLAYER_HEIGHT: 1.75,
 	WALK_SPEED: 3.5,
 };
@@ -65,8 +62,6 @@ function RoomLighting() {
 }
 
 function Scene() {
-	const controlsRef = useRef<OrbitControlsImpl | null>(null);
-
 	return (
 		<Canvas
 			shadows
@@ -84,21 +79,12 @@ function Scene() {
 				<Room />
 			</Suspense>
 
-			<OrbitControls
-				ref={controlsRef}
-				makeDefault
-				target={CAMERA_CONFIG.INITIAL_TARGET}
-				enableDamping
-				dampingFactor={0.06}
-				minDistance={0.5}
-				maxDistance={12}
-				maxPolarAngle={Math.PI / 2 + 0.05}
-			/>
-
+			{/* First-person camera controller: Look-around in place & WASD 2D walk (No zoom) */}
 			<SmoothCameraController
-				controlsRef={controlsRef}
 				height={CAMERA_CONFIG.PLAYER_HEIGHT}
 				speed={CAMERA_CONFIG.WALK_SPEED}
+				initialYaw={0}
+				initialPitch={-0.12}
 			/>
 		</Canvas>
 	);

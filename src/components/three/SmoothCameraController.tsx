@@ -2,31 +2,70 @@
 import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 export interface SmoothCameraControllerProps {
-	/** Reference to the OrbitControls instance */
-	controlsRef?: React.RefObject<OrbitControlsImpl | null>;
-	/** Player height / eye level (default 1.75 units) */
+	/** Player eye-level height in units (default 1.75) */
 	height?: number;
 	/** Walking movement speed in units/sec (default 3.5) */
 	speed?: number;
+	/** Mouse look sensitivity (default 0.0024) */
+	sensitivity?: number;
+	/** Initial yaw rotation in radians (default 0) */
+	initialYaw?: number;
+	/** Initial pitch rotation in radians (default -0.12, slightly down at desk) */
+	initialPitch?: number;
 }
 
-// Temporary vectors to avoid garbage collection inside useFrame loop
+// Temporary vectors to avoid garbage collection allocations inside useFrame loop
 const _forward = new THREE.Vector3();
 const _right = new THREE.Vector3();
 const _moveDir = new THREE.Vector3();
 
 export function SmoothCameraController({
-	controlsRef,
 	height = 1.75,
 	speed = 3.5,
+	sensitivity = 0.0024,
+	initialYaw = 0,
+	initialPitch = -0.12,
 }: SmoothCameraControllerProps) {
-	const { camera, controls: stateControls } = useThree();
+	const { camera, gl } = useThree();
+
+	// Orientation state (Yaw & Pitch)
+	const targetYaw = useRef(initialYaw);
+	const targetPitch = useRef(initialPitch);
+	const currentYaw = useRef(initialYaw);
+	const currentPitch = useRef(initialPitch);
+
+	// Movement state
 	const activeKeys = useRef<Set<string>>(new Set());
 	const velocity = useRef(new THREE.Vector3(0, 0, 0));
 
+	// Mouse / touch drag state
+	const isDragging = useRef(false);
+	const lastPointer = useRef({ x: 0, y: 0 });
+
+	// Initialize camera orientation with YXZ Euler order
+	useEffect(() => {
+		camera.rotation.order = "YXZ";
+		camera.rotation.y = initialYaw;
+		camera.rotation.x = initialPitch;
+		camera.rotation.z = 0;
+	}, [camera, initialPitch, initialYaw]);
+
+	// Disable scroll / pinch zoom on the canvas (No zoom allowed)
+	useEffect(() => {
+		const canvas = gl.domElement;
+		const handleWheel = (e: WheelEvent) => {
+			e.preventDefault();
+		};
+
+		canvas.addEventListener("wheel", handleWheel, { passive: false });
+		return () => {
+			canvas.removeEventListener("wheel", handleWheel);
+		};
+	}, [gl]);
+
+	// Keyboard controls (WASD & Directional Arrows)
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			const target = e.target as HTMLElement | null;
@@ -55,12 +94,12 @@ export function SmoothCameraController({
 		};
 
 		const handleKeyUp = (e: KeyboardEvent) => {
-			const key = e.key.toLowerCase();
-			activeKeys.current.delete(key);
+			activeKeys.current.delete(e.key.toLowerCase());
 		};
 
 		const handleBlur = () => {
 			activeKeys.current.clear();
+			isDragging.current = false;
 		};
 
 		window.addEventListener("keydown", handleKeyDown);
@@ -74,13 +113,76 @@ export function SmoothCameraController({
 		};
 	}, []);
 
+	// First-person mouse & touch drag-to-look (Look around in place)
+	useEffect(() => {
+		const canvas = gl.domElement;
+
+		const handlePointerDown = (e: PointerEvent) => {
+			if (e.button !== 0 && e.pointerType === "mouse") return;
+			isDragging.current = true;
+			lastPointer.current = { x: e.clientX, y: e.clientY };
+			canvas.style.cursor = "grabbing";
+		};
+
+		const handlePointerMove = (e: PointerEvent) => {
+			if (!isDragging.current) return;
+
+			const deltaX = e.clientX - lastPointer.current.x;
+			const deltaY = e.clientY - lastPointer.current.y;
+			lastPointer.current = { x: e.clientX, y: e.clientY };
+
+			// Rotate horizontally (yaw) and vertically (pitch)
+			targetYaw.current -= deltaX * sensitivity;
+			targetPitch.current -= deltaY * sensitivity;
+
+			// Clamp pitch between -85° and +85° to prevent upside-down flipping
+			const maxPitch = 1.48; // ~85 degrees
+			targetPitch.current = Math.max(
+				-maxPitch,
+				Math.min(maxPitch, targetPitch.current),
+			);
+		};
+
+		const handlePointerUp = () => {
+			isDragging.current = false;
+			canvas.style.cursor = "grab";
+		};
+
+		canvas.style.cursor = "grab";
+		canvas.addEventListener("pointerdown", handlePointerDown);
+		window.addEventListener("pointermove", handlePointerMove);
+		window.addEventListener("pointerup", handlePointerUp);
+		window.addEventListener("pointercancel", handlePointerUp);
+
+		return () => {
+			canvas.removeEventListener("pointerdown", handlePointerDown);
+			window.removeEventListener("pointermove", handlePointerMove);
+			window.removeEventListener("pointerup", handlePointerUp);
+			window.removeEventListener("pointercancel", handlePointerUp);
+		};
+	}, [gl, sensitivity]);
+
 	useFrame((_, delta) => {
-		// 1. Maintain player eye-height
+		// 1. Enforce player eye height (hard-coded variable, default 1.75)
 		camera.position.y = height;
 
-		// 2. Resolve controls instance
-		const controls =
-			controlsRef?.current ?? (stateControls as OrbitControlsImpl | null);
+		// 2. Smoothly damp camera rotation in place (first-person look around)
+		const rotDamp = Math.min(1, delta * 20);
+		currentYaw.current = THREE.MathUtils.lerp(
+			currentYaw.current,
+			targetYaw.current,
+			rotDamp,
+		);
+		currentPitch.current = THREE.MathUtils.lerp(
+			currentPitch.current,
+			targetPitch.current,
+			rotDamp,
+		);
+
+		camera.rotation.order = "YXZ";
+		camera.rotation.y = currentYaw.current;
+		camera.rotation.x = currentPitch.current;
+		camera.rotation.z = 0;
 
 		// 3. Compute horizontal forward direction (XZ plane only)
 		camera.getWorldDirection(_forward);
@@ -94,7 +196,7 @@ export function SmoothCameraController({
 		// 4. Compute horizontal right direction
 		_right.crossVectors(_forward, camera.up).normalize();
 
-		// 5. Combine keyboard inputs
+		// 5. Combine keyboard inputs for 2D move
 		_moveDir.set(0, 0, 0);
 		const keys = activeKeys.current;
 
@@ -115,28 +217,18 @@ export function SmoothCameraController({
 			_moveDir.normalize();
 		}
 
-		// 6. Smooth acceleration & damping
+		// 6. Smooth velocity acceleration & damping
 		const targetVelocity = _moveDir.multiplyScalar(speed);
-		const dampFactor = Math.min(1, delta * 12);
-		velocity.current.lerp(targetVelocity, dampFactor);
+		const moveDamp = Math.min(1, delta * 12);
+		velocity.current.lerp(targetVelocity, moveDamp);
 
-		// 7. Apply translation to both camera and OrbitControls target (2D move)
+		// 7. Apply 2D movement
 		const deltaX = velocity.current.x * delta;
 		const deltaZ = velocity.current.z * delta;
 
 		if (Math.abs(deltaX) > 0.00001 || Math.abs(deltaZ) > 0.00001) {
 			camera.position.x += deltaX;
 			camera.position.z += deltaZ;
-
-			if (controls) {
-				controls.target.x += deltaX;
-				controls.target.z += deltaZ;
-			}
-		}
-
-		// 8. Update controls damping
-		if (controls) {
-			controls.update();
 		}
 	});
 
