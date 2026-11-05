@@ -2,6 +2,8 @@
 import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { MenuType } from "@/constants/menuConfig.ts";
+import { CAMERA_WAYPOINTS } from "@/constants/cameraWaypoints.ts";
 
 export interface SmoothCameraControllerProps {
 	/** Player eye-level height in units (default 1.75) */
@@ -14,12 +16,23 @@ export interface SmoothCameraControllerProps {
 	initialYaw?: number;
 	/** Initial pitch rotation in radians (default -0.12, slightly down at desk) */
 	initialPitch?: number;
+	/** Current active menu section to glide towards */
+	activeSection?: MenuType | null;
 }
 
-// Temporary vectors to avoid garbage collection allocations inside useFrame loop
+// Temporary vectors to avoid allocations inside useFrame loop
 const _forward = new THREE.Vector3();
 const _right = new THREE.Vector3();
 const _moveDir = new THREE.Vector3();
+const _startPos = new THREE.Vector3();
+const _targetPos = new THREE.Vector3();
+
+/**
+ * Cubic ease-in-out curve for cinematic camera acceleration and deceleration.
+ */
+function easeInOutCubic(x: number): number {
+	return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
 
 export function SmoothCameraController({
 	height = 1.75,
@@ -27,6 +40,7 @@ export function SmoothCameraController({
 	sensitivity = 0.0024,
 	initialYaw = 0,
 	initialPitch = -0.12,
+	activeSection = null,
 }: SmoothCameraControllerProps) {
 	const { camera, gl } = useThree();
 
@@ -44,6 +58,15 @@ export function SmoothCameraController({
 	const isDragging = useRef(false);
 	const lastPointer = useRef({ x: 0, y: 0 });
 
+	// Waypoint transition state
+	const isTransitioning = useRef(false);
+	const transitionProgress = useRef(0);
+	const transitionDuration = useRef(1.4);
+	const startYaw = useRef(initialYaw);
+	const startPitch = useRef(initialPitch);
+	const diffYaw = useRef(0);
+	const targetPitchVal = useRef(initialPitch);
+
 	// Initialize camera orientation with YXZ Euler order
 	useEffect(() => {
 		camera.rotation.order = "YXZ";
@@ -51,6 +74,31 @@ export function SmoothCameraController({
 		camera.rotation.x = initialPitch;
 		camera.rotation.z = 0;
 	}, [camera, initialPitch, initialYaw]);
+
+	// Listen to activeSection changes to trigger waypoint glide
+	useEffect(() => {
+		if (!activeSection) return;
+		const waypoint = CAMERA_WAYPOINTS[activeSection];
+		if (!waypoint) return;
+
+		_startPos.copy(camera.position);
+		_targetPos.set(...waypoint.position);
+
+		startYaw.current = currentYaw.current;
+		startPitch.current = currentPitch.current;
+
+		// Shortest angular distance for yaw (avoid 360-degree spins)
+		let dy = (waypoint.yaw - currentYaw.current) % (Math.PI * 2);
+		if (dy > Math.PI) dy -= Math.PI * 2;
+		if (dy < -Math.PI) dy += Math.PI * 2;
+		diffYaw.current = dy;
+
+		targetPitchVal.current = waypoint.pitch;
+
+		transitionProgress.current = 0;
+		transitionDuration.current = 1.4;
+		isTransitioning.current = true;
+	}, [activeSection, camera.position]);
 
 	// Disable scroll / pinch zoom on the canvas (No zoom allowed)
 	useEffect(() => {
@@ -90,6 +138,13 @@ export function SmoothCameraController({
 				key === "arrowright"
 			) {
 				activeKeys.current.add(key);
+
+				// Immediately cancel scripted transition when user walks
+				if (isTransitioning.current) {
+					isTransitioning.current = false;
+					targetYaw.current = currentYaw.current;
+					targetPitch.current = currentPitch.current;
+				}
 			}
 		};
 
@@ -131,6 +186,13 @@ export function SmoothCameraController({
 			const deltaY = e.clientY - lastPointer.current.y;
 			lastPointer.current = { x: e.clientX, y: e.clientY };
 
+			// Cancel waypoint transition seamlessly if user drags mouse to look
+			if (isTransitioning.current && (deltaX !== 0 || deltaY !== 0)) {
+				isTransitioning.current = false;
+				targetYaw.current = currentYaw.current;
+				targetPitch.current = currentPitch.current;
+			}
+
 			// Rotate horizontally (yaw) and vertically (pitch)
 			targetYaw.current -= deltaX * sensitivity;
 			targetPitch.current -= deltaY * sensitivity;
@@ -163,8 +225,37 @@ export function SmoothCameraController({
 	}, [gl, sensitivity]);
 
 	useFrame((_, delta) => {
-		// 1. Enforce player eye height (hard-coded variable, default 1.75)
-		camera.position.y = height;
+		// 1. Scripted Waypoint Transition (Cinematic easing curve)
+		if (isTransitioning.current) {
+			transitionProgress.current += delta / transitionDuration.current;
+			const t = Math.min(1, transitionProgress.current);
+			const eased = easeInOutCubic(t);
+
+			// Lerp 3D position
+			camera.position.lerpVectors(_startPos, _targetPos, eased);
+
+			// Lerp orientation angles
+			currentYaw.current = startYaw.current + diffYaw.current * eased;
+			currentPitch.current = THREE.MathUtils.lerp(
+				startPitch.current,
+				targetPitchVal.current,
+				eased,
+			);
+
+			targetYaw.current = currentYaw.current;
+			targetPitch.current = currentPitch.current;
+
+			camera.rotation.order = "YXZ";
+			camera.rotation.y = currentYaw.current;
+			camera.rotation.x = currentPitch.current;
+			camera.rotation.z = 0;
+
+			// Transition complete -> smoothly transition to free-look
+			if (t >= 1) {
+				isTransitioning.current = false;
+			}
+			return;
+		}
 
 		// 2. Smoothly damp camera rotation in place (first-person look around)
 		const rotDamp = Math.min(1, delta * 20);
@@ -226,9 +317,17 @@ export function SmoothCameraController({
 		const deltaX = velocity.current.x * delta;
 		const deltaZ = velocity.current.z * delta;
 
-		if (Math.abs(deltaX) > 0.00001 || Math.abs(deltaZ) > 0.00001) {
+		const isWalking = Math.abs(deltaX) > 0.00001 || Math.abs(deltaZ) > 0.00001;
+		if (isWalking) {
 			camera.position.x += deltaX;
 			camera.position.z += deltaZ;
+
+			// While walking, smoothly return eye height to standing height
+			camera.position.y = THREE.MathUtils.lerp(
+				camera.position.y,
+				height,
+				Math.min(1, delta * 3),
+			);
 		}
 	});
 

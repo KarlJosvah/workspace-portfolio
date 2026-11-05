@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
 import Room from "@/components/three/Room.tsx";
+import { MenuType } from "@/constants/menuConfig.ts";
 
 const CAMERA_CONFIG = {
 	FOV: 45,
@@ -9,6 +10,10 @@ const CAMERA_CONFIG = {
 	PLAYER_HEIGHT: 1.75,
 	WALK_SPEED: 3.5,
 };
+
+interface SceneProps {
+	activeSection?: MenuType | null;
+}
 
 function RoomLighting() {
 	return (
@@ -61,7 +66,7 @@ function RoomLighting() {
 	);
 }
 
-function Scene() {
+export function Scene({ activeSection = null }: SceneProps) {
 	return (
 		<Canvas
 			shadows
@@ -85,6 +90,7 @@ function Scene() {
 				speed={CAMERA_CONFIG.WALK_SPEED}
 				initialYaw={0}
 				initialPitch={-0.12}
+				activeSection={activeSection}
 			/>
 		</Canvas>
 	);

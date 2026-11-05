@@ -23,7 +23,7 @@ export function WorkSpacePage() {
 	return (
 		<main className="workspace-container">
 			{/* Fullscreen 3D Room — always interactive */}
-			<Scene />
+			<Scene activeSection={activeSection} />
 
 			{/* Top bar */}
 			<Header />
