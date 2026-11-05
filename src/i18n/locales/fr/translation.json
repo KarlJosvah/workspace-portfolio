@@ -1,4 +1,147 @@
 {
+  "language": {
+    "select": "Langue",
+    "en": "English",
+    "fr": "Français",
+    "ja": "日本語",
+    "mg": "Malagasy"
+  },
+  "controls": {
+    "walk": "pour marcher",
+    "walkWithHeight": "pour marcher (Hauteur : {{height}}m)",
+    "look": "Glisser pour regarder autour",
+    "keys": {
+      "wasd": "Z Q S D",
+      "arrows": "Flèches",
+      "space": "ESPACE",
+      "esc": "ÉCHAP"
+    },
+    "hints": {
+      "sit": "Cliquer sur la chaise pour s'asseoir",
+      "stand": "Appuyer sur ESPACE pour se lever",
+      "interact": "Cliquer pour interagir",
+      "escToExit": "Appuyer sur ÉCHAP pour revenir"
+    }
+  },
+  "menu": {
+    "hero": {
+      "label": "Accueil",
+      "description": "Présentation du développeur & biographie"
+    },
+    "technicalSkills": {
+      "label": "Compétences Techniques",
+      "description": "Expertises clés & technologies"
+    },
+    "featuredProjects": {
+      "label": "Projets Phares",
+      "description": "Sélection de réalisations & démos live"
+    },
+    "recommendedProjects": {
+      "label": "Projets Recommandés",
+      "description": "Contributions open source & bibliothèques"
+    },
+    "professionalExperiences": {
+      "label": "Expériences Pro",
+      "description": "Parcours professionnel & étapes clés"
+    },
+    "contact": {
+      "label": "Contact",
+      "description": "Prise de contact & CV"
+    }
+  },
+  "sections": {
+    "hero": {
+      "greeting": "Bonjour, je suis",
+      "title": "Développeur Full-Stack & 3D Créatif",
+      "bio": "Créateur d'expériences numériques immersives alliant architectures web modernes et performantes à des graphismes 3D interactifs et un design soigné.",
+      "ctaProjects": "Explorer les Projets",
+      "ctaContact": "Me Contacter",
+      "status": "Disponible pour de nouvelles opportunités"
+    },
+    "skills": {
+      "title": "Compétences Techniques",
+      "subtitle": "Technologies, frameworks et outils modernes que j'utilise au quotidien.",
+      "categories": {
+        "frontend": "Développement Frontend",
+        "threeD": "Graphismes 3D & WebGL",
+        "backend": "Architecture Backend & Cloud",
+        "devops": "DevOps & CI/CD",
+        "tools": "Outils d'Ingénierie & Méthodes"
+      }
+    },
+    "featuredProjects": {
+      "title": "Projets Phares",
+      "subtitle": "Sélection de projets d'ingénierie logicielle et d'expériences 3D interactives de la conception à la production.",
+      "viewDemo": "Aperçu en Direct",
+      "sourceCode": "Code Source",
+      "techStack": "Stack Technique"
+    },
+    "recommendedProjects": {
+      "title": "Projets Recommandés",
+      "subtitle": "Dépôts open-source sélectionnés, expérimentations et packages utilitaires.",
+      "visitRepo": "Voir sur GitHub",
+      "stars": "Étoiles",
+      "forks": "Forks"
+    },
+    "experiences": {
+      "title": "Expériences Professionnelles",
+      "subtitle": "Mon parcours en tant qu'ingénieur logiciel concevant des solutions applicatives scalables.",
+      "present": "Aujourd'hui"
+    },
+    "contact": {
+      "title": "Me Contacter",
+      "subtitle": "Un projet créatif, une opportunité ou envie d'échanger ? N'hésitez pas à me contacter.",
+      "emailLabel": "Adresse Email",
+      "copyEmail": "Copier l'Email",
+      "copied": "Copié dans le presse-papiers !",
+      "downloadResume": "Télécharger le CV (PDF)",
+      "socialLinks": "Réseaux Sociaux"
+    }
+  },
+  "interactions": {
+    "chair": {
+      "sit": "S'asseoir",
+      "stand": "Se lever"
+    },
+    "light": {
+      "toggle": "Interrupteur Lampe",
+      "turnOn": "Allumer la Lampe",
+      "turnOff": "Éteindre la Lampe",
+      "preset": "Préréglage Couleur"
+    },
+    "headset": {
+      "wear": "Mettre le Casque",
+      "remove": "Retirer le Casque",
+      "lofi": "Radio Lo-Fi Activée"
+    },
+    "laptop": {
+      "open": "Ouvrir l'Écran",
+      "close": "Fermer l'Écran",
+      "media": "Lecteur Multimédia"
+    },
+    "drawer": {
+      "open": "Ouvrir le Tiroir",
+      "close": "Fermer le Tiroir",
+      "resume": "CV Secret Trouvé"
+    },
+    "fridge": {
+      "open": "Ouvrir le Mini-Frigo",
+      "close": "Fermer le Mini-Frigo",
+      "drink": "Boisson Fraîche Récupérée"
+    },
+    "mug": {
+      "drink": "Prendre une Gorgée (+Boost Vitesse)",
+      "refill": "Remplir de Café Fumant"
+    },
+    "trashCan": {
+      "toss": "Lancer la Boule de Papier",
+      "score": "Score Panier : {{score}}"
+    },
+    "poster": {
+      "inspect": "Examiner le Poster",
+      "return": "Revenir à la Pièce"
+    }
+  },
   "getStarted": "Commencer",
   "editPrompt": "Modifiez <1>src/App.tsx</1> et enregistrez pour tester le <3>HMR</3>",
   "count": "Le compte est de {{count}}",
@@ -11,12 +154,5 @@
   "social": {
     "title": "Rejoignez-nous",
     "subtitle": "Rejoignez la communauté Vite"
-  },
-  "language": {
-    "select": "Langue",
-    "en": "English",
-    "fr": "Français",
-    "ja": "日本語",
-    "mg": "Malagasy"
   }
 }

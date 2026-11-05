@@ -1,4 +1,147 @@
 {
+  "language": {
+    "select": "言語",
+    "en": "English",
+    "fr": "Français",
+    "ja": "日本語",
+    "mg": "Malagasy"
+  },
+  "controls": {
+    "walk": "移動",
+    "walkWithHeight": "移動（視点高: {{height}}m）",
+    "look": "ドラッグで視点移動",
+    "keys": {
+      "wasd": "W A S D",
+      "arrows": "矢印キー",
+      "space": "SPACE",
+      "esc": "ESC"
+    },
+    "hints": {
+      "sit": "椅子をクリックして座る",
+      "stand": "SPACEキーで立ち上がる",
+      "interact": "クリックでインタラクト",
+      "escToExit": "ESCキーで戻る"
+    }
+  },
+  "menu": {
+    "hero": {
+      "label": "トップ",
+      "description": "エンジニア自己紹介・バイオグラフィ"
+    },
+    "technicalSkills": {
+      "label": "技術スキル",
+      "description": "主要技術スタック & 開発スキル"
+    },
+    "featuredProjects": {
+      "label": "主要プロジェクト",
+      "description": "厳選開発実績 & ライブデモ"
+    },
+    "recommendedProjects": {
+      "label": "推薦プロジェクト",
+      "description": "オープンソース貢献 & ライブラリ"
+    },
+    "professionalExperiences": {
+      "label": "職務経歴",
+      "description": "キャリアの歩み & 主な成果"
+    },
+    "contact": {
+      "label": "お問い合わせ",
+      "description": "ご連絡先 & レジュメ"
+    }
+  },
+  "sections": {
+    "hero": {
+      "greeting": "はじめまして、私は",
+      "title": "フルスタック & クリエイティブ 3D Web エンジニア",
+      "bio": "高パフォーマンスな最新ウェブアーキテクチャと、没入感のあるインタラクティブ 3D グラフィックスを融合したデジタル体験を創造しています。",
+      "ctaProjects": "プロジェクトを見る",
+      "ctaContact": "お問い合わせ",
+      "status": "案件・お仕事のご相談を受付中"
+    },
+    "skills": {
+      "title": "技術スキル",
+      "subtitle": "日々のプロダクト開発で活用している主要テクノロジー、フレームワーク、ツール群。",
+      "categories": {
+        "frontend": "フロントエンド開発",
+        "threeD": "3D & WebGL グラフィックス",
+        "backend": "バックエンド & クラウド設計",
+        "devops": "DevOps & CI/CD",
+        "tools": "開発ツール & ワークフロー"
+      }
+    },
+    "featuredProjects": {
+      "title": "主要プロジェクト",
+      "subtitle": "設計から本番リリースまで手掛けた代表的なソフトウェアおよび 3D 実績。",
+      "viewDemo": "デモを体験",
+      "sourceCode": "ソースコード",
+      "techStack": "使用技術"
+    },
+    "recommendedProjects": {
+      "title": "推薦プロジェクト",
+      "subtitle": "厳選したオープンソースリポジトリ、実験的プロトタイプ、ユーティリティ。",
+      "visitRepo": "GitHubで確認",
+      "stars": "スター数",
+      "forks": "フォーク数"
+    },
+    "experiences": {
+      "title": "職務経歴",
+      "subtitle": "スケーラブルなウェブプロダクトを開発・成長させてきたエンジニアとしての歩み。",
+      "present": "現在"
+    },
+    "contact": {
+      "title": "お問い合わせ",
+      "subtitle": "新規プロジェクトのご相談、開発のご依頼、カジュアルなディスカッションなど、お気軽にご連絡ください。",
+      "emailLabel": "メールアドレス",
+      "copyEmail": "メールアドレスをコピー",
+      "copied": "クリップボードにコピーしました！",
+      "downloadResume": "レジュメをダウンロード (PDF)",
+      "socialLinks": "ソーシャルリンク"
+    }
+  },
+  "interactions": {
+    "chair": {
+      "sit": "座る",
+      "stand": "立ち上がる"
+    },
+    "light": {
+      "toggle": "デスクライト切替",
+      "turnOn": "ライトを点灯",
+      "turnOff": "ライトを消灯",
+      "preset": "カラープリセット"
+    },
+    "headset": {
+      "wear": "ヘッドセットを装着",
+      "remove": "ヘッドセットを外す",
+      "lofi": "Lo-Fi ラジオ再生中"
+    },
+    "laptop": {
+      "open": "ノートPCを開く",
+      "close": "ノートPCを閉じる",
+      "media": "メディアプレイヤー"
+    },
+    "drawer": {
+      "open": "引き出しを開ける",
+      "close": "引き出しを閉じる",
+      "resume": "秘密のレジュメを発見"
+    },
+    "fridge": {
+      "open": "ミニ冷蔵庫を開ける",
+      "close": "ミニ冷蔵庫を閉じる",
+      "drink": "冷たいドリンクをゲット"
+    },
+    "mug": {
+      "drink": "コーヒーを飲む（+移動速度UP）",
+      "refill": "淹れたてコーヒーを注ぐ"
+    },
+    "trashCan": {
+      "toss": "紙くずを投げる",
+      "score": "スコア: {{score}}"
+    },
+    "poster": {
+      "inspect": "ポスターを拡大",
+      "return": "部屋に戻る"
+    }
+  },
   "getStarted": "始めましょう",
   "editPrompt": "<1>src/App.tsx</1> を編集して保存し、<3>HMR</3> をテストします",
   "count": "カウント: {{count}}",
@@ -11,12 +154,5 @@
   "social": {
     "title": "コミュニティに参加",
     "subtitle": "Vite コミュニティに参加する"
-  },
-  "language": {
-    "select": "言語",
-    "en": "English",
-    "fr": "Français",
-    "ja": "日本語",
-    "mg": "Malagasy"
   }
 }

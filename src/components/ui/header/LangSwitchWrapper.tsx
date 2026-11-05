@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { supportedLanguages } from "@/i18n/index.ts";
 
 export function LangSwitchWrapper() {
-	const { i18n } = useTranslation();
+	const { t, i18n } = useTranslation();
 
 	const currentLangCode =
 		i18n.resolvedLanguage?.split("-")[0] ||
@@ -26,14 +26,18 @@ export function LangSwitchWrapper() {
 				type="button"
 				className="lang-toggle-btn"
 				onClick={toggleLanguage}
-				title="Toggle language"
+				title={t("language.select", "Language")}
 			>
 				<span role="img" aria-label="Globe">
 					🌐
 				</span>
 				<span>{currentLanguage.name}</span>
 			</button>
-			<div className="lang-options" role="group" aria-label="Language options">
+			<div
+				className="lang-options"
+				role="group"
+				aria-label={t("language.select", "Language options")}
+			>
 				{supportedLanguages.map((lang) => (
 					<button
 						key={lang.code}
