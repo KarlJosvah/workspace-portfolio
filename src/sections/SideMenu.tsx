@@ -3,7 +3,7 @@ import MenuButton from "@/components/ui/MenuButton.tsx";
 import { MENU_ITEMS, MenuType } from "@/constants/menuConfig.ts";
 
 interface SideMenuProps {
-	activeSection: MenuType;
+	activeSection: MenuType | null;
 	onSectionChange: (section: MenuType) => void;
 }
 
