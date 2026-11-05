@@ -1,5 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { supportedLanguages } from "@/i18n/index.ts";
+import flagEn from "@/assets/flags/united-kingdom.svg";
+import flagFr from "@/assets/flags/france.svg";
+import flagJa from "@/assets/flags/japan.svg";
+import flagMg from "@/assets/flags/madagascar.svg";
+
+const FLAG_MAP: Record<string, string> = {
+	en: flagEn,
+	fr: flagFr,
+	ja: flagJa,
+	mg: flagMg,
+};
 
 export function LangSwitchWrapper() {
 	const { t, i18n } = useTranslation();
@@ -20,18 +31,24 @@ export function LangSwitchWrapper() {
 		void i18n.changeLanguage(supportedLanguages[nextIndex].code);
 	};
 
+	const currentFlagSrc = FLAG_MAP[currentLanguage.code] || flagEn;
+
 	return (
 		<div className="lang-switch-wrapper">
 			<button
 				type="button"
 				className="lang-toggle-btn"
 				onClick={toggleLanguage}
-				title={t("language.select", "Language")}
+				title={t("language.select", "Switch language")}
+				aria-label={currentLanguage.name}
 			>
-				<span role="img" aria-label="Globe">
-					🌐
-				</span>
-				<span>{currentLanguage.name}</span>
+				<img
+					src={currentFlagSrc}
+					alt=""
+					aria-hidden="true"
+					className="lang-flag-toggle"
+				/>
+				<span className="lang-current-label">{currentLanguage.name}</span>
 			</button>
 			<div
 				className="lang-options"
@@ -46,6 +63,8 @@ export function LangSwitchWrapper() {
 							lang.code === currentLanguage.code ? "active" : ""
 						}`}
 						onClick={() => void i18n.changeLanguage(lang.code)}
+						title={lang.name}
+						aria-label={lang.name}
 					>
 						{lang.code.toUpperCase()}
 					</button>
