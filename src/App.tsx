@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import WorkSpacePage from "./pages/WorkSpacePage.tsx";
-import { ROUTES } from "./app/router.ts";
-import "./App.css";
+import WorkSpacePage from "@/pages/WorkSpacePage.tsx";
+import { ROUTES } from "@/app/router.ts";
+import "@/App.css";
 
 function App() {
 	return (

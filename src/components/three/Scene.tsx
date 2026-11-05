@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import SmoothCameraController from "./SmoothCameraController.tsx";
-import Room from "./Room.tsx";
+import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
+import Room from "@/components/three/Room.tsx";
 
 const CAMERA_CONFIG = {
 	FOV: 45,

@@ -1,5 +1,5 @@
-import MenuButton from "../components/ui/MenuButton.tsx";
-import { MENU_ITEMS, type MenuType } from "../constants/menuConfig.ts";
+import MenuButton from "@/components/ui/MenuButton.tsx";
+import { MENU_ITEMS, type MenuType } from "@/constants/menuConfig.ts";
 
 interface SideMenuProps {
 	activeSection: MenuType;

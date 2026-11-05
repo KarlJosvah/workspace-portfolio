@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Scene from "../components/three/Scene.tsx";
-import SideMenu from "../sections/SideMenu.tsx";
-import { MenuType } from "../constants/menuConfig.ts";
 import { useTranslation } from "react-i18next";
-import { supportedLanguages } from "../i18n/index.ts";
+import Scene from "@/components/three/Scene.tsx";
+import SideMenu from "@/sections/SideMenu.tsx";
+import { MenuType } from "@/constants/menuConfig.ts";
+import { supportedLanguages } from "@/i18n/index.ts";
 
 export function WorkSpacePage() {
 	const [activeSection, setActiveSection] = useState<MenuType>(MenuType.Hero);

@@ -2,10 +2,10 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
-import enTranslation from './locales/en/translation.json'
-import frTranslation from './locales/fr/translation.json'
-import jaTranslation from './locales/ja/translation.json'
-import mgTranslation from './locales/mg/translation.json'
+import enTranslation from '@/i18n/locales/en/translation.json'
+import frTranslation from '@/i18n/locales/fr/translation.json'
+import jaTranslation from '@/i18n/locales/ja/translation.json'
+import mgTranslation from '@/i18n/locales/mg/translation.json'
 
 export const supportedLanguages = [
   { code: 'en', name: 'English' },
