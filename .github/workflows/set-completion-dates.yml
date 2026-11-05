@@ -1,0 +1,152 @@
+name: Set Project Dates on Issue Close
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  set-dates:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_URL: "https://github.com/users/KarlJosvah/projects/3"
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - name: Ensure issue is in Project and get Item ID
+        id: add-to-project
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: ${{ env.PROJECT_URL }}
+          github-token: ${{ secrets.PROJECT_PAT }}
+
+      - name: Update Start date (if blank) and Target date to current date
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PROJECT_PAT }}
+          script: |
+            const itemId = "${{ steps.add-to-project.outputs.itemId }}";
+            const projectUrl = "${{ env.PROJECT_URL }}";
+            
+            const parsedUrl = new URL(projectUrl);
+            const pathSegments = parsedUrl.pathname.split('/').filter(Boolean);
+            const isOrg = pathSegments[0] === 'orgs';
+            const owner = pathSegments[1];
+            const projectNumber = parseInt(pathSegments[3], 10);
+
+            // Get today's date in YYYY-MM-DD format (UTC)
+            const today = new Date().toISOString().split('T')[0];
+
+            // Fetch field definitions and existing 'Start date' value on the item
+            const queryData = isOrg ? `
+              query($owner: String!, $number: Int!, $itemId: ID!) {
+                organization(login: $owner) {
+                  projectV2(number: $number) {
+                    id
+                    fields(first: 30) {
+                      nodes {
+                        ... on ProjectV2FieldCommon {
+                          id
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+                node(id: $itemId) {
+                  ... on ProjectV2Item {
+                    fieldValueByName(name: "Start date") {
+                      ... on ProjectV2ItemFieldDateValue {
+                        date
+                      }
+                    }
+                  }
+                }
+              }
+            ` : `
+              query($owner: String!, $number: Int!, $itemId: ID!) {
+                user(login: $owner) {
+                  projectV2(number: $number) {
+                    id
+                    fields(first: 30) {
+                      nodes {
+                        ... on ProjectV2FieldCommon {
+                          id
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+                node(id: $itemId) {
+                  ... on ProjectV2Item {
+                    fieldValueByName(name: "Start date") {
+                      ... on ProjectV2ItemFieldDateValue {
+                        date
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+
+            const result = await github.graphql(queryData, {
+              owner,
+              number: projectNumber,
+              itemId
+            });
+
+            const projectData = isOrg ? result.organization.projectV2 : result.user.projectV2;
+            const fields = projectData.fields.nodes;
+            const startDateField = fields.find(f => f.name === "Start date");
+            const targetDateField = fields.find(f => f.name === "Target date");
+
+            if (!startDateField) {
+              throw new Error("Could not find project field 'Start date'.");
+            }
+            if (!targetDateField) {
+              throw new Error("Could not find project field 'Target date'.");
+            }
+
+            // Mutation template for updating date fields
+            const updateDateMutation = `
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $date: Date!) {
+                updateProjectV2ItemFieldValue(
+                  input: {
+                    projectId: $projectId
+                    itemId: $itemId
+                    fieldId: $fieldId
+                    value: {
+                      date: $date
+                    }
+                  }
+                ) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `;
+
+            // Only update 'Start date' if it is not already set
+            const existingStartDate = result.node?.fieldValueByName?.date;
+            if (existingStartDate) {
+              console.log(`'Start date' is already set to ${existingStartDate}. Leaving untouched.`);
+            } else {
+              await github.graphql(updateDateMutation, {
+                projectId: projectData.id,
+                itemId: itemId,
+                fieldId: startDateField.id,
+                date: today
+              });
+              console.log(`Set 'Start date' to ${today} for project item ID ${itemId}.`);
+            }
+
+            // Always update 'Target date' to today when closing the issue
+            await github.graphql(updateDateMutation, {
+              projectId: projectData.id,
+              itemId: itemId,
+              fieldId: targetDateField.id,
+              date: today
+            });
+            console.log(`Set 'Target date' to ${today} for project item ID ${itemId}.`);
