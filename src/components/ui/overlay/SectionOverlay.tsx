@@ -1,6 +1,7 @@
-import { useEffect, lazy, Suspense } from "react";
+﻿import { useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MenuType } from "@/constants/menuConfig.ts";
+import "@/components/ui/overlay/SectionOverlay.css";
 
 const HeroSection = lazy(() => import("@/sections/panels/HeroSection.tsx"));
 const SkillsSection = lazy(
@@ -34,7 +35,7 @@ interface SectionOverlayProps {
 }
 
 export function SectionOverlay({ activeSection, onClose }: SectionOverlayProps) {
-	// ESC always fires on window — works even while canvas has pointer focus
+	// ESC always fires on window â€” works even while canvas has pointer focus
 	useEffect(() => {
 		if (activeSection === null) return;
 		const onKey = (e: KeyboardEvent) => {
@@ -48,7 +49,7 @@ export function SectionOverlay({ activeSection, onClose }: SectionOverlayProps) 
 
 	return (
 		/*
-		 * pointer-events: none on the root → canvas keeps ALL input events.
+		 * pointer-events: none on the root â†’ canvas keeps ALL input events.
 		 * Interactive descendants (links, buttons) opt back in individually.
 		 */
 		<div className="section-overlay">

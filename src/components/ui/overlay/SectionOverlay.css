@@ -1,0 +1,262 @@
+/* =============================================================
+ * Minimalist Editorial Text Overlay
+ *
+ * Positioned on the left, vertically centered.
+ * No solid background, no card container, no border box, no shadows.
+ * Only a thin vertical border-left accent line (like in design mock).
+ * Root has pointer-events: none so 3D scene (WASD, drag to look)
+ * remains 100% interactive. Interactive links/buttons opt in.
+ * ============================================================*/
+.section-overlay {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 150;
+}
+
+.section-overlay-inner {
+	position: absolute;
+	left: clamp(2.5rem, 6vw, 6rem);
+	top: 50%;
+	transform: translateY(-50%);
+	max-width: min(540px, 80vw);
+	max-height: 82vh;
+	overflow-y: auto;
+	pointer-events: none;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.section-overlay-inner::-webkit-scrollbar {
+	display: none;
+}
+
+.text-overlay-content {
+	border-left: 2px solid rgba(255, 255, 255, 0.35);
+	padding: 0.5rem 0 0.5rem 1.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.15rem;
+	text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+	pointer-events: none;
+}
+
+.text-overlay-title {
+	font-size: clamp(2rem, 3.2vw, 2.75rem);
+	font-weight: 700;
+	color: #ffffff;
+	line-height: 1.12;
+	letter-spacing: -0.025em;
+	margin: 0;
+}
+
+.text-overlay-subtitle {
+	font-size: 1.05rem;
+	font-weight: 500;
+	color: var(--palette-1, #90caf9);
+	line-height: 1.45;
+	margin: 0;
+}
+
+.text-overlay-body {
+	font-size: 0.98rem;
+	line-height: 1.68;
+	color: rgba(255, 255, 255, 0.88);
+	margin: 0;
+}
+
+.text-overlay-actions {
+	display: flex;
+	gap: 1.5rem;
+	align-items: center;
+	margin-top: 0.25rem;
+}
+
+.text-link {
+	pointer-events: auto;
+	font-size: 0.92rem;
+	font-weight: 600;
+	color: #90caf9;
+	text-decoration: none;
+	transition:
+		color 0.18s ease,
+		transform 0.18s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+}
+
+.text-link:hover {
+	color: #ffffff;
+	transform: translateX(2px);
+}
+
+.text-link.secondary {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.text-link.secondary:hover {
+	color: #ffffff;
+}
+
+.text-overlay-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-top: 0.25rem;
+}
+
+.text-group-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.text-item-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1rem;
+}
+
+.text-group-heading {
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: #ffffff;
+	margin: 0;
+}
+
+.text-group-heading-link {
+	font-size: 1.02rem;
+	font-weight: 600;
+	color: #90caf9;
+	text-decoration: none;
+	pointer-events: auto;
+	transition: color 0.18s ease;
+}
+
+.text-group-heading-link:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.text-group-body {
+	font-size: 0.9rem;
+	line-height: 1.55;
+	color: rgba(255, 255, 255, 0.82);
+	margin: 0;
+}
+
+.text-meta-text {
+	font-size: 0.82rem;
+	font-family: var(--font-mono);
+	color: rgba(144, 202, 249, 0.85);
+	margin: 0;
+}
+
+.text-link-sm {
+	pointer-events: auto;
+	font-size: 0.82rem;
+	font-weight: 500;
+	color: #90caf9;
+	text-decoration: none;
+	transition: color 0.18s ease;
+}
+
+.text-link-sm:hover {
+	color: #ffffff;
+}
+
+.text-item-links {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+.text-company-label {
+	font-size: 0.84rem;
+	font-weight: 500;
+	color: #90caf9;
+	margin: 0;
+}
+
+.text-contact-block {
+	display: flex;
+	flex-direction: column;
+	gap: 1.1rem;
+	margin-top: 0.25rem;
+}
+
+.text-contact-email-line {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+	flex-wrap: wrap;
+}
+
+.text-email-link {
+	pointer-events: auto;
+	font-family: var(--font-mono);
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: #90caf9;
+	text-decoration: none;
+	transition: color 0.18s ease;
+}
+
+.text-email-link:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.text-inline-btn {
+	pointer-events: auto;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.7);
+	font-family: var(--font-mono);
+	font-size: 0.82rem;
+	padding: 0;
+	transition: color 0.18s ease;
+}
+
+.text-inline-btn:hover {
+	color: #ffffff;
+}
+
+.text-contact-actions {
+	display: flex;
+	align-items: center;
+}
+
+.text-social-links {
+	display: flex;
+	gap: 1.25rem;
+	flex-wrap: wrap;
+	margin-top: 0.25rem;
+}
+
+.text-social-link {
+	pointer-events: auto;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: #90caf9;
+	text-decoration: none;
+	transition: color 0.18s ease;
+}
+
+.text-social-link:hover {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	.section-overlay-inner {
+		left: 1.25rem;
+		max-width: calc(100vw - 4.5rem);
+	}
+	.text-overlay-content {
+		padding-left: 1.25rem;
+	}
+}

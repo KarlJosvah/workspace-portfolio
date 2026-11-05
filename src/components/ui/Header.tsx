@@ -1,5 +1,6 @@
 import BrandBadge from "@/components/ui/header/BrandBadge.tsx";
 import LangSwitchWrapper from "@/components/ui/header/LangSwitchWrapper.tsx";
+import "@/components/ui/Header.css";
 
 export function Header() {
 	return (

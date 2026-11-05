@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import "@/components/ui/ControlsHint.css";
 
 interface ControlsHintProps {
 	playerHeight?: number;

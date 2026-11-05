@@ -5,6 +5,7 @@ import SideMenu from "@/sections/SideMenu.tsx";
 import ControlsHint from "@/components/ui/ControlsHint.tsx";
 import SectionOverlay from "@/components/ui/overlay/SectionOverlay.tsx";
 import { MenuType } from "@/constants/menuConfig.ts";
+import "@/pages/WorkSpacePage.css";
 
 export function WorkSpacePage() {
 	const [activeSection, setActiveSection] = useState<MenuType | null>(

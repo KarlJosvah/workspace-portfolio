@@ -1,0 +1,112 @@
+/* -------------------------------------------------------------
+ * Top Header & Language Selector
+ * ------------------------------------------------------------*/
+.workspace-header {
+	position: fixed;
+	top: 1.25rem;
+	left: 1.5rem;
+	right: 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	pointer-events: none;
+	z-index: 50;
+}
+
+.brand-badge {
+	pointer-events: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 16px;
+	background: var(--surface-glass);
+	border: 1px solid var(--border-subtle);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border-radius: 9999px;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.brand-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: var(--accent-primary);
+	box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.brand-title {
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	color: var(--text-secondary);
+}
+
+.lang-switch-wrapper {
+	pointer-events: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: var(--surface-glass);
+	border: 1px solid var(--border-subtle);
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	border-radius: 9999px;
+	padding: 4px 6px;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+	margin-right: 50px; /* leaves room for side menu if needed */
+}
+
+.lang-toggle-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--text-secondary);
+	padding: 4px 10px;
+	border-radius: 9999px;
+	transition: all 0.2s ease;
+}
+
+.lang-toggle-btn:hover {
+	color: var(--text-main);
+	background: rgba(144, 202, 249, 0.15);
+}
+
+.lang-options {
+	display: inline-flex;
+	gap: 3px;
+	border-left: 1px solid var(--border-subtle);
+	padding-left: 6px;
+}
+
+.lang-option-btn {
+	font-size: 11px;
+	font-family: var(--font-mono);
+	font-weight: 600;
+	padding: 3px 7px;
+	border-radius: 9999px;
+	color: var(--text-muted);
+	border: 1px solid transparent;
+	transition: all 0.2s ease;
+}
+
+.lang-option-btn:hover {
+	color: var(--text-main);
+	background: rgba(144, 202, 249, 0.15);
+}
+
+.lang-option-btn.active {
+	background: var(--accent-primary);
+	color: #ffffff;
+	border-color: var(--accent-primary);
+	box-shadow: 0 0 10px var(--accent-glow);
+}
+
+@media (max-width: 768px) {
+	.workspace-header {
+		left: 1rem;
+		right: 1rem;
+	}
+}

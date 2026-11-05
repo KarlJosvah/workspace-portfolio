@@ -1,0 +1,92 @@
+/* -------------------------------------------------------------
+ * Side Menu (Fixed to the very right, rotated clockwise)
+ * ------------------------------------------------------------*/
+.side-menu-container {
+	position: fixed;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 12px;
+	z-index: 100;
+	pointer-events: auto;
+}
+
+.menu-button {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-self: flex-end;
+	margin-left: auto;
+	/* Extra width on right side that overflows off-screen when inactive */
+	margin-right: -16px;
+	padding: 16px 26px 16px 10px;
+	/* Rotate clockwise 90deg: text reads top-to-bottom, lean head to the left to read */
+	writing-mode: vertical-rl;
+	text-orientation: mixed;
+	background: var(--surface-glass);
+	border: 1px solid var(--border-subtle);
+	border-right: none;
+	border-radius: 8px 0 0 8px;
+	backdrop-filter: blur(14px);
+	-webkit-backdrop-filter: blur(14px);
+	color: var(--text-muted);
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: 0.8px;
+	white-space: nowrap;
+	cursor: pointer;
+	transform: translateX(0);
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	box-shadow: -4px 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.menu-button:hover {
+	background: var(--surface-glass-hover);
+	color: var(--text-main);
+	border-color: var(--border-hover);
+	/* Subtle peek out on hover while remaining anchored off-screen on the right */
+	transform: translateX(-6px);
+}
+
+.menu-button.active {
+	background: var(--surface-glass-active);
+	color: var(--text-main);
+	font-weight: 700;
+	border-color: var(--border-active);
+	border-left: 3px solid var(--border-active);
+	box-shadow: -6px 8px 24px var(--border-glow);
+	/* Pops out 10px to the left like a marker, while its right edge stays 6px off-screen */
+	transform: translateX(-10px);
+}
+
+.menu-button.active:hover {
+	transform: translateX(-10px);
+}
+
+.side-menu-container.collapsed .menu-button,
+.side-menu-container.expanded .menu-button {
+	align-self: flex-end;
+}
+
+.menu-button-glow {
+	display: none;
+}
+
+.menu-button.active .menu-button-glow {
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 15%;
+	bottom: 15%;
+	width: 2px;
+	background: var(--palette-4);
+	box-shadow: 0 0 8px var(--palette-4);
+}
+
+.menu-button-label {
+	display: inline-block;
+}

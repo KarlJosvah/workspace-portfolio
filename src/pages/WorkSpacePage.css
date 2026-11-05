@@ -1,0 +1,18 @@
+/* -------------------------------------------------------------
+ * Fullscreen Workspace Page Layout
+ * ------------------------------------------------------------*/
+.workspace-container {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	background: var(--bg-canvas);
+}
+
+.three-canvas {
+	width: 100% !important;
+	height: 100% !important;
+	display: block !important;
+	outline: none;
+	touch-action: none;
+}

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import MenuButton from "@/components/ui/MenuButton.tsx";
 import { MENU_ITEMS, MenuType } from "@/constants/menuConfig.ts";
+import "@/sections/SideMenu.css";
 
 interface SideMenuProps {
 	activeSection: MenuType | null;
