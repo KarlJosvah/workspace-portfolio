@@ -178,7 +178,7 @@ export function RoomStructure({
 				name="WingsofFreedomRight"
 				geometry={nodes.WingsofFreedomRight.geometry}
 				material={materials.Imphezia}
-				position={[-5.8, 1.103, 3.371]}
+				position={[-5.8, 1.067, 3.152]}
 				castShadow
 				receiveShadow
 			/>
@@ -186,7 +186,7 @@ export function RoomStructure({
 				name="WingsofFreedomLeft"
 				geometry={nodes.WingsofFreedomLeft.geometry}
 				material={materials.Imphezia}
-				position={[-5.8, 1.103, 3.371]}
+				position={[-5.8, 1.147, 3.646]}
 				castShadow
 				receiveShadow
 			/>
