@@ -23,19 +23,11 @@ interface RoomLightingProps {
 }
 
 function RoomLighting({ showHelpers = false }: RoomLightingProps) {
-	const sunLightRef = useRef<THREE.DirectionalLight>(null);
 	const ceilingLightRef = useRef<THREE.PointLight>(null);
 	const deskLampRef = useRef<THREE.PointLight>(null);
 	const pcTowerLightRef = useRef<THREE.PointLight>(null);
-	const rimLightRef = useRef<THREE.DirectionalLight>(null);
 
-	// Light visual helpers (DirectionalLightHelper & PointLightHelper)
-	useHelper(
-		showHelpers ? (sunLightRef as React.RefObject<THREE.Object3D>) : null,
-		THREE.DirectionalLightHelper,
-		1,
-		"#facc15",
-	);
+	// Light visual helpers (PointLightHelper)
 	useHelper(
 		showHelpers ? (ceilingLightRef as React.RefObject<THREE.Object3D>) : null,
 		THREE.PointLightHelper,
@@ -54,54 +46,36 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 		0.2,
 		"#2196f3",
 	);
-	useHelper(
-		showHelpers ? (rimLightRef as React.RefObject<THREE.Object3D>) : null,
-		THREE.DirectionalLightHelper,
-		1,
-		"#3b82f6",
-	);
 
 	return (
 		<>
-			{/* Ambient fill light (omnidirectional, no positional helper) */}
-			<ambientLight intensity={0.65} color="#e3f2fd" />
+			{/* Ambient fill light for base indoor illumination */}
+			<ambientLight intensity={0.85} color="#e3f2fd" />
 
-			{/* Main sunlight / window directional light */}
-			<directionalLight
-				ref={sunLightRef}
-				position={[-4, 6, 4]}
-				intensity={1.4}
-				color="#ffffff"
+			{/* Soft ceiling fill light with shadow casting inside the room */}
+			<pointLight
+				ref={ceilingLightRef}
+				position={[-1.0, 2.5, 2.0]}
+				intensity={1.2}
+				color="#f8fafc"
+				distance={10}
+				decay={2}
 				castShadow
-				shadow-mapSize-width={2048}
-				shadow-mapSize-height={2048}
-				shadow-camera-near={0.5}
-				shadow-camera-far={20}
-				shadow-camera-left={-5}
-				shadow-camera-right={5}
-				shadow-camera-top={5}
-				shadow-camera-bottom={-5}
+				shadow-mapSize-width={1024}
+				shadow-mapSize-height={1024}
 				shadow-bias={-0.0001}
 			/>
 
-			{/* Soft ceiling fill light */}
-			<pointLight
-				ref={ceilingLightRef}
-				position={[-1.0, 3.0, 1.5]}
-				intensity={0.8}
-				color="#90caf9"
-			/>
-
 			{/* Desk lamp local warm point light */}
-			{/* <pointLight
+			<pointLight
 				ref={deskLampRef}
 				position={[0.08, 1.45, -0.05]}
 				intensity={1.2}
 				color="#fffaed"
-				distance={3.5}
+				distance={4.0}
 				decay={2}
 				castShadow
-			/> */}
+			/>
 
 			{/* PC Tower subtle cyber blue glow matching palette */}
 			<pointLight
@@ -111,14 +85,6 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 				color="#2196f3"
 				distance={2.0}
 				decay={2}
-			/>
-
-			{/* Subtle rim light for background wall contrast */}
-			<directionalLight
-				ref={rimLightRef}
-				position={[3, 3, -2]}
-				intensity={0.4}
-				color="#0d47a1"
 			/>
 		</>
 	);
