@@ -377,7 +377,7 @@ export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<mesh
 				name="Light"
 				geometry={nodes.Light.geometry}
-				material={glowMaterials.wallArt}
+				material={glowMaterials.pcAccents}
 				position={[0.079, 1.405, -0.099]}
 				castShadow
 			/>
@@ -877,7 +877,7 @@ export function GamingConsoleZone({
 			<mesh
 				name="MysteryBox"
 				geometry={nodes.MysteryBox.geometry}
-				material={glowMaterials.standard}
+				material={glowMaterials.neonSigns}
 				position={[-3.963, 1.699, -0.211]}
 				castShadow
 				receiveShadow

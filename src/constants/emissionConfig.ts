@@ -11,7 +11,7 @@ export const EMISSION_LEVELS = {
 	pcAccents: 3.5, // PC tower internal cyber glow
 	wallArt: 4.5, // Wings of Freedom wall plaque & desk lamp head
 	neonSigns: 5.0, // PlayStation neon wall symbols
-	ledStrips: 7.0, // Ambient LED edge strips & screen bias lights
+	ledStrips: 1.5, // Ambient LED edge strips & screen bias lights
 } as const;
 
 export type EmissionTier = keyof typeof EMISSION_LEVELS;
