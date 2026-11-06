@@ -7,10 +7,18 @@ export const MODEL_URL = "/assets/models/room-portfolio.glb";
 
 type GLTFResult = GLTF & {
 	nodes: {
-		Wall: THREE.Mesh;
 		Floor: THREE.Mesh;
+		LED: THREE.Mesh;
+		WingsofFreedomRight: THREE.Mesh;
+		WingsofFreedomLeft: THREE.Mesh;
+		Ceiling: THREE.Mesh;
+		Wall: THREE.Mesh;
 		DeskDrawer: THREE.Mesh;
 		Desk: THREE.Mesh;
+		LED001: THREE.Mesh;
+		LED002: THREE.Mesh;
+		LED003: THREE.Mesh;
+		LED004: THREE.Mesh;
 		Chair: THREE.Mesh;
 		Speaker002: THREE.Mesh;
 		Speaker001: THREE.Mesh;
@@ -69,11 +77,30 @@ type GLTFResult = GLTF & {
 		ChessBlackPawn007: THREE.Mesh;
 		ChessBlackPawn008: THREE.Mesh;
 		Shelves: THREE.Mesh;
+		LED014: THREE.Mesh;
+		LED015: THREE.Mesh;
+		LED016: THREE.Mesh;
+		LED017: THREE.Mesh;
+		LED018: THREE.Mesh;
+		LED019: THREE.Mesh;
+		LED020: THREE.Mesh;
+		LED021: THREE.Mesh;
 		Fridge: THREE.Mesh;
 		ShelveConsole: THREE.Mesh;
+		LED010: THREE.Mesh;
+		LED011: THREE.Mesh;
+		LED012: THREE.Mesh;
+		LED013: THREE.Mesh;
 		Shelve001: THREE.Mesh;
+		LED005: THREE.Mesh;
 		MysteryBox: THREE.Mesh;
 		Monitor004: THREE.Mesh;
+		LED006: THREE.Mesh;
+		LED007: THREE.Mesh;
+		LED008: THREE.Mesh;
+		LED009: THREE.Mesh;
+		Speaker003: THREE.Mesh;
+		TVRemote: THREE.Mesh;
 		LedPSTriangle: THREE.Mesh;
 		LedPSCircle: THREE.Mesh;
 		LedPSCross: THREE.Mesh;
@@ -92,6 +119,8 @@ type GLTFResult = GLTF & {
 		SwitchJoyConLeft001: THREE.Mesh;
 		SwitchJoyConRight002: THREE.Mesh;
 		SwitchJoyConLeft002: THREE.Mesh;
+		PSGameShelve: THREE.Mesh;
+		PSGameShelveSupport: THREE.Mesh;
 	};
 	materials: {
 		Imphezia: THREE.MeshStandardMaterial;
@@ -99,7 +128,7 @@ type GLTFResult = GLTF & {
 };
 
 /* -------------------------------------------------------------
- * 1. Room Architecture & Structure (Floor, Walls, Rugs)
+ * 1. Room Architecture & Structure (Floor, Walls, Ceiling, Rugs & Wall Art)
  * ------------------------------------------------------------*/
 export function RoomStructure({
 	nodes,
@@ -125,6 +154,13 @@ export function RoomStructure({
 				receiveShadow
 			/>
 			<mesh
+				name="Ceiling"
+				geometry={nodes.Ceiling.geometry}
+				material={materials.Imphezia}
+				position={[-2.712, 2.661, 3.358]}
+				receiveShadow
+			/>
+			<mesh
 				name="CarpetDesk"
 				geometry={nodes.CarpetDesk.geometry}
 				material={materials.Imphezia}
@@ -138,12 +174,35 @@ export function RoomStructure({
 				position={[-1.255, -0.385, 6.284]}
 				receiveShadow
 			/>
+			<mesh
+				name="WingsofFreedomRight"
+				geometry={nodes.WingsofFreedomRight.geometry}
+				material={materials.Imphezia}
+				position={[-5.8, 1.103, 3.371]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="WingsofFreedomLeft"
+				geometry={nodes.WingsofFreedomLeft.geometry}
+				material={materials.Imphezia}
+				position={[-5.8, 1.103, 3.371]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="LED"
+				geometry={nodes.LED.geometry}
+				material={materials.Imphezia}
+				position={[0, 0, -5.54]}
+				castShadow
+			/>
 		</group>
 	);
 }
 
 /* -------------------------------------------------------------
- * 2. Desk & Seating (Main Desk, Drawer, Mat, Chair, Props)
+ * 2. Desk & Seating (Main Desk, Drawer with Edge LEDs, Mat, Chair, Props)
  * ------------------------------------------------------------*/
 export function DeskStation({
 	nodes,
@@ -158,7 +217,7 @@ export function DeskStation({
 				name="DeskDrawer"
 				geometry={nodes.DeskDrawer.geometry}
 				material={materials.Imphezia}
-				position={[-0.759, -0.024, 0.541]}
+				position={[-0.742, -0.024, 0.524]}
 				castShadow
 				receiveShadow
 			>
@@ -166,9 +225,37 @@ export function DeskStation({
 					name="Desk"
 					geometry={nodes.Desk.geometry}
 					material={materials.Imphezia}
-					position={[0.052, 0.39, -0.068]}
+					position={[0.036, 0.39, -0.051]}
 					castShadow
 					receiveShadow
+				/>
+				<mesh
+					name="LED001"
+					geometry={nodes.LED001.geometry}
+					material={materials.Imphezia}
+					position={[-0.866, 0.361, -0.139]}
+					castShadow
+				/>
+				<mesh
+					name="LED002"
+					geometry={nodes.LED002.geometry}
+					material={materials.Imphezia}
+					position={[-2.079, 0.361, -0.529]}
+					castShadow
+				/>
+				<mesh
+					name="LED003"
+					geometry={nodes.LED003.geometry}
+					material={materials.Imphezia}
+					position={[0.357, 0.361, 0.611]}
+					castShadow
+				/>
+				<mesh
+					name="LED004"
+					geometry={nodes.LED004.geometry}
+					material={materials.Imphezia}
+					position={[0.747, 0.361, 1.361]}
+					castShadow
 				/>
 			</mesh>
 			<mesh
@@ -329,7 +416,7 @@ export function AudioEquipment({
 				name="Speaker002"
 				geometry={nodes.Speaker002.geometry}
 				material={materials.Imphezia}
-				position={[-3.23, 0.162, 0.071]}
+				position={[-3.116, 0.162, 0.241]}
 				castShadow
 			/>
 			<mesh
@@ -351,7 +438,7 @@ export function AudioEquipment({
 }
 
 /* -------------------------------------------------------------
- * 5. Room Storage & Appliances (Shelves, Mini-Fridge)
+ * 5. Room Storage & Appliances (Shelves with LED strips, Mini-Fridge)
  * ------------------------------------------------------------*/
 export function RoomFurniture({
 	nodes,
@@ -377,7 +464,64 @@ export function RoomFurniture({
 				position={[0.205, 0.859, 3.319]}
 				castShadow
 				receiveShadow
-			/>
+			>
+				<mesh
+					name="LED014"
+					geometry={nodes.LED014.geometry}
+					material={materials.Imphezia}
+					position={[0.16, 0, 0.643]}
+					castShadow
+				/>
+				<mesh
+					name="LED015"
+					geometry={nodes.LED015.geometry}
+					material={materials.Imphezia}
+					position={[0.16, 0, -0.643]}
+					castShadow
+				/>
+				<mesh
+					name="LED016"
+					geometry={nodes.LED016.geometry}
+					material={materials.Imphezia}
+					position={[0.16, 1.224, 0]}
+					castShadow
+				/>
+				<mesh
+					name="LED017"
+					geometry={nodes.LED017.geometry}
+					material={materials.Imphezia}
+					position={[0.16, 0.766, 0]}
+					castShadow
+				/>
+				<mesh
+					name="LED018"
+					geometry={nodes.LED018.geometry}
+					material={materials.Imphezia}
+					position={[0.16, 0.27, 0]}
+					castShadow
+				/>
+				<mesh
+					name="LED019"
+					geometry={nodes.LED019.geometry}
+					material={materials.Imphezia}
+					position={[0.16, -0.225, 0]}
+					castShadow
+				/>
+				<mesh
+					name="LED020"
+					geometry={nodes.LED020.geometry}
+					material={materials.Imphezia}
+					position={[0.16, -0.721, 0]}
+					castShadow
+				/>
+				<mesh
+					name="LED021"
+					geometry={nodes.LED021.geometry}
+					material={materials.Imphezia}
+					position={[0.16, -1.224, 0]}
+					castShadow
+				/>
+			</mesh>
 		</group>
 	);
 }
@@ -655,7 +799,7 @@ export function ChessArea({
 }
 
 /* -------------------------------------------------------------
- * 7. Gaming & Entertainment Wall (TV Console, PlayStation Collection, Nintendo Switch & LED Signs)
+ * 7. Gaming & Entertainment Wall (TV Console, TV with Backlight, Soundbar, Remote, Game Shelves, PlayStation Collection, Nintendo Switch & LED Signs)
  * ------------------------------------------------------------*/
 export function GamingConsoleZone({
 	nodes,
@@ -670,31 +814,127 @@ export function GamingConsoleZone({
 				name="ShelveConsole"
 				geometry={nodes.ShelveConsole.geometry}
 				material={materials.Imphezia}
-				position={[-4.579, 0.01, -0.149]}
+				position={[-4.705, 0.01, -0.149]}
 				castShadow
 				receiveShadow
-			/>
+			>
+				<mesh
+					name="LED010"
+					geometry={nodes.LED010.geometry}
+					material={materials.Imphezia}
+					position={[-1.074, 0, -0.206]}
+					castShadow
+				/>
+				<mesh
+					name="LED011"
+					geometry={nodes.LED011.geometry}
+					material={materials.Imphezia}
+					position={[0.676, 0, -0.206]}
+					castShadow
+				/>
+				<mesh
+					name="LED012"
+					geometry={nodes.LED012.geometry}
+					material={materials.Imphezia}
+					position={[-0.199, 0.365, -0.206]}
+					castShadow
+				/>
+				<mesh
+					name="LED013"
+					geometry={nodes.LED013.geometry}
+					material={materials.Imphezia}
+					position={[-0.199, -0.365, -0.206]}
+					castShadow
+				/>
+			</mesh>
 			<mesh
 				name="Shelve001"
 				geometry={nodes.Shelve001.geometry}
 				material={materials.Imphezia}
-				position={[-4.813, 1.424, -0.24]}
+				position={[-4.813, 1.569, -0.24]}
 				castShadow
 				receiveShadow
-			/>
-			<mesh
-				name="MysteryBox"
-				geometry={nodes.MysteryBox.geometry}
-				material={materials.Imphezia}
-				position={[-4.008, 0.515, -0.119]}
-				castShadow
-				receiveShadow
-			/>
+			>
+				<mesh
+					name="LED005"
+					geometry={nodes.LED005.geometry}
+					material={materials.Imphezia}
+					position={[0, -0.03, 0.145]}
+					castShadow
+				/>
+			</mesh>
 			<mesh
 				name="Monitor004"
 				geometry={nodes.Monitor004.geometry}
 				material={materials.Imphezia}
-				position={[-4.813, 0.933, -0.268]}
+				position={[-4.813, 0.9, -0.268]}
+				castShadow
+				receiveShadow
+			>
+				<mesh
+					name="LED006"
+					geometry={nodes.LED006.geometry}
+					material={materials.Imphezia}
+					position={[0, 0.45, -0.035]}
+					castShadow
+				/>
+				<mesh
+					name="LED007"
+					geometry={nodes.LED007.geometry}
+					material={materials.Imphezia}
+					position={[0.829, 0, -0.035]}
+					castShadow
+				/>
+				<mesh
+					name="LED008"
+					geometry={nodes.LED008.geometry}
+					material={materials.Imphezia}
+					position={[0, -0.45, -0.035]}
+					castShadow
+				/>
+				<mesh
+					name="LED009"
+					geometry={nodes.LED009.geometry}
+					material={materials.Imphezia}
+					position={[-0.829, 0, -0.035]}
+					castShadow
+				/>
+			</mesh>
+			<mesh
+				name="MysteryBox"
+				geometry={nodes.MysteryBox.geometry}
+				material={materials.Imphezia}
+				position={[-3.963, 1.699, -0.211]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="Speaker003"
+				geometry={nodes.Speaker003.geometry}
+				material={materials.Imphezia}
+				position={[-4.813, 0.736, -0.335]}
+				castShadow
+			/>
+			<mesh
+				name="TVRemote"
+				geometry={nodes.TVRemote.geometry}
+				material={materials.Imphezia}
+				position={[-4.141, 0.42, -0.038]}
+				castShadow
+			/>
+			<mesh
+				name="PSGameShelve"
+				geometry={nodes.PSGameShelve.geometry}
+				material={materials.Imphezia}
+				position={[-3.603, -0.002, -0.001]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="PSGameShelveSupport"
+				geometry={nodes.PSGameShelveSupport.geometry}
+				material={materials.Imphezia}
+				position={[-3.599, -0.004, -0.001]}
 				castShadow
 				receiveShadow
 			/>
@@ -702,28 +942,28 @@ export function GamingConsoleZone({
 				name="LedPSTriangle"
 				geometry={nodes.LedPSTriangle.geometry}
 				material={materials.Imphezia}
-				position={[-5.676, 1.15, -0.352]}
+				position={[-3.919, 0.225, 0.135]}
 				castShadow
 			/>
 			<mesh
 				name="LedPSCircle"
 				geometry={nodes.LedPSCircle.geometry}
 				material={materials.Imphezia}
-				position={[-5.676, 0.975, -0.352]}
+				position={[-3.919, 0.082, 0.135]}
 				castShadow
 			/>
 			<mesh
 				name="LedPSCross"
 				geometry={nodes.LedPSCross.geometry}
 				material={materials.Imphezia}
-				position={[-5.676, 0.809, -0.352]}
+				position={[-3.919, -0.066, 0.135]}
 				castShadow
 			/>
 			<mesh
 				name="LedPSSquare"
 				geometry={nodes.LedPSSquare.geometry}
 				material={materials.Imphezia}
-				position={[-5.676, 0.618, -0.352]}
+				position={[-3.919, -0.235, 0.135]}
 				castShadow
 			/>
 			<mesh
@@ -738,7 +978,7 @@ export function GamingConsoleZone({
 				name="PS2"
 				geometry={nodes.PS2.geometry}
 				material={materials.Imphezia}
-				position={[-4.954, -0.321, -0.099]}
+				position={[-4.985, -0.321, -0.099]}
 				castShadow
 				receiveShadow
 			/>
@@ -746,7 +986,7 @@ export function GamingConsoleZone({
 				name="PS3"
 				geometry={nodes.PS3.geometry}
 				material={materials.Imphezia}
-				position={[-4.523, -0.311, -0.099]}
+				position={[-4.607, -0.311, -0.099]}
 				castShadow
 				receiveShadow
 			/>
@@ -754,7 +994,7 @@ export function GamingConsoleZone({
 				name="PS4"
 				geometry={nodes.PS4.geometry}
 				material={materials.Imphezia}
-				position={[-4.195, -0.222, -0.086]}
+				position={[-4.302, -0.222, -0.086]}
 				castShadow
 				receiveShadow
 			/>
@@ -762,7 +1002,7 @@ export function GamingConsoleZone({
 				name="PS5"
 				geometry={nodes.PS5.geometry}
 				material={materials.Imphezia}
-				position={[-3.963, -0.165, -0.086]}
+				position={[-4.119, -0.165, -0.086]}
 				castShadow
 				receiveShadow
 			/>
@@ -778,7 +1018,7 @@ export function GamingConsoleZone({
 				name="SwitchDock"
 				geometry={nodes.SwitchDock.geometry}
 				material={materials.Imphezia}
-				position={[-3.585, 0.925, -0.338]}
+				position={[-3.585, 0.916, -0.338]}
 				castShadow
 				receiveShadow
 			/>
@@ -786,7 +1026,7 @@ export function GamingConsoleZone({
 				name="SwitchTablet"
 				geometry={nodes.SwitchTablet.geometry}
 				material={materials.Imphezia}
-				position={[-3.585, 0.951, -0.338]}
+				position={[-3.585, 0.942, -0.338]}
 				castShadow
 				receiveShadow
 			/>
@@ -794,7 +1034,7 @@ export function GamingConsoleZone({
 				name="SwitchJoyConRight"
 				geometry={nodes.SwitchJoyConRight.geometry}
 				material={materials.Imphezia}
-				position={[-3.481, 0.951, -0.338]}
+				position={[-3.481, 0.942, -0.338]}
 				castShadow
 				receiveShadow
 			/>
@@ -802,7 +1042,7 @@ export function GamingConsoleZone({
 				name="SwitchJoyConLeft"
 				geometry={nodes.SwitchJoyConLeft.geometry}
 				material={materials.Imphezia}
-				position={[-3.691, 0.951, -0.338]}
+				position={[-3.691, 0.942, -0.338]}
 				castShadow
 				receiveShadow
 			/>
