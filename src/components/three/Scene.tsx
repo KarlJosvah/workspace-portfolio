@@ -1,16 +1,11 @@
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas } from "@react-three/fiber";
 import { useHelper } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
-import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
-import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib.js";
 import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
 import Room from "@/components/three/Room.tsx";
 import { MenuType } from "@/constants/menuConfig.ts";
-
-// Initialize RectAreaLight LTC lookup tables once at module level
-RectAreaLightUniformsLib.init();
 
 const CAMERA_CONFIG = {
 	FOV: 45,
@@ -27,41 +22,29 @@ interface RoomLightingProps {
 	showHelpers?: boolean;
 }
 
-/** Manual RectAreaLight helper — drei's useHelper does not support RectAreaLightHelper */
-function DeskLampHelper({
-	lightRef,
-}: {
-	lightRef: React.RefObject<THREE.RectAreaLight | null>;
-}) {
-	const helperRef = useRef<RectAreaLightHelper | null>(null);
-	const { scene } = useThree();
-
-	useLayoutEffect(() => {
-		if (!lightRef.current) return;
-		const helper = new RectAreaLightHelper(lightRef.current);
-		helperRef.current = helper;
-		scene.add(helper);
-		return () => {
-			scene.remove(helper);
-			helper.dispose?.();
-			helperRef.current = null;
-		};
-	}, [lightRef, scene]);
-
-	return null;
-}
-
 function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 	const ceilingLightRef = useRef<THREE.PointLight>(null);
-	const deskLampRef = useRef<THREE.RectAreaLight>(null);
+	const deskLampRef = useRef<THREE.SpotLight>(null);
 	const pcTowerLightRef = useRef<THREE.PointLight>(null);
 
-	// Light visual helpers (PointLightHelper) for point lights
+	// Dedicated target for the desk lamp spotLight aiming toward the chair and desk workspace
+	const [lampTarget] = useState(() => {
+		const obj = new THREE.Object3D();
+		obj.position.set(-1.126, 0.65, 0.968);
+		return obj;
+	});
+
+	// Light visual helpers
 	useHelper(
 		showHelpers ? (ceilingLightRef as React.RefObject<THREE.Object3D>) : null,
 		THREE.PointLightHelper,
 		0.3,
 		"#f8fafc",
+	);
+	useHelper(
+		showHelpers ? (deskLampRef as React.RefObject<THREE.Object3D>) : null,
+		THREE.SpotLightHelper,
+		"#fffaed",
 	);
 	useHelper(
 		showHelpers ? (pcTowerLightRef as React.RefObject<THREE.Object3D>) : null,
@@ -90,24 +73,28 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 			/>
 
 			{/*
-			  Desk lamp warm area light — emits only toward the chair, never through walls.
-			  RectAreaLight emits along its local -Z axis.
-			  Lamp pos: [0.08, 1.45, -0.05] | Chair center: [-1.126, 0.65, 0.968]
-			  Rotation from setFromUnitVectors(0,0,-1 → toChair): x≈-2.4755, y≈0.7499, z≈1.6996 rad
-			  RectAreaLight does NOT support castShadow (Three.js limitation).
+			  Desk lamp directional SpotLight:
+			  - Positioned at the lamp: [0.08, 1.45, -0.05]
+			  - Aimed directly toward the chair / desk station: [-1.126, 0.65, 0.968]
+			  - Emits in a forward cone (angle & penumbra prevent light leaking behind through the wall)
+			  - Full shadow-mapping support to cast shadows across DeskStation, ComputerSetup, and chair
 			*/}
-			<rectAreaLight
+			<primitive object={lampTarget} />
+			<spotLight
 				ref={deskLampRef}
+				target={lampTarget}
 				position={[0.08, 1.45, -0.05]}
-				rotation={[-2.4755, 0.7499, 1.6996]}
-				intensity={6}
+				intensity={3.5}
 				color="#fffaed"
-				width={0.5}
-				height={0.5}
+				angle={Math.PI / 3.5}
+				penumbra={0.4}
+				distance={5}
+				decay={2}
+				castShadow
+				shadow-mapSize-width={1024}
+				shadow-mapSize-height={1024}
+				shadow-bias={-0.0001}
 			/>
-
-			{/* Manual RectAreaLightHelper — only shown when L is pressed */}
-			{showHelpers && <DeskLampHelper lightRef={deskLampRef} />}
 
 			{/* PC Tower subtle cyber blue glow matching palette */}
 			<pointLight
