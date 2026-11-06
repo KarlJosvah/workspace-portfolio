@@ -34,8 +34,8 @@ function createWaypoint(
 	return { position, target, yaw, pitch };
 }
 
-/** Seated eye-level height simulating sitting at the desk (~1.15m vs standing 1.75m) */
-export const SEATED_EYE_HEIGHT = 1.15;
+/** Seated eye-level height simulating sitting at the desk (~0.80m vs standing 1.75m) */
+export const SEATED_EYE_HEIGHT = 0.8;
 
 /**
  * Camera waypoint presets for each section:
