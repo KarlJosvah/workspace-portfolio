@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useHelper } from "@react-three/drei";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
 import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
 import Room from "@/components/three/Room.tsx";
@@ -92,7 +93,7 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 			/>
 
 			{/* Desk lamp local warm point light */}
-			<pointLight
+			{/* <pointLight
 				ref={deskLampRef}
 				position={[0.08, 1.45, -0.05]}
 				intensity={1.2}
@@ -100,7 +101,7 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 				distance={3.5}
 				decay={2}
 				castShadow
-			/>
+			/> */}
 
 			{/* PC Tower subtle cyber blue glow matching palette */}
 			<pointLight
@@ -166,6 +167,16 @@ export function Scene({ activeSection = null }: SceneProps) {
 			<Suspense fallback={null}>
 				<Room />
 			</Suspense>
+
+			{/* Bloom post-processing for high-emission palette glow */}
+			<EffectComposer>
+				<Bloom
+					luminanceThreshold={1.0}
+					luminanceSmoothing={0.25}
+					intensity={1.2}
+					mipmapBlur
+				/>
+			</EffectComposer>
 
 			{/* First-person camera controller: Look-around in place & WASD 2D walk (No zoom) */}
 			<SmoothCameraController
