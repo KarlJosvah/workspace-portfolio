@@ -8,11 +8,11 @@ export const EMISSION_LEVELS = {
 	standard: 0.0, // Base non-glowing objects (furniture, walls, floor, props)
 	subtle: 1.5, // Subtle backlights & indicators (keyboard, mouse, cooling pad)
 	screen: 2.0, // Monitor & laptop displays
-	lamp: 1.8, // All basic lamps that should light the room
+	lamp: 2.2, // All basic lamps that should light the room
 	pcAccents: 3.5, // PC tower internal cyber glow
 	wallArt: 4.5, // Wings of Freedom wall plaque
 	neonSigns: 5.0, // PlayStation neon wall symbols
-	ledStrips: 1.5, // Ambient LED edge strips & screen bias lights
+	ledStrips: 1.2, // Ambient LED edge strips & screen bias lights
 } as const;
 
 export type EmissionTier = keyof typeof EMISSION_LEVELS;

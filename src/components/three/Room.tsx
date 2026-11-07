@@ -167,7 +167,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<mesh
 				name="Ceiling"
 				geometry={nodes.Ceiling.geometry}
-				material={glowMaterials.standard}
+				material={glowMaterials.lamp}
 				position={[-2.712, 2.647, 3.358]}
 				receiveShadow
 			/>
@@ -950,7 +950,7 @@ export function GamingConsoleZone({
 			<mesh
 				name="Speaker003"
 				geometry={nodes.Speaker003.geometry}
-				material={glowMaterials.standard}
+				material={glowMaterials.pcAccents}
 				position={[-4.813, 0.736, -0.335]}
 				castShadow
 			/>

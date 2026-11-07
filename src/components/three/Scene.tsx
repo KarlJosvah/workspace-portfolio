@@ -14,6 +14,14 @@ const CAMERA_CONFIG = {
 	WALK_SPEED: 3.5,
 };
 
+// Ceiling lamp coordinates at fixture surface (y = 2.58) emitting downward
+const CEILING_LAMP_LIGHTS = [
+	{ id: "CeilingLamp001", position: [-4.572, 2.58, 1.752] as [number, number, number] },
+	{ id: "CeilingLamp002", position: [-0.851, 2.58, 1.752] as [number, number, number] },
+	{ id: "CeilingLamp003", position: [-4.572, 2.58, 4.965] as [number, number, number] },
+	{ id: "CeilingLamp004", position: [-0.851, 2.58, 4.965] as [number, number, number] },
+];
+
 interface SceneProps {
 	activeSection?: MenuType | null;
 }
@@ -22,8 +30,57 @@ interface RoomLightingProps {
 	showHelpers?: boolean;
 }
 
+interface CeilingLampSpotLightProps {
+	position: [number, number, number];
+	showHelpers: boolean;
+}
+
+/**
+ * Directional downward SpotLight for each ceiling lamp fixture.
+ * Emits strictly in a wide downward cone — zero light reflects or bleeds upward onto the ceiling.
+ */
+function CeilingLampSpotLight({
+	position,
+	showHelpers,
+}: CeilingLampSpotLightProps) {
+	const lightRef = useRef<THREE.SpotLight>(null);
+
+	// Dedicated downward target directly below the lamp on the floor plane
+	const [target] = useState(() => {
+		const obj = new THREE.Object3D();
+		obj.position.set(position[0], 0, position[2]);
+		return obj;
+	});
+
+	useHelper(
+		showHelpers ? (lightRef as React.RefObject<THREE.Object3D>) : null,
+		THREE.SpotLightHelper,
+		"#f8fafc",
+	);
+
+	return (
+		<>
+			<primitive object={target} />
+			<spotLight
+				ref={lightRef}
+				target={target}
+				position={position}
+				intensity={5.0}
+				color="#f8fafc"
+				angle={Math.PI / 2.4}
+				penumbra={0.8}
+				distance={8}
+				decay={2}
+				castShadow
+				shadow-mapSize-width={1024}
+				shadow-mapSize-height={1024}
+				shadow-bias={-0.0001}
+			/>
+		</>
+	);
+}
+
 function RoomLighting({ showHelpers = false }: RoomLightingProps) {
-	const ceilingLightRef = useRef<THREE.PointLight>(null);
 	const deskLampRef = useRef<THREE.SpotLight>(null);
 	const pcTowerLightRef = useRef<THREE.PointLight>(null);
 
@@ -35,12 +92,6 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 	});
 
 	// Light visual helpers
-	useHelper(
-		showHelpers ? (ceilingLightRef as React.RefObject<THREE.Object3D>) : null,
-		THREE.PointLightHelper,
-		0.3,
-		"#f8fafc",
-	);
 	useHelper(
 		showHelpers ? (deskLampRef as React.RefObject<THREE.Object3D>) : null,
 		THREE.SpotLightHelper,
@@ -58,19 +109,14 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 			{/* Ambient fill light for base indoor illumination */}
 			<ambientLight intensity={0.85} color="#e3f2fd" />
 
-			{/* Soft ceiling fill light — primary shadow caster for the room */}
-			<pointLight
-				ref={ceilingLightRef}
-				position={[-1.0, 2.5, 2.0]}
-				intensity={1.2}
-				color="#f8fafc"
-				distance={10}
-				decay={2}
-				castShadow
-				shadow-mapSize-width={1024}
-				shadow-mapSize-height={1024}
-				shadow-bias={-0.0001}
-			/>
+			{/* 4 downward wide-angle spotlights for the ceiling fixtures (no upward ceiling bleed) */}
+			{CEILING_LAMP_LIGHTS.map((lamp) => (
+				<CeilingLampSpotLight
+					key={lamp.id}
+					position={lamp.position}
+					showHelpers={showHelpers}
+				/>
+			))}
 
 			{/*
 			  Desk lamp directional SpotLight:
