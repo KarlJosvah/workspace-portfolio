@@ -13,7 +13,14 @@ export const MODEL_URL = "/assets/models/room-portfolio.glb";
 type GLTFResult = GLTF & {
 	nodes: {
 		Floor: THREE.Mesh;
-		LED: THREE.Mesh;
+		DoorFrame: THREE.Mesh;
+		Door: THREE.Mesh;
+		DoorAxes: THREE.Mesh;
+		DoorHandle: THREE.Mesh;
+		CeilingLamp001: THREE.Mesh;
+		CeilingLamp002: THREE.Mesh;
+		CeilingLamp003: THREE.Mesh;
+		CeilingLamp004: THREE.Mesh;
 		WingsofFreedomRight: THREE.Mesh;
 		WingsofFreedomLeft: THREE.Mesh;
 		Ceiling: THREE.Mesh;
@@ -161,7 +168,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 				name="Ceiling"
 				geometry={nodes.Ceiling.geometry}
 				material={glowMaterials.standard}
-				position={[-2.712, 2.661, 3.358]}
+				position={[-2.712, 2.647, 3.358]}
 				receiveShadow
 			/>
 			<mesh
@@ -182,7 +189,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 				name="WingsofFreedomRight"
 				geometry={nodes.WingsofFreedomRight.geometry}
 				material={glowMaterials.wallArt}
-				position={[-5.8, 1.067, 3.152]}
+				position={[-2.225, 1.396, -0.378]}
 				castShadow
 				receiveShadow
 			/>
@@ -190,16 +197,74 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 				name="WingsofFreedomLeft"
 				geometry={nodes.WingsofFreedomLeft.geometry}
 				material={glowMaterials.wallArt}
-				position={[-5.8, 1.147, 3.646]}
+				position={[-2.356, 1.417, -0.378]}
 				castShadow
 				receiveShadow
 			/>
 			<mesh
-				name="LED"
-				geometry={nodes.LED.geometry}
-				material={glowMaterials.ledStrips}
-				position={[0, 0, -5.54]}
+				name="DoorFrame"
+				geometry={nodes.DoorFrame.geometry}
+				material={glowMaterials.standard}
+				position={[-4.46, 0.71, 7.216]}
 				castShadow
+				receiveShadow
+			>
+				<mesh
+					name="Door"
+					geometry={nodes.Door.geometry}
+					material={glowMaterials.standard}
+					position={[-0.118, -0.005, 0.059]}
+					castShadow
+					receiveShadow
+				/>
+				<mesh
+					name="DoorAxes"
+					geometry={nodes.DoorAxes.geometry}
+					material={glowMaterials.standard}
+					position={[-0.523, -0.096, 0.033]}
+					castShadow
+					receiveShadow
+				/>
+				<mesh
+					name="DoorHandle"
+					geometry={nodes.DoorHandle.geometry}
+					material={glowMaterials.standard}
+					position={[0.383, -0.036, 0.009]}
+					castShadow
+					receiveShadow
+				/>
+			</mesh>
+			<mesh
+				name="CeilingLamp001"
+				geometry={nodes.CeilingLamp001.geometry}
+				material={glowMaterials.lamp}
+				position={[-4.572, 2.595, 1.752]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="CeilingLamp002"
+				geometry={nodes.CeilingLamp002.geometry}
+				material={glowMaterials.lamp}
+				position={[-0.851, 2.595, 1.752]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="CeilingLamp003"
+				geometry={nodes.CeilingLamp003.geometry}
+				material={glowMaterials.lamp}
+				position={[-4.572, 2.595, 4.965]}
+				castShadow
+				receiveShadow
+			/>
+			<mesh
+				name="CeilingLamp004"
+				geometry={nodes.CeilingLamp004.geometry}
+				material={glowMaterials.lamp}
+				position={[-0.851, 2.595, 4.965]}
+				castShadow
+				receiveShadow
 			/>
 		</group>
 	);
@@ -377,7 +442,7 @@ export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<mesh
 				name="Light"
 				geometry={nodes.Light.geometry}
-				material={glowMaterials.pcAccents}
+				material={glowMaterials.lamp}
 				position={[0.079, 1.405, -0.099]}
 				castShadow
 			/>
@@ -518,7 +583,7 @@ export function ChessArea({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<mesh
 				name="ChessBoard"
 				geometry={nodes.ChessBoard.geometry}
-				material={glowMaterials.standard}
+				material={glowMaterials.subtle}
 				position={[-1.204, 0.496, 6.322]}
 				castShadow
 				receiveShadow

@@ -7,9 +7,10 @@ import * as THREE from "three";
 export const EMISSION_LEVELS = {
 	standard: 0.0, // Base non-glowing objects (furniture, walls, floor, props)
 	subtle: 1.5, // Subtle backlights & indicators (keyboard, mouse, cooling pad)
-	screen: 2.5, // Monitor & laptop displays
+	screen: 2.0, // Monitor & laptop displays
+	lamp: 1.8, // All basic lamps that should light the room
 	pcAccents: 3.5, // PC tower internal cyber glow
-	wallArt: 4.5, // Wings of Freedom wall plaque & desk lamp head
+	wallArt: 4.5, // Wings of Freedom wall plaque
 	neonSigns: 5.0, // PlayStation neon wall symbols
 	ledStrips: 1.5, // Ambient LED edge strips & screen bias lights
 } as const;
@@ -34,6 +35,7 @@ export function createGlowMaterials(
 		standard: createTier(EMISSION_LEVELS.standard),
 		subtle: createTier(EMISSION_LEVELS.subtle),
 		screen: createTier(EMISSION_LEVELS.screen),
+		lamp: createTier(EMISSION_LEVELS.lamp),
 		pcAccents: createTier(EMISSION_LEVELS.pcAccents),
 		wallArt: createTier(EMISSION_LEVELS.wallArt),
 		neonSigns: createTier(EMISSION_LEVELS.neonSigns),
