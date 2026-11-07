@@ -1,10 +1,10 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { useHelper } from "@react-three/drei";
+import { useGLTF, useHelper } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
 import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
-import Room from "@/components/three/Room.tsx";
+import Room, { MODEL_URL, type GLTFResult } from "@/components/three/Room.tsx";
 import { MenuType } from "@/constants/menuConfig.ts";
 
 const CAMERA_CONFIG = {
@@ -13,26 +13,6 @@ const CAMERA_CONFIG = {
 	PLAYER_HEIGHT: 1.75,
 	WALK_SPEED: 3.5,
 };
-
-// Ceiling lamp coordinates at fixture surface (y = 2.58) emitting downward
-const CEILING_LAMP_LIGHTS = [
-	{
-		id: "CeilingLamp001",
-		position: [-4.572, 2.58, 1.752] as [number, number, number],
-	},
-	{
-		id: "CeilingLamp002",
-		position: [-0.851, 2.58, 1.752] as [number, number, number],
-	},
-	{
-		id: "CeilingLamp003",
-		position: [-4.572, 2.58, 4.965] as [number, number, number],
-	},
-	{
-		id: "CeilingLamp004",
-		position: [-0.851, 2.58, 4.965] as [number, number, number],
-	},
-];
 
 interface SceneProps {
 	activeSection?: MenuType | null;
@@ -43,24 +23,31 @@ interface RoomLightingProps {
 }
 
 interface CeilingLampSpotLightProps {
-	position: [number, number, number];
+	node: THREE.Mesh;
 	showHelpers: boolean;
 }
 
 /**
  * Directional downward SpotLight for each ceiling lamp fixture.
+ * Reads coordinates dynamically from the GLB node.
  * Emits strictly in a wide downward cone — zero light reflects or bleeds upward onto the ceiling.
  */
 function CeilingLampSpotLight({
-	position,
+	node,
 	showHelpers,
 }: CeilingLampSpotLightProps) {
 	const lightRef = useRef<THREE.SpotLight>(null);
 
+	// Position light flush with bottom face of fixture (y - 0.015)
+	const lightPosition: [number, number, number] = useMemo(
+		() => [node.position.x, node.position.y - 0.015, node.position.z],
+		[node.position.x, node.position.y, node.position.z],
+	);
+
 	// Dedicated downward target directly below the lamp on the floor plane
 	const [target] = useState(() => {
 		const obj = new THREE.Object3D();
-		obj.position.set(position[0], 0, position[2]);
+		obj.position.set(node.position.x, 0, node.position.z);
 		return obj;
 	});
 
@@ -76,7 +63,7 @@ function CeilingLampSpotLight({
 			<spotLight
 				ref={lightRef}
 				target={target}
-				position={position}
+				position={lightPosition}
 				intensity={5.0}
 				color="#f8fafc"
 				angle={Math.PI / 2.4}
@@ -93,8 +80,24 @@ function CeilingLampSpotLight({
 }
 
 function RoomLighting({ showHelpers = false }: RoomLightingProps) {
+	const { nodes } = useGLTF(MODEL_URL) as unknown as GLTFResult;
+
 	const deskLampRef = useRef<THREE.SpotLight>(null);
 	const pcTowerLightRef = useRef<THREE.PointLight>(null);
+
+	// Dynamically discover all ceiling lamp fixtures from GLB nodes
+	const ceilingLampNodes = useMemo(() => {
+		const lamps = [
+			nodes.CeilingLamp001,
+			nodes.CeilingLamp002,
+			nodes.CeilingLamp003,
+			nodes.CeilingLamp004,
+		].filter(Boolean);
+		if (lamps.length > 0) return lamps;
+		return Object.values(nodes).filter((node): node is THREE.Mesh =>
+			Boolean(node?.name?.startsWith("CeilingLamp")),
+		);
+	}, [nodes]);
 
 	// Dedicated target for the desk lamp spotLight aiming toward the chair and desk workspace
 	const [lampTarget] = useState(() => {
@@ -121,11 +124,11 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 			{/* Ambient fill light for base indoor illumination */}
 			<ambientLight intensity={0.85} color="#e3f2fd" />
 
-			{/* 4 downward wide-angle spotlights for the ceiling fixtures (no upward ceiling bleed) */}
-			{CEILING_LAMP_LIGHTS.map((lamp) => (
+			{/* Downward wide-angle spotlights dynamically placed for each ceiling lamp fixture */}
+			{ceilingLampNodes.map((node) => (
 				<CeilingLampSpotLight
-					key={lamp.id}
-					position={lamp.position}
+					key={node.name}
+					node={node}
 					showHelpers={showHelpers}
 				/>
 			))}
@@ -205,9 +208,8 @@ export function Scene({ activeSection = null }: SceneProps) {
 			}}
 			className="three-canvas"
 		>
-			<RoomLighting showHelpers={showHelpers} />
-
 			<Suspense fallback={null}>
+				<RoomLighting showHelpers={showHelpers} />
 				<Room />
 			</Suspense>
 

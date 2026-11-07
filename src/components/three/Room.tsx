@@ -10,7 +10,7 @@ import {
 
 export const MODEL_URL = "/assets/models/room-portfolio.glb";
 
-type GLTFResult = GLTF & {
+export type GLTFResult = GLTF & {
 	nodes: {
 		Floor: THREE.Mesh;
 		DoorFrame: THREE.Mesh;
