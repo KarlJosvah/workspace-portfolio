@@ -144,128 +144,62 @@ interface RoomSubComponentProps {
 	glowMaterials: GlowMaterials;
 }
 
+type RoomMeshProps = ThreeElements["mesh"] & {
+	node: THREE.Mesh;
+	material?: THREE.Material;
+};
+
+/**
+ * Reusable mesh wrapper that automatically reads geometry, position, rotation,
+ * and scale directly from the loaded GLB node, while allowing optional prop overrides.
+ */
+export function RoomMesh({
+	node,
+	material,
+	position,
+	rotation,
+	scale,
+	name,
+	children,
+	...rest
+}: RoomMeshProps) {
+	return (
+		<mesh
+			name={name ?? node.name}
+			geometry={node.geometry}
+			material={material}
+			position={position ?? node.position}
+			rotation={rotation ?? node.rotation}
+			scale={scale ?? node.scale}
+			{...rest}
+		>
+			{children}
+		</mesh>
+	);
+}
+
 /* -------------------------------------------------------------
  * 1. Room Architecture & Structure (Floor, Walls, Ceiling, Rugs & Wall Art)
  * ------------------------------------------------------------*/
 export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 	return (
 		<group name="RoomStructure">
-			<mesh
-				name="Floor"
-				geometry={nodes.Floor.geometry}
-				material={glowMaterials.standard}
-				position={[-2.712, -0.49, 3.358]}
-				receiveShadow
-			/>
-			<mesh
-				name="Wall"
-				geometry={nodes.Wall.geometry}
-				material={glowMaterials.standard}
-				position={[-2.712, 1.111, 3.358]}
-				receiveShadow
-			/>
-			<mesh
-				name="Ceiling"
-				geometry={nodes.Ceiling.geometry}
-				material={glowMaterials.lamp}
-				position={[-2.712, 2.647, 3.358]}
-				receiveShadow
-			/>
-			<mesh
-				name="CarpetDesk"
-				geometry={nodes.CarpetDesk.geometry}
-				material={glowMaterials.standard}
-				position={[-1.268, -0.385, 0.814]}
-				receiveShadow
-			/>
-			<mesh
-				name="CarpetChess"
-				geometry={nodes.CarpetChess.geometry}
-				material={glowMaterials.standard}
-				position={[-1.255, -0.385, 6.284]}
-				receiveShadow
-			/>
-			<mesh
-				name="WingsofFreedomRight"
-				geometry={nodes.WingsofFreedomRight.geometry}
-				material={glowMaterials.wallArt}
-				position={[-2.225, 1.396, -0.378]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="WingsofFreedomLeft"
-				geometry={nodes.WingsofFreedomLeft.geometry}
-				material={glowMaterials.wallArt}
-				position={[-2.356, 1.417, -0.378]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="DoorFrame"
-				geometry={nodes.DoorFrame.geometry}
-				material={glowMaterials.standard}
-				position={[-4.46, 0.71, 7.216]}
-				castShadow
-				receiveShadow
-			>
-				<mesh
-					name="Door"
-					geometry={nodes.Door.geometry}
-					material={glowMaterials.standard}
-					position={[-0.118, -0.005, 0.059]}
-					castShadow
-					receiveShadow
-				/>
-				<mesh
-					name="DoorAxes"
-					geometry={nodes.DoorAxes.geometry}
-					material={glowMaterials.standard}
-					position={[-0.523, -0.096, 0.033]}
-					castShadow
-					receiveShadow
-				/>
-				<mesh
-					name="DoorHandle"
-					geometry={nodes.DoorHandle.geometry}
-					material={glowMaterials.standard}
-					position={[0.383, -0.036, 0.009]}
-					castShadow
-					receiveShadow
-				/>
-			</mesh>
-			<mesh
-				name="CeilingLamp001"
-				geometry={nodes.CeilingLamp001.geometry}
-				material={glowMaterials.lamp}
-				position={[-4.572, 2.595, 1.752]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="CeilingLamp002"
-				geometry={nodes.CeilingLamp002.geometry}
-				material={glowMaterials.lamp}
-				position={[-0.851, 2.595, 1.752]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="CeilingLamp003"
-				geometry={nodes.CeilingLamp003.geometry}
-				material={glowMaterials.lamp}
-				position={[-4.572, 2.595, 4.965]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="CeilingLamp004"
-				geometry={nodes.CeilingLamp004.geometry}
-				material={glowMaterials.lamp}
-				position={[-0.851, 2.595, 4.965]}
-				castShadow
-				receiveShadow
-			/>
+			<RoomMesh node={nodes.Floor} material={glowMaterials.standard} receiveShadow />
+			<RoomMesh node={nodes.Wall} material={glowMaterials.standard} receiveShadow />
+			<RoomMesh node={nodes.Ceiling} material={glowMaterials.lamp} receiveShadow />
+			<RoomMesh node={nodes.CarpetDesk} material={glowMaterials.standard} receiveShadow />
+			<RoomMesh node={nodes.CarpetChess} material={glowMaterials.standard} receiveShadow />
+			<RoomMesh node={nodes.WingsofFreedomRight} material={glowMaterials.wallArt} castShadow receiveShadow />
+			<RoomMesh node={nodes.WingsofFreedomLeft} material={glowMaterials.wallArt} castShadow receiveShadow />
+			<RoomMesh node={nodes.DoorFrame} material={glowMaterials.standard} castShadow receiveShadow>
+				<RoomMesh node={nodes.Door} material={glowMaterials.standard} castShadow receiveShadow />
+				<RoomMesh node={nodes.DoorAxes} material={glowMaterials.standard} castShadow receiveShadow />
+				<RoomMesh node={nodes.DoorHandle} material={glowMaterials.standard} castShadow receiveShadow />
+			</RoomMesh>
+			<RoomMesh node={nodes.CeilingLamp001} material={glowMaterials.lamp} castShadow receiveShadow />
+			<RoomMesh node={nodes.CeilingLamp002} material={glowMaterials.lamp} castShadow receiveShadow />
+			<RoomMesh node={nodes.CeilingLamp003} material={glowMaterials.lamp} castShadow receiveShadow />
+			<RoomMesh node={nodes.CeilingLamp004} material={glowMaterials.lamp} castShadow receiveShadow />
 		</group>
 	);
 }
@@ -276,97 +210,19 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 	return (
 		<group name="DeskStation">
-			<mesh
-				name="DeskDrawer"
-				geometry={nodes.DeskDrawer.geometry}
-				material={glowMaterials.standard}
-				position={[-0.742, -0.024, 0.524]}
-				castShadow
-				receiveShadow
-			>
-				<mesh
-					name="Desk"
-					geometry={nodes.Desk.geometry}
-					material={glowMaterials.standard}
-					position={[0.036, 0.39, -0.051]}
-					castShadow
-					receiveShadow
-				/>
-				<mesh
-					name="LED001"
-					geometry={nodes.LED001.geometry}
-					material={glowMaterials.ledStrips}
-					position={[-0.866, 0.361, -0.139]}
-					castShadow
-				/>
-				<mesh
-					name="LED002"
-					geometry={nodes.LED002.geometry}
-					material={glowMaterials.ledStrips}
-					position={[-2.079, 0.361, -0.529]}
-					castShadow
-				/>
-				<mesh
-					name="LED003"
-					geometry={nodes.LED003.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.357, 0.361, 0.611]}
-					castShadow
-				/>
-				<mesh
-					name="LED004"
-					geometry={nodes.LED004.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.747, 0.361, 1.361]}
-					castShadow
-				/>
-			</mesh>
-			<mesh
-				name="DeskMat"
-				geometry={nodes.DeskMat.geometry}
-				material={glowMaterials.standard}
-				position={[-0.761, 0.392, 0.133]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Chair"
-				geometry={nodes.Chair.geometry}
-				material={glowMaterials.standard}
-				position={[-1.146, -0.061, 0.992]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="TrashCan"
-				geometry={nodes.TrashCan.geometry}
-				material={glowMaterials.standard}
-				position={[-0.08, -0.205, 1.412]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Rubik"
-				geometry={nodes.Rubik.geometry}
-				material={glowMaterials.standard}
-				position={[-1.208, 0.425, 0.131]}
-				castShadow
-			/>
-			<mesh
-				name="Mug"
-				geometry={nodes.Mug.geometry}
-				material={glowMaterials.standard}
-				position={[-0.091, 0.443, 0.593]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Coaster"
-				geometry={nodes.Coaster.geometry}
-				material={glowMaterials.standard}
-				position={[-0.091, 0.391, 0.593]}
-				castShadow
-			/>
+			<RoomMesh node={nodes.DeskDrawer} material={glowMaterials.standard} castShadow receiveShadow>
+				<RoomMesh node={nodes.Desk} material={glowMaterials.standard} castShadow receiveShadow />
+				<RoomMesh node={nodes.LED001} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED002} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED003} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED004} material={glowMaterials.ledStrips} castShadow />
+			</RoomMesh>
+			<RoomMesh node={nodes.DeskMat} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.Chair} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.TrashCan} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.Rubik} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.Mug} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.Coaster} material={glowMaterials.standard} castShadow />
 		</group>
 	);
 }
@@ -377,75 +233,15 @@ export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 	return (
 		<group name="ComputerSetup">
-			<mesh
-				name="PCTower"
-				geometry={nodes.PCTower.geometry}
-				material={glowMaterials.pcAccents}
-				position={[-2.29, 0.74, -0.19]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Monitor001"
-				geometry={nodes.Monitor001.geometry}
-				material={glowMaterials.screen}
-				position={[-0.693, 0.779, -0.099]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Monitor002"
-				geometry={nodes.Monitor002.geometry}
-				material={glowMaterials.screen}
-				position={[0.034, 0.708, 0.542]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Monitor003"
-				geometry={nodes.Monitor003.geometry}
-				material={glowMaterials.screen}
-				position={[-1.544, 0.795, -0.025]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="LapTop"
-				geometry={nodes.LapTop.geometry}
-				material={glowMaterials.screen}
-				position={[0.13, 0.537, 1.182]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="CoolingPad"
-				geometry={nodes.CoolingPad.geometry}
-				material={glowMaterials.subtle}
-				position={[0.058, 0.415, 1.155]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Keyboard"
-				geometry={nodes.Keyboard.geometry}
-				material={glowMaterials.subtle}
-				position={[-0.734, 0.406, 0.183]}
-				castShadow
-			/>
-			<mesh
-				name="Mouse"
-				geometry={nodes.Mouse.geometry}
-				material={glowMaterials.subtle}
-				position={[-0.301, 0.415, 0.199]}
-				castShadow
-			/>
-			<mesh
-				name="Light"
-				geometry={nodes.Light.geometry}
-				material={glowMaterials.lamp}
-				position={[0.079, 1.405, -0.099]}
-				castShadow
-			/>
+			<RoomMesh node={nodes.PCTower} material={glowMaterials.pcAccents} castShadow receiveShadow />
+			<RoomMesh node={nodes.Monitor001} material={glowMaterials.screen} castShadow receiveShadow />
+			<RoomMesh node={nodes.Monitor002} material={glowMaterials.screen} castShadow receiveShadow />
+			<RoomMesh node={nodes.Monitor003} material={glowMaterials.screen} castShadow receiveShadow />
+			<RoomMesh node={nodes.LapTop} material={glowMaterials.screen} castShadow receiveShadow />
+			<RoomMesh node={nodes.CoolingPad} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.Keyboard} material={glowMaterials.subtle} castShadow />
+			<RoomMesh node={nodes.Mouse} material={glowMaterials.subtle} castShadow />
+			<RoomMesh node={nodes.Light} material={glowMaterials.lamp} castShadow />
 		</group>
 	);
 }
@@ -459,34 +255,10 @@ export function AudioEquipment({
 }: RoomSubComponentProps) {
 	return (
 		<group name="AudioEquipment">
-			<mesh
-				name="Speaker001"
-				geometry={nodes.Speaker001.geometry}
-				material={glowMaterials.standard}
-				position={[-0.056, 0.178, 2.314]}
-				castShadow
-			/>
-			<mesh
-				name="Speaker002"
-				geometry={nodes.Speaker002.geometry}
-				material={glowMaterials.standard}
-				position={[-3.116, 0.162, 0.241]}
-				castShadow
-			/>
-			<mesh
-				name="HeadSetHolder"
-				geometry={nodes.HeadSetHolder.geometry}
-				material={glowMaterials.standard}
-				position={[-0.005, 0.489, 1.602]}
-				castShadow
-			/>
-			<mesh
-				name="HeadSet003"
-				geometry={nodes.HeadSet003.geometry}
-				material={glowMaterials.subtle}
-				position={[-0.001, 0.522, 1.604]}
-				castShadow
-			/>
+			<RoomMesh node={nodes.Speaker001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.Speaker002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.HeadSetHolder} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.HeadSet003} material={glowMaterials.subtle} castShadow />
 		</group>
 	);
 }
@@ -497,79 +269,17 @@ export function AudioEquipment({
 export function RoomFurniture({ nodes, glowMaterials }: RoomSubComponentProps) {
 	return (
 		<group name="RoomFurniture">
-			<mesh
-				name="Fridge"
-				geometry={nodes.Fridge.geometry}
-				material={glowMaterials.standard}
-				position={[0.032, 0.275, 4.639]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Shelves"
-				geometry={nodes.Shelves.geometry}
-				material={glowMaterials.standard}
-				position={[0.205, 0.859, 3.319]}
-				castShadow
-				receiveShadow
-			>
-				<mesh
-					name="LED014"
-					geometry={nodes.LED014.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, 0, 0.643]}
-					castShadow
-				/>
-				<mesh
-					name="LED015"
-					geometry={nodes.LED015.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, 0, -0.643]}
-					castShadow
-				/>
-				<mesh
-					name="LED016"
-					geometry={nodes.LED016.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, 1.224, 0]}
-					castShadow
-				/>
-				<mesh
-					name="LED017"
-					geometry={nodes.LED017.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, 0.766, 0]}
-					castShadow
-				/>
-				<mesh
-					name="LED018"
-					geometry={nodes.LED018.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, 0.27, 0]}
-					castShadow
-				/>
-				<mesh
-					name="LED019"
-					geometry={nodes.LED019.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, -0.225, 0]}
-					castShadow
-				/>
-				<mesh
-					name="LED020"
-					geometry={nodes.LED020.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, -0.721, 0]}
-					castShadow
-				/>
-				<mesh
-					name="LED021"
-					geometry={nodes.LED021.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.16, -1.224, 0]}
-					castShadow
-				/>
-			</mesh>
+			<RoomMesh node={nodes.Fridge} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.Shelves} material={glowMaterials.standard} castShadow receiveShadow>
+				<RoomMesh node={nodes.LED014} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED015} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED016} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED017} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED018} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED019} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED020} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED021} material={glowMaterials.ledStrips} castShadow />
+			</RoomMesh>
 		</group>
 	);
 }
@@ -580,262 +290,42 @@ export function RoomFurniture({ nodes, glowMaterials }: RoomSubComponentProps) {
 export function ChessArea({ nodes, glowMaterials }: RoomSubComponentProps) {
 	return (
 		<group name="ChessArea">
-			<mesh
-				name="ChessBoard"
-				geometry={nodes.ChessBoard.geometry}
-				material={glowMaterials.subtle}
-				position={[-1.204, 0.496, 6.322]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="ChessTable"
-				geometry={nodes.ChessTable.geometry}
-				material={glowMaterials.standard}
-				position={[-1.204, 0.126, 6.322]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="ChessChair002"
-				geometry={nodes.ChessChair002.geometry}
-				material={glowMaterials.standard}
-				position={[-0.286, 0.105, 6.316]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="ChessChair001"
-				geometry={nodes.ChessChair001.geometry}
-				material={glowMaterials.standard}
-				position={[-2.196, 0.105, 6.316]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="ChessWhiteRook001"
-				geometry={nodes.ChessWhiteRook001.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.526, 6.112]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteKnight001"
-				geometry={nodes.ChessWhiteKnight001.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.531, 6.172]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteBishop001"
-				geometry={nodes.ChessWhiteBishop001.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.536, 6.232]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteQueen"
-				geometry={nodes.ChessWhiteQueen.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.541, 6.292]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteKing"
-				geometry={nodes.ChessWhiteKing.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.549, 6.352]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn001"
-				geometry={nodes.ChessWhitePawn001.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.112]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteRook002"
-				geometry={nodes.ChessWhiteRook002.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.526, 6.532]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteKnight002"
-				geometry={nodes.ChessWhiteKnight002.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.531, 6.472]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteBishop002"
-				geometry={nodes.ChessWhiteBishop002.geometry}
-				material={glowMaterials.standard}
-				position={[-1.415, 0.536, 6.412]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn002"
-				geometry={nodes.ChessWhitePawn002.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.171]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn003"
-				geometry={nodes.ChessWhitePawn003.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.231]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn004"
-				geometry={nodes.ChessWhitePawn004.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.291]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn005"
-				geometry={nodes.ChessWhitePawn005.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.351]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn006"
-				geometry={nodes.ChessWhitePawn006.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.411]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn007"
-				geometry={nodes.ChessWhitePawn007.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.471]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhitePawn008"
-				geometry={nodes.ChessWhitePawn008.geometry}
-				material={glowMaterials.standard}
-				position={[-1.354, 0.524, 6.531]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteRook003"
-				geometry={nodes.ChessWhiteRook003.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.526, 6.532]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackKnight001"
-				geometry={nodes.ChessBlackKnight001.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.531, 6.472]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackBishop001"
-				geometry={nodes.ChessBlackBishop001.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.536, 6.411]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteQueen001"
-				geometry={nodes.ChessWhiteQueen001.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.541, 6.351]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackKing"
-				geometry={nodes.ChessBlackKing.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.549, 6.291]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn001"
-				geometry={nodes.ChessBlackPawn001.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.532]}
-				castShadow
-			/>
-			<mesh
-				name="ChessWhiteRook004"
-				geometry={nodes.ChessWhiteRook004.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.526, 6.111]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackKnight002"
-				geometry={nodes.ChessBlackKnight002.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.531, 6.171]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackBishop002"
-				geometry={nodes.ChessBlackBishop002.geometry}
-				material={glowMaterials.standard}
-				position={[-0.992, 0.536, 6.231]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn002"
-				geometry={nodes.ChessBlackPawn002.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.471]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn003"
-				geometry={nodes.ChessBlackPawn003.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.411]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn004"
-				geometry={nodes.ChessBlackPawn004.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.35]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn005"
-				geometry={nodes.ChessBlackPawn005.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.29]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn006"
-				geometry={nodes.ChessBlackPawn006.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.229]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn007"
-				geometry={nodes.ChessBlackPawn007.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.169]}
-				castShadow
-			/>
-			<mesh
-				name="ChessBlackPawn008"
-				geometry={nodes.ChessBlackPawn008.geometry}
-				material={glowMaterials.standard}
-				position={[-1.053, 0.524, 6.108]}
-				castShadow
-			/>
+			<RoomMesh node={nodes.ChessBoard} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.ChessTable} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.ChessChair002} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.ChessChair001} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.ChessWhiteRook001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteKnight001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteBishop001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteQueen} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteKing} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteRook002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteKnight002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteBishop002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn003} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn004} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn005} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn006} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn007} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhitePawn008} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteRook003} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackKnight001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackBishop001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteQueen001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackKing} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn001} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessWhiteRook004} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackKnight002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackBishop002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn002} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn003} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn004} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn005} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn006} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn007} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.ChessBlackPawn008} material={glowMaterials.standard} castShadow />
 		</group>
 	);
 }
@@ -849,274 +339,44 @@ export function GamingConsoleZone({
 }: RoomSubComponentProps) {
 	return (
 		<group name="GamingConsoleZone">
-			<mesh
-				name="ShelveConsole"
-				geometry={nodes.ShelveConsole.geometry}
-				material={glowMaterials.standard}
-				position={[-4.705, 0.01, -0.149]}
-				castShadow
-				receiveShadow
-			>
-				<mesh
-					name="LED010"
-					geometry={nodes.LED010.geometry}
-					material={glowMaterials.ledStrips}
-					position={[-1.074, 0, -0.206]}
-					castShadow
-				/>
-				<mesh
-					name="LED011"
-					geometry={nodes.LED011.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.676, 0, -0.206]}
-					castShadow
-				/>
-				<mesh
-					name="LED012"
-					geometry={nodes.LED012.geometry}
-					material={glowMaterials.ledStrips}
-					position={[-0.199, 0.365, -0.206]}
-					castShadow
-				/>
-				<mesh
-					name="LED013"
-					geometry={nodes.LED013.geometry}
-					material={glowMaterials.ledStrips}
-					position={[-0.199, -0.365, -0.206]}
-					castShadow
-				/>
-			</mesh>
-			<mesh
-				name="Shelve001"
-				geometry={nodes.Shelve001.geometry}
-				material={glowMaterials.standard}
-				position={[-4.813, 1.569, -0.24]}
-				castShadow
-				receiveShadow
-			>
-				<mesh
-					name="LED005"
-					geometry={nodes.LED005.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0, -0.03, 0.145]}
-					castShadow
-				/>
-			</mesh>
-			<mesh
-				name="Monitor004"
-				geometry={nodes.Monitor004.geometry}
-				material={glowMaterials.screen}
-				position={[-4.813, 0.9, -0.268]}
-				castShadow
-				receiveShadow
-			>
-				<mesh
-					name="LED006"
-					geometry={nodes.LED006.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0, 0.45, -0.035]}
-					castShadow
-				/>
-				<mesh
-					name="LED007"
-					geometry={nodes.LED007.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0.829, 0, -0.035]}
-					castShadow
-				/>
-				<mesh
-					name="LED008"
-					geometry={nodes.LED008.geometry}
-					material={glowMaterials.ledStrips}
-					position={[0, -0.45, -0.035]}
-					castShadow
-				/>
-				<mesh
-					name="LED009"
-					geometry={nodes.LED009.geometry}
-					material={glowMaterials.ledStrips}
-					position={[-0.829, 0, -0.035]}
-					castShadow
-				/>
-			</mesh>
-			<mesh
-				name="MysteryBox"
-				geometry={nodes.MysteryBox.geometry}
-				material={glowMaterials.neonSigns}
-				position={[-3.963, 1.699, -0.211]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="Speaker003"
-				geometry={nodes.Speaker003.geometry}
-				material={glowMaterials.pcAccents}
-				position={[-4.813, 0.736, -0.335]}
-				castShadow
-			/>
-			<mesh
-				name="TVRemote"
-				geometry={nodes.TVRemote.geometry}
-				material={glowMaterials.standard}
-				position={[-4.141, 0.42, -0.038]}
-				castShadow
-			/>
-			<mesh
-				name="PSGameShelve"
-				geometry={nodes.PSGameShelve.geometry}
-				material={glowMaterials.standard}
-				position={[-3.603, -0.002, -0.001]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="PSGameShelveSupport"
-				geometry={nodes.PSGameShelveSupport.geometry}
-				material={glowMaterials.standard}
-				position={[-3.599, -0.004, -0.001]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="LedPSTriangle"
-				geometry={nodes.LedPSTriangle.geometry}
-				material={glowMaterials.neonSigns}
-				position={[-3.919, 0.225, 0.135]}
-				castShadow
-			/>
-			<mesh
-				name="LedPSCircle"
-				geometry={nodes.LedPSCircle.geometry}
-				material={glowMaterials.neonSigns}
-				position={[-3.919, 0.082, 0.135]}
-				castShadow
-			/>
-			<mesh
-				name="LedPSCross"
-				geometry={nodes.LedPSCross.geometry}
-				material={glowMaterials.neonSigns}
-				position={[-3.919, -0.066, 0.135]}
-				castShadow
-			/>
-			<mesh
-				name="LedPSSquare"
-				geometry={nodes.LedPSSquare.geometry}
-				material={glowMaterials.neonSigns}
-				position={[-3.919, -0.235, 0.135]}
-				castShadow
-			/>
-			<mesh
-				name="PS1"
-				geometry={nodes.PS1.geometry}
-				material={glowMaterials.subtle}
-				position={[-5.345, -0.328, -0.099]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="PS2"
-				geometry={nodes.PS2.geometry}
-				material={glowMaterials.subtle}
-				position={[-4.985, -0.321, -0.099]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="PS3"
-				geometry={nodes.PS3.geometry}
-				material={glowMaterials.subtle}
-				position={[-4.607, -0.311, -0.099]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="PS4"
-				geometry={nodes.PS4.geometry}
-				material={glowMaterials.subtle}
-				position={[-4.302, -0.222, -0.086]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="PS5"
-				geometry={nodes.PS5.geometry}
-				material={glowMaterials.subtle}
-				position={[-4.119, -0.165, -0.086]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchSupport"
-				geometry={nodes.SwitchSupport.geometry}
-				material={glowMaterials.standard}
-				position={[-3.585, 0.848, -0.336]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchDock"
-				geometry={nodes.SwitchDock.geometry}
-				material={glowMaterials.standard}
-				position={[-3.585, 0.916, -0.338]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchTablet"
-				geometry={nodes.SwitchTablet.geometry}
-				material={glowMaterials.screen}
-				position={[-3.585, 0.942, -0.338]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchJoyConRight"
-				geometry={nodes.SwitchJoyConRight.geometry}
-				material={glowMaterials.standard}
-				position={[-3.481, 0.942, -0.338]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchJoyConLeft"
-				geometry={nodes.SwitchJoyConLeft.geometry}
-				material={glowMaterials.standard}
-				position={[-3.691, 0.942, -0.338]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchJoyConRight001"
-				geometry={nodes.SwitchJoyConRight001.geometry}
-				material={glowMaterials.standard}
-				position={[-3.484, 0.787, -0.358]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchJoyConLeft001"
-				geometry={nodes.SwitchJoyConLeft001.geometry}
-				material={glowMaterials.standard}
-				position={[-3.688, 0.787, -0.358]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchJoyConRight002"
-				geometry={nodes.SwitchJoyConRight002.geometry}
-				material={glowMaterials.standard}
-				position={[-3.484, 0.787, -0.326]}
-				castShadow
-				receiveShadow
-			/>
-			<mesh
-				name="SwitchJoyConLeft002"
-				geometry={nodes.SwitchJoyConLeft002.geometry}
-				material={glowMaterials.standard}
-				position={[-3.688, 0.787, -0.326]}
-				castShadow
-				receiveShadow
-			/>
+			<RoomMesh node={nodes.ShelveConsole} material={glowMaterials.standard} castShadow receiveShadow>
+				<RoomMesh node={nodes.LED010} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED011} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED012} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED013} material={glowMaterials.ledStrips} castShadow />
+			</RoomMesh>
+			<RoomMesh node={nodes.Shelve001} material={glowMaterials.standard} castShadow receiveShadow>
+				<RoomMesh node={nodes.LED005} material={glowMaterials.ledStrips} castShadow />
+			</RoomMesh>
+			<RoomMesh node={nodes.Monitor004} material={glowMaterials.screen} castShadow receiveShadow>
+				<RoomMesh node={nodes.LED006} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED007} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED008} material={glowMaterials.ledStrips} castShadow />
+				<RoomMesh node={nodes.LED009} material={glowMaterials.ledStrips} castShadow />
+			</RoomMesh>
+			<RoomMesh node={nodes.MysteryBox} material={glowMaterials.neonSigns} castShadow receiveShadow />
+			<RoomMesh node={nodes.Speaker003} material={glowMaterials.pcAccents} castShadow />
+			<RoomMesh node={nodes.TVRemote} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.PSGameShelve} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.PSGameShelveSupport} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.LedPSTriangle} material={glowMaterials.neonSigns} castShadow />
+			<RoomMesh node={nodes.LedPSCircle} material={glowMaterials.neonSigns} castShadow />
+			<RoomMesh node={nodes.LedPSCross} material={glowMaterials.neonSigns} castShadow />
+			<RoomMesh node={nodes.LedPSSquare} material={glowMaterials.neonSigns} castShadow />
+			<RoomMesh node={nodes.PS1} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.PS2} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.PS3} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.PS4} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.PS5} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchSupport} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchDock} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchTablet} material={glowMaterials.screen} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchJoyConRight} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchJoyConLeft} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchJoyConRight001} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchJoyConLeft001} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchJoyConRight002} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.SwitchJoyConLeft002} material={glowMaterials.standard} castShadow receiveShadow />
 		</group>
 	);
 }

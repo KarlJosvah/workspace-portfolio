@@ -16,10 +16,22 @@ const CAMERA_CONFIG = {
 
 // Ceiling lamp coordinates at fixture surface (y = 2.58) emitting downward
 const CEILING_LAMP_LIGHTS = [
-	{ id: "CeilingLamp001", position: [-4.572, 2.58, 1.752] as [number, number, number] },
-	{ id: "CeilingLamp002", position: [-0.851, 2.58, 1.752] as [number, number, number] },
-	{ id: "CeilingLamp003", position: [-4.572, 2.58, 4.965] as [number, number, number] },
-	{ id: "CeilingLamp004", position: [-0.851, 2.58, 4.965] as [number, number, number] },
+	{
+		id: "CeilingLamp001",
+		position: [-4.572, 2.58, 1.752] as [number, number, number],
+	},
+	{
+		id: "CeilingLamp002",
+		position: [-0.851, 2.58, 1.752] as [number, number, number],
+	},
+	{
+		id: "CeilingLamp003",
+		position: [-4.572, 2.58, 4.965] as [number, number, number],
+	},
+	{
+		id: "CeilingLamp004",
+		position: [-0.851, 2.58, 4.965] as [number, number, number],
+	},
 ];
 
 interface SceneProps {
