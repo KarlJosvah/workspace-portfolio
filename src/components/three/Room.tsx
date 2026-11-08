@@ -186,7 +186,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 		<group name="RoomStructure">
 			<RoomMesh node={nodes.Floor} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.Wall} material={glowMaterials.standard} receiveShadow />
-			<RoomMesh node={nodes.Ceiling} material={glowMaterials.lamp} receiveShadow />
+			<RoomMesh node={nodes.Ceiling} material={glowMaterials.neonSigns} receiveShadow />
 			<RoomMesh node={nodes.CarpetDesk} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.CarpetChess} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.WingsofFreedomRight} material={glowMaterials.wallArt} castShadow receiveShadow />
