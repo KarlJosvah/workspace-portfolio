@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { MenuType } from "@/constants/menuConfig.ts";
 
 export interface CameraWaypoint {
@@ -8,6 +9,8 @@ export interface CameraWaypoint {
 	/** Precomputed yaw and pitch (in radians) */
 	yaw: number;
 	pitch: number;
+	/** Optional bound mesh reference */
+	mesh?: THREE.Object3D;
 }
 
 /**
@@ -26,25 +29,142 @@ export function computeLookAtRotation(
 	return { yaw, pitch };
 }
 
-function createWaypoint(
+/**
+ * Resolves 3D target coordinates from a bound mesh (THREE.Object3D) or coordinate array.
+ */
+export function resolveTargetPosition(
+	target: THREE.Object3D | [number, number, number],
+	offset: [number, number, number] = [0, 0, 0],
+): [number, number, number] {
+	if (Array.isArray(target)) {
+		return [
+			target[0] + offset[0],
+			target[1] + offset[1],
+			target[2] + offset[2],
+		];
+	}
+
+	const worldPos = new THREE.Vector3();
+	target.getWorldPosition(worldPos);
+	// Fallback to local position if world matrix is unpopulated or at origin
+	if (worldPos.lengthSq() === 0 && target.position.lengthSq() > 0) {
+		worldPos.copy(target.position);
+	}
+
+	return [
+		worldPos.x + offset[0],
+		worldPos.y + offset[1],
+		worldPos.z + offset[2],
+	];
+}
+
+/**
+ * Creates a camera waypoint by binding directly to a target mesh (or coordinate array),
+ * dynamically computing lookAt yaw & pitch from the target's position.
+ */
+export function createWaypoint(
 	position: [number, number, number],
-	target: [number, number, number],
+	target: THREE.Object3D | [number, number, number],
+	offset: [number, number, number] = [0, 0, 0],
 ): CameraWaypoint {
-	const { yaw, pitch } = computeLookAtRotation(position, target);
-	return { position, target, yaw, pitch };
+	const targetPos = resolveTargetPosition(target, offset);
+	const { yaw, pitch } = computeLookAtRotation(position, targetPos);
+	return {
+		position,
+		target: targetPos,
+		yaw,
+		pitch,
+		mesh: target instanceof THREE.Object3D ? target : undefined,
+	};
 }
 
 /** Seated eye-level height simulating sitting at the desk (~0.80m vs standing 1.75m) */
 export const SEATED_EYE_HEIGHT = 0.8;
 
 /**
- * Camera waypoint presets for each section:
- * - Hero: none (free walk)
- * - TechnicalSkills: Looking at PCTower [-2.29, 0.74, -0.19]
- * - FeaturedProjects: Shifted slightly left to face the main monitor & keyboard [-0.85, 1.15, 1.25]
- * - RecommendedProjects: Moved more to the left & closer to face the screen with mug [-0.75, 1.15, 1.20]
- * - ProfessionalExperiences: Repositioned away to prevent top-down look, viewing laptop screen [-0.90, 1.15, 1.35]
- * - Contact: Moved right and forward to focus on standing vertical screen [-1.00, 1.15, 1.15]
+ * Mapping of menu sections to camera vantage position and target mesh name.
+ */
+export const WAYPOINT_TARGET_MESHES: Record<
+	Exclude<MenuType, typeof MenuType.Hero>,
+	{
+		position: [number, number, number];
+		meshName: string;
+		offset?: [number, number, number];
+	}
+> = {
+	[MenuType.TechnicalSkills]: {
+		position: [-1.55, SEATED_EYE_HEIGHT, 1.15],
+		meshName: "PCTower",
+	},
+	[MenuType.FeaturedProjects]: {
+		position: [-0.85, SEATED_EYE_HEIGHT, 1.25],
+		meshName: "Monitor001",
+	},
+	[MenuType.RecommendedProjects]: {
+		position: [-0.75, SEATED_EYE_HEIGHT, 1.2],
+		meshName: "Monitor002",
+	},
+	[MenuType.ProfessionalExperiences]: {
+		position: [-0.9, SEATED_EYE_HEIGHT, 1.35],
+		meshName: "LapTop",
+	},
+	[MenuType.Contact]: {
+		position: [-1.0, SEATED_EYE_HEIGHT, 1.15],
+		meshName: "Monitor003",
+	},
+};
+
+/**
+ * Resolves a dynamic waypoint for a given section by binding directly to a mesh from the scene or nodes dictionary.
+ */
+export function resolveWaypointForSection(
+	section: MenuType,
+	sceneOrNodes: THREE.Object3D | Record<string, THREE.Object3D>,
+): CameraWaypoint | null {
+	if (section === MenuType.Hero) return null;
+	const config = WAYPOINT_TARGET_MESHES[section];
+	if (!config) return null;
+
+	let mesh: THREE.Object3D | undefined;
+	if (sceneOrNodes instanceof THREE.Object3D) {
+		mesh = sceneOrNodes.getObjectByName(config.meshName);
+	} else {
+		mesh = sceneOrNodes[config.meshName];
+	}
+
+	if (mesh) {
+		return createWaypoint(config.position, mesh, config.offset);
+	}
+	return CAMERA_WAYPOINTS[section];
+}
+
+/**
+ * Creates dynamic waypoints bound to a set of GLTF nodes.
+ */
+export function createWaypointsFromNodes(
+	nodes: Record<string, THREE.Object3D>,
+): Record<MenuType, CameraWaypoint | null> {
+	const resolve = (section: Exclude<MenuType, typeof MenuType.Hero>) => {
+		const config = WAYPOINT_TARGET_MESHES[section];
+		const mesh = nodes[config.meshName];
+		if (mesh) {
+			return createWaypoint(config.position, mesh, config.offset);
+		}
+		return CAMERA_WAYPOINTS[section];
+	};
+
+	return {
+		[MenuType.Hero]: null,
+		[MenuType.TechnicalSkills]: resolve(MenuType.TechnicalSkills),
+		[MenuType.FeaturedProjects]: resolve(MenuType.FeaturedProjects),
+		[MenuType.RecommendedProjects]: resolve(MenuType.RecommendedProjects),
+		[MenuType.ProfessionalExperiences]: resolve(MenuType.ProfessionalExperiences),
+		[MenuType.Contact]: resolve(MenuType.Contact),
+	};
+}
+
+/**
+ * Camera waypoint presets with updated Monitor.001 target coordinates [-0.656, 0.848, -0.162].
  */
 export const CAMERA_WAYPOINTS: Record<MenuType, CameraWaypoint | null> = {
 	[MenuType.Hero]: null, // Free walk, no forced waypoint
@@ -54,18 +174,18 @@ export const CAMERA_WAYPOINTS: Record<MenuType, CameraWaypoint | null> = {
 	),
 	[MenuType.FeaturedProjects]: createWaypoint(
 		[-0.85, SEATED_EYE_HEIGHT, 1.25],
-		[-0.693, 0.78, -0.099],
+		[-0.656, 0.848, -0.162], // Updated Monitor.001 location
 	),
 	[MenuType.RecommendedProjects]: createWaypoint(
-		[-0.75, SEATED_EYE_HEIGHT, 1.20],
+		[-0.75, SEATED_EYE_HEIGHT, 1.2],
 		[0.034, 0.73, 0.542],
 	),
 	[MenuType.ProfessionalExperiences]: createWaypoint(
-		[-0.90, SEATED_EYE_HEIGHT, 1.35],
+		[-0.9, SEATED_EYE_HEIGHT, 1.35],
 		[0.13, 0.68, 1.182],
 	),
 	[MenuType.Contact]: createWaypoint(
-		[-1.00, SEATED_EYE_HEIGHT, 1.15],
+		[-1.0, SEATED_EYE_HEIGHT, 1.15],
 		[-1.544, 0.82, -0.025],
 	),
 };

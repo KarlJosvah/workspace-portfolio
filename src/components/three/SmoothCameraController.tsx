@@ -3,7 +3,10 @@ import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { MenuType } from "@/constants/menuConfig.ts";
-import { CAMERA_WAYPOINTS } from "@/constants/cameraWaypoints.ts";
+import {
+	CAMERA_WAYPOINTS,
+	resolveWaypointForSection,
+} from "@/constants/cameraWaypoints.ts";
 
 export interface SmoothCameraControllerProps {
 	/** Player eye-level height in units (default 1.75) */
@@ -42,7 +45,7 @@ export function SmoothCameraController({
 	initialPitch = -0.12,
 	activeSection = null,
 }: SmoothCameraControllerProps) {
-	const { camera, gl } = useThree();
+	const { camera, gl, scene } = useThree();
 
 	// Orientation state (Yaw & Pitch)
 	const targetYaw = useRef(initialYaw);
@@ -78,7 +81,9 @@ export function SmoothCameraController({
 	// Listen to activeSection changes to trigger waypoint glide
 	useEffect(() => {
 		if (!activeSection) return;
-		const waypoint = CAMERA_WAYPOINTS[activeSection];
+		const waypoint =
+			resolveWaypointForSection(activeSection, scene) ??
+			CAMERA_WAYPOINTS[activeSection];
 		if (!waypoint) return;
 
 		_startPos.copy(camera.position);
@@ -98,7 +103,7 @@ export function SmoothCameraController({
 		transitionProgress.current = 0;
 		transitionDuration.current = 1.4;
 		isTransitioning.current = true;
-	}, [activeSection, camera.position]);
+	}, [activeSection, camera.position, scene]);
 
 	// Disable scroll / pinch zoom on the canvas (No zoom allowed)
 	useEffect(() => {

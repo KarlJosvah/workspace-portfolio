@@ -133,6 +133,15 @@ export type GLTFResult = GLTF & {
 		SwitchJoyConLeft002: THREE.Mesh;
 		PSGameShelve: THREE.Mesh;
 		PSGameShelveSupport: THREE.Mesh;
+		DigitalAnalogWallClock: THREE.Mesh;
+		MCHotBar: THREE.Mesh;
+		MCHeart: THREE.Mesh;
+		MCHunger: THREE.Mesh;
+		MCXPBar: THREE.Mesh;
+		AVR001: THREE.Mesh;
+		AVR002: THREE.Mesh;
+		Rocket: THREE.Mesh;
+		[key: string]: THREE.Mesh;
 	};
 	materials: {
 		Imphezia: THREE.MeshStandardMaterial;
@@ -178,6 +187,75 @@ export function RoomMesh({
 	);
 }
 
+interface ClockMeshArrays {
+	hours: THREE.Mesh[];
+	seconds: THREE.Mesh[];
+	digits: THREE.Mesh[];
+}
+
+/**
+ * Dynamically organizes the hundreds of clock children into three arrays:
+ * - hours: Digital.Clock.Hour.01 - 12
+ * - seconds: Digital.Clock.Second.00 - 59
+ * - digits: Digital.Clock.Digit.* and Digital.Clock.Colon
+ */
+function getClockMeshes(nodes: GLTFResult["nodes"]): ClockMeshArrays {
+	const clock = nodes.DigitalAnalogWallClock;
+	const children = (clock?.children ?? []) as THREE.Mesh[];
+	const source =
+		children.length > 0
+			? children
+			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
+					n?.name?.startsWith("DigitalClock"),
+			  );
+
+	return {
+		hours: source.filter((c) => c.name.includes("Hour")),
+		seconds: source.filter((c) => c.name.includes("Second")),
+		digits: source.filter(
+			(c) => c.name.includes("Digit") || c.name.includes("Colon"),
+		),
+	};
+}
+
+export function WallClock({ nodes, glowMaterials }: RoomSubComponentProps) {
+	const { hours, seconds, digits } = useMemo(
+		() => getClockMeshes(nodes),
+		[nodes],
+	);
+
+	return (
+		<RoomMesh
+			node={nodes.DigitalAnalogWallClock}
+			material={glowMaterials.standard}
+			castShadow
+			receiveShadow
+		>
+			{digits.map((node) => (
+				<RoomMesh
+					key={node.name}
+					node={node}
+					material={glowMaterials.ledStrips}
+				/>
+			))}
+			{hours.map((node) => (
+				<RoomMesh
+					key={node.name}
+					node={node}
+					material={glowMaterials.ledStrips}
+				/>
+			))}
+			{seconds.map((node) => (
+				<RoomMesh
+					key={node.name}
+					node={node}
+					material={glowMaterials.ledStrips}
+				/>
+			))}
+		</RoomMesh>
+	);
+}
+
 /* -------------------------------------------------------------
  * 1. Room Architecture & Structure (Floor, Walls, Ceiling, Rugs & Wall Art)
  * ------------------------------------------------------------*/
@@ -200,6 +278,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<RoomMesh node={nodes.CeilingLamp002} material={glowMaterials.lamp} castShadow receiveShadow />
 			<RoomMesh node={nodes.CeilingLamp003} material={glowMaterials.lamp} castShadow receiveShadow />
 			<RoomMesh node={nodes.CeilingLamp004} material={glowMaterials.lamp} castShadow receiveShadow />
+			<WallClock nodes={nodes} glowMaterials={glowMaterials} />
 		</group>
 	);
 }
@@ -223,6 +302,7 @@ export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<RoomMesh node={nodes.Rubik} material={glowMaterials.standard} castShadow />
 			<RoomMesh node={nodes.Mug} material={glowMaterials.standard} castShadow receiveShadow />
 			<RoomMesh node={nodes.Coaster} material={glowMaterials.standard} castShadow />
+			<RoomMesh node={nodes.AVR001} material={glowMaterials.standard} castShadow receiveShadow />
 		</group>
 	);
 }
@@ -242,6 +322,11 @@ export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<RoomMesh node={nodes.Keyboard} material={glowMaterials.subtle} castShadow />
 			<RoomMesh node={nodes.Mouse} material={glowMaterials.subtle} castShadow />
 			<RoomMesh node={nodes.Light} material={glowMaterials.lamp} castShadow />
+			<RoomMesh node={nodes.MCHotBar} material={glowMaterials.screen} castShadow receiveShadow>
+				<RoomMesh node={nodes.MCHeart} material={glowMaterials.screen} castShadow />
+				<RoomMesh node={nodes.MCHunger} material={glowMaterials.screen} castShadow />
+				<RoomMesh node={nodes.MCXPBar} material={glowMaterials.screen} castShadow />
+			</RoomMesh>
 		</group>
 	);
 }
@@ -377,6 +462,8 @@ export function GamingConsoleZone({
 			<RoomMesh node={nodes.SwitchJoyConLeft001} material={glowMaterials.standard} castShadow receiveShadow />
 			<RoomMesh node={nodes.SwitchJoyConRight002} material={glowMaterials.standard} castShadow receiveShadow />
 			<RoomMesh node={nodes.SwitchJoyConLeft002} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.AVR002} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.Rocket} material={glowMaterials.standard} castShadow receiveShadow />
 		</group>
 	);
 }
