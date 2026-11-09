@@ -41,7 +41,7 @@ function CeilingLampSpotLight({
 	// Position light flush with bottom face of fixture (y - 0.015)
 	const lightPosition: [number, number, number] = useMemo(
 		() => [node.position.x, node.position.y - 0.015, node.position.z],
-		[node.position.x, node.position.y, node.position.z],
+		[node.position.x, node.position.y, node.position.z]
 	);
 
 	// Dedicated downward target directly below the lamp on the floor plane
@@ -54,7 +54,7 @@ function CeilingLampSpotLight({
 	useHelper(
 		showHelpers ? (lightRef as React.RefObject<THREE.Object3D>) : null,
 		THREE.SpotLightHelper,
-		"#f8fafc",
+		"#f8fafc"
 	);
 
 	return (
@@ -95,7 +95,7 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 		].filter(Boolean);
 		if (lamps.length > 0) return lamps;
 		return Object.values(nodes).filter((node): node is THREE.Mesh =>
-			Boolean(node?.name?.startsWith("CeilingLamp")),
+			Boolean(node?.name?.startsWith("CeilingLamp"))
 		);
 	}, [nodes]);
 
@@ -110,13 +110,15 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 	useHelper(
 		showHelpers ? (deskLampRef as React.RefObject<THREE.Object3D>) : null,
 		THREE.SpotLightHelper,
-		"#fffaed",
+		"#fffaed"
 	);
 	useHelper(
-		showHelpers ? (pcTowerLightRef as React.RefObject<THREE.Object3D>) : null,
+		showHelpers
+			? (pcTowerLightRef as React.RefObject<THREE.Object3D>)
+			: null,
 		THREE.PointLightHelper,
 		0.2,
-		"#2196f3",
+		"#2196f3"
 	);
 
 	return (

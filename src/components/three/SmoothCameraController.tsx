@@ -206,7 +206,7 @@ export function SmoothCameraController({
 			const maxPitch = 1.48; // ~85 degrees
 			targetPitch.current = Math.max(
 				-maxPitch,
-				Math.min(maxPitch, targetPitch.current),
+				Math.min(maxPitch, targetPitch.current)
 			);
 		};
 
@@ -244,7 +244,7 @@ export function SmoothCameraController({
 			currentPitch.current = THREE.MathUtils.lerp(
 				startPitch.current,
 				targetPitchVal.current,
-				eased,
+				eased
 			);
 
 			targetYaw.current = currentYaw.current;
@@ -267,12 +267,12 @@ export function SmoothCameraController({
 		currentYaw.current = THREE.MathUtils.lerp(
 			currentYaw.current,
 			targetYaw.current,
-			rotDamp,
+			rotDamp
 		);
 		currentPitch.current = THREE.MathUtils.lerp(
 			currentPitch.current,
 			targetPitch.current,
-			rotDamp,
+			rotDamp
 		);
 
 		camera.rotation.order = "YXZ";
@@ -322,7 +322,8 @@ export function SmoothCameraController({
 		const deltaX = velocity.current.x * delta;
 		const deltaZ = velocity.current.z * delta;
 
-		const isWalking = Math.abs(deltaX) > 0.00001 || Math.abs(deltaZ) > 0.00001;
+		const isWalking =
+			Math.abs(deltaX) > 0.00001 || Math.abs(deltaZ) > 0.00001;
 		if (isWalking) {
 			camera.position.x += deltaX;
 			camera.position.z += deltaZ;
@@ -331,7 +332,7 @@ export function SmoothCameraController({
 			camera.position.y = THREE.MathUtils.lerp(
 				camera.position.y,
 				height,
-				Math.min(1, delta * 3),
+				Math.min(1, delta * 3)
 			);
 		}
 	});

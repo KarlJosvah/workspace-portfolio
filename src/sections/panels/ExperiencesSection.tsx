@@ -29,8 +29,12 @@ export function ExperiencesSection() {
 
 	return (
 		<div className="text-overlay-content">
-			<h1 className="text-overlay-title">{t("sections.experiences.title")}.</h1>
-			<p className="text-overlay-subtitle">{t("sections.experiences.subtitle")}</p>
+			<h1 className="text-overlay-title">
+				{t("sections.experiences.title")}.
+			</h1>
+			<p className="text-overlay-subtitle">
+				{t("sections.experiences.subtitle")}
+			</p>
 
 			<div className="text-overlay-list">
 				{EXPERIENCES.map((exp) => (

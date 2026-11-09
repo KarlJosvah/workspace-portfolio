@@ -20,8 +20,8 @@ function getChessPieces(nodes: GLTFResult["nodes"]): ChessPieceArrays {
 		children.length > 0
 			? children
 			: (Object.values(nodes) as THREE.Mesh[]).filter(
-					(n) => n?.name && /^Chess\.?(White|Black)/i.test(n.name),
-			  );
+					(n) => n?.name && /^Chess\.?(White|Black)/i.test(n.name)
+				);
 
 	return {
 		all: source,
@@ -31,10 +31,7 @@ function getChessPieces(nodes: GLTFResult["nodes"]): ChessPieceArrays {
 }
 
 export function ChessPieces({ nodes, glowMaterials }: RoomSubComponentProps) {
-	const { all: chessPieces } = useMemo(
-		() => getChessPieces(nodes),
-		[nodes],
-	);
+	const { all: chessPieces } = useMemo(() => getChessPieces(nodes), [nodes]);
 
 	return (
 		<>

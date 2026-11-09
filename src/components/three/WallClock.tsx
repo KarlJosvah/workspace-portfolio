@@ -22,14 +22,14 @@ function getClockMeshes(nodes: GLTFResult["nodes"]): ClockMeshArrays {
 		children.length > 0
 			? children
 			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
-					n?.name?.startsWith("DigitalClock"),
-			  );
+					n?.name?.startsWith("DigitalClock")
+				);
 
 	return {
 		hours: source.filter((c) => c.name.includes("Hour")),
 		seconds: source.filter((c) => c.name.includes("Second")),
 		digits: source.filter(
-			(c) => c.name.includes("Digit") || c.name.includes("Colon"),
+			(c) => c.name.includes("Digit") || c.name.includes("Colon")
 		),
 	};
 }
@@ -37,7 +37,7 @@ function getClockMeshes(nodes: GLTFResult["nodes"]): ClockMeshArrays {
 export function WallClock({ nodes, glowMaterials }: RoomSubComponentProps) {
 	const { hours, seconds, digits } = useMemo(
 		() => getClockMeshes(nodes),
-		[nodes],
+		[nodes]
 	);
 
 	return (

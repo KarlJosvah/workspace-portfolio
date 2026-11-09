@@ -21,7 +21,10 @@ export function SideMenu({ activeSection, onSectionChange }: SideMenuProps) {
 	const { t } = useTranslation();
 
 	return (
-		<aside className="side-menu-container" aria-label="Page Sections Navigation">
+		<aside
+			className="side-menu-container"
+			aria-label="Page Sections Navigation"
+		>
 			{MENU_ITEMS.map((item) => (
 				<MenuButton
 					key={item.id}

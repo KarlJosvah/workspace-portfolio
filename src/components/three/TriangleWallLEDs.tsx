@@ -15,7 +15,7 @@ interface TriangleLEDArrays {
  */
 function getTriangleWallLEDs(nodes: GLTFResult["nodes"]): TriangleLEDArrays {
 	const all = (Object.values(nodes) as THREE.Mesh[]).filter(
-		(n) => n?.name && /^LED\.?Triangle/i.test(n.name),
+		(n) => n?.name && /^LED\.?Triangle/i.test(n.name)
 	);
 
 	return {
@@ -31,7 +31,7 @@ export function TriangleWallLEDs({
 }: RoomSubComponentProps) {
 	const { all: triangleLEDs } = useMemo(
 		() => getTriangleWallLEDs(nodes),
-		[nodes],
+		[nodes]
 	);
 
 	return (

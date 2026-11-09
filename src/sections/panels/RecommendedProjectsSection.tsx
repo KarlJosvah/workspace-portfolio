@@ -36,8 +36,12 @@ export function RecommendedProjectsSection() {
 
 	return (
 		<div className="text-overlay-content">
-			<h1 className="text-overlay-title">{t("sections.recommendedProjects.title")}.</h1>
-			<p className="text-overlay-subtitle">{t("sections.recommendedProjects.subtitle")}</p>
+			<h1 className="text-overlay-title">
+				{t("sections.recommendedProjects.title")}.
+			</h1>
+			<p className="text-overlay-subtitle">
+				{t("sections.recommendedProjects.subtitle")}
+			</p>
 
 			<div className="text-overlay-list">
 				{REPOS.map((repo) => (
@@ -51,7 +55,9 @@ export function RecommendedProjectsSection() {
 							>
 								{repo.name} ↗
 							</a>
-							<span className="text-meta-text">⭐ {repo.stars}</span>
+							<span className="text-meta-text">
+								⭐ {repo.stars}
+							</span>
 						</div>
 						<p className="text-group-body">{repo.desc}</p>
 					</div>

@@ -15,7 +15,9 @@ export function ControlsHint({ playerHeight = 1.75 }: ControlsHintProps) {
 			<span className="controls-key">S</span>
 			<span className="controls-key">D</span>
 			<span className="controls-separator">/</span>
-			<span className="controls-key">{t("controls.keys.arrows", "Arrows")}</span>
+			<span className="controls-key">
+				{t("controls.keys.arrows", "Arrows")}
+			</span>
 			<span className="controls-desc">
 				{t("controls.walkWithHeight", {
 					height: playerHeight,

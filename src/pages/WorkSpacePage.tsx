@@ -9,7 +9,7 @@ import "@/pages/WorkSpacePage.css";
 
 export function WorkSpacePage() {
 	const [activeSection, setActiveSection] = useState<MenuType | null>(
-		MenuType.Hero,
+		MenuType.Hero
 	);
 
 	const handleSectionChange = useCallback((section: MenuType) => {
@@ -44,7 +44,10 @@ export function WorkSpacePage() {
 			 * Root has pointer-events: none so WASD walk and drag-to-look remain active.
 			 * Pressing ESC or clicking the active menu button closes it.
 			 */}
-			<SectionOverlay activeSection={activeSection} onClose={handleClose} />
+			<SectionOverlay
+				activeSection={activeSection}
+				onClose={handleClose}
+			/>
 		</main>
 	);
 }

@@ -28,13 +28,19 @@ export function SkillsSection() {
 
 	return (
 		<div className="text-overlay-content">
-			<h1 className="text-overlay-title">{t("sections.skills.title")}.</h1>
-			<p className="text-overlay-subtitle">{t("sections.skills.subtitle")}</p>
+			<h1 className="text-overlay-title">
+				{t("sections.skills.title")}.
+			</h1>
+			<p className="text-overlay-subtitle">
+				{t("sections.skills.subtitle")}
+			</p>
 
 			<div className="text-overlay-list">
 				{SKILL_GROUPS.map((group) => (
 					<div key={group.key} className="text-group-item">
-						<h3 className="text-group-heading">{t(group.i18nKey)}</h3>
+						<h3 className="text-group-heading">
+							{t(group.i18nKey)}
+						</h3>
 						<p className="text-group-body">{group.skills}</p>
 					</div>
 				))}

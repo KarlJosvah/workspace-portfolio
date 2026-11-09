@@ -4,20 +4,18 @@ import { MenuType } from "@/constants/menuConfig.ts";
 import "@/components/ui/overlay/SectionOverlay.css";
 
 const HeroSection = lazy(() => import("@/sections/panels/HeroSection.tsx"));
-const SkillsSection = lazy(
-	() => import("@/sections/panels/SkillsSection.tsx"),
-);
+const SkillsSection = lazy(() => import("@/sections/panels/SkillsSection.tsx"));
 const FeaturedProjectsSection = lazy(
-	() => import("@/sections/panels/FeaturedProjectsSection.tsx"),
+	() => import("@/sections/panels/FeaturedProjectsSection.tsx")
 );
 const RecommendedProjectsSection = lazy(
-	() => import("@/sections/panels/RecommendedProjectsSection.tsx"),
+	() => import("@/sections/panels/RecommendedProjectsSection.tsx")
 );
 const ExperiencesSection = lazy(
-	() => import("@/sections/panels/ExperiencesSection.tsx"),
+	() => import("@/sections/panels/ExperiencesSection.tsx")
 );
 const ContactSection = lazy(
-	() => import("@/sections/panels/ContactSection.tsx"),
+	() => import("@/sections/panels/ContactSection.tsx")
 );
 
 const SECTION_MAP: Record<MenuType, React.ComponentType> = {
@@ -34,7 +32,10 @@ interface SectionOverlayProps {
 	onClose: () => void;
 }
 
-export function SectionOverlay({ activeSection, onClose }: SectionOverlayProps) {
+export function SectionOverlay({
+	activeSection,
+	onClose,
+}: SectionOverlayProps) {
 	// ESC always fires on window â€” works even while canvas has pointer focus
 	useEffect(() => {
 		if (activeSection === null) return;

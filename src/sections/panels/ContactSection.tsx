@@ -5,7 +5,11 @@ const EMAIL = "karl.josvah@example.com";
 
 const SOCIAL_LINKS = [
 	{ id: "github", label: "GitHub", url: "https://github.com/KarlJosvah" },
-	{ id: "linkedin", label: "LinkedIn", url: "https://linkedin.com/in/karljosvah" },
+	{
+		id: "linkedin",
+		label: "LinkedIn",
+		url: "https://linkedin.com/in/karljosvah",
+	},
 	{ id: "twitter", label: "Twitter / X", url: "https://x.com/KarlJosvah" },
 ];
 
@@ -22,8 +26,12 @@ export function ContactSection() {
 
 	return (
 		<div className="text-overlay-content">
-			<h1 className="text-overlay-title">{t("sections.contact.title")}.</h1>
-			<p className="text-overlay-body">{t("sections.contact.subtitle")}</p>
+			<h1 className="text-overlay-title">
+				{t("sections.contact.title")}.
+			</h1>
+			<p className="text-overlay-body">
+				{t("sections.contact.subtitle")}
+			</p>
 
 			<div className="text-contact-block">
 				<div className="text-contact-email-line">
@@ -35,7 +43,9 @@ export function ContactSection() {
 						className="text-inline-btn"
 						onClick={handleCopyEmail}
 					>
-						{copied ? `✓ ${t("sections.contact.copied")}` : `[ ${t("sections.contact.copyEmail")} ]`}
+						{copied
+							? `✓ ${t("sections.contact.copied")}`
+							: `[ ${t("sections.contact.copyEmail")} ]`}
 					</button>
 				</div>
 

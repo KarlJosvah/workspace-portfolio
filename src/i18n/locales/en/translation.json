@@ -1,158 +1,158 @@
 {
-  "language": {
-    "select": "Language",
-    "en": "English",
-    "fr": "Français",
-    "ja": "日本語",
-    "mg": "Malagasy"
-  },
-  "controls": {
-    "walk": "to walk",
-    "walkWithHeight": "to walk (Height: {{height}}m)",
-    "look": "Drag to look around",
-    "keys": {
-      "wasd": "W A S D",
-      "arrows": "Arrows",
-      "space": "SPACE",
-      "esc": "ESC"
-    },
-    "hints": {
-      "sit": "Click chair to sit down",
-      "stand": "Press SPACE to stand up",
-      "interact": "Click to interact",
-      "escToExit": "Press ESC to return"
-    }
-  },
-  "menu": {
-    "hero": {
-      "label": "Hero",
-      "description": "Developer introduction & bio"
-    },
-    "technicalSkills": {
-      "label": "Technical Skills",
-      "description": "Core proficiencies & tech stack"
-    },
-    "featuredProjects": {
-      "label": "Featured Projects",
-      "description": "Selected key works & live demos"
-    },
-    "recommendedProjects": {
-      "label": "Recommended Projects",
-      "description": "Open source contributions & libraries"
-    },
-    "professionalExperiences": {
-      "label": "Professional Experiences",
-      "description": "Career history & milestones"
-    },
-    "contact": {
-      "label": "Contact",
-      "description": "Get in touch & resume"
-    }
-  },
-  "sections": {
-    "hero": {
-      "greeting": "Hello, I am a",
-      "title": "Creative Full-Stack & 3D Web Developer",
-      "bio": "Building immersive digital experiences combining high-performance modern web architectures with interactive 3D graphics and clean software design.",
-      "ctaProjects": "Explore Projects",
-      "ctaContact": "Get in Touch",
-      "status": "Available for opportunities"
-    },
-    "skills": {
-      "title": "Technical Skills",
-      "subtitle": "Core competencies, frameworks, and modern technologies I leverage daily.",
-      "categories": {
-        "frontend": "Frontend Development",
-        "threeD": "3D & WebGL Graphics",
-        "backend": "Backend & Cloud Architecture",
-        "devops": "DevOps & CI/CD",
-        "tools": "Engineering Workflow & Tooling"
-      }
-    },
-    "featuredProjects": {
-      "title": "Featured Projects",
-      "subtitle": "Selected software engineering and interactive 3D projects built from concept to production.",
-      "viewDemo": "Live Preview",
-      "sourceCode": "Source Code",
-      "techStack": "Tech Stack"
-    },
-    "recommendedProjects": {
-      "title": "Recommended Projects",
-      "subtitle": "Curated open-source repositories, developer experiments, and utility packages.",
-      "visitRepo": "View on GitHub",
-      "stars": "Stars",
-      "forks": "Forks"
-    },
-    "experiences": {
-      "title": "Professional Experiences",
-      "subtitle": "My journey as a software engineer delivering scalable applications and digital products.",
-      "present": "Present"
-    },
-    "contact": {
-      "title": "Get in Touch",
-      "subtitle": "Interested in collaborating, hiring, or discussing a creative project? Reach out anytime.",
-      "emailLabel": "Email Address",
-      "copyEmail": "Copy Email",
-      "copied": "Copied to clipboard!",
-      "downloadResume": "Download Resume (PDF)",
-      "socialLinks": "Social Networks"
-    }
-  },
-  "interactions": {
-    "chair": {
-      "sit": "Sit Down",
-      "stand": "Stand Up"
-    },
-    "light": {
-      "toggle": "Toggle Lamp",
-      "turnOn": "Turn Lamp On",
-      "turnOff": "Turn Lamp Off",
-      "preset": "Color Preset"
-    },
-    "headset": {
-      "wear": "Wear Headset",
-      "remove": "Remove Headset",
-      "lofi": "Lo-Fi Radio Active"
-    },
-    "laptop": {
-      "open": "Open Laptop Lid",
-      "close": "Close Laptop Lid",
-      "media": "Music Player"
-    },
-    "drawer": {
-      "open": "Open Drawer",
-      "close": "Close Drawer",
-      "resume": "Secret Resume Found"
-    },
-    "fridge": {
-      "open": "Open Mini-Fridge",
-      "close": "Close Mini-Fridge",
-      "drink": "Energy Drink Collected"
-    },
-    "mug": {
-      "drink": "Take a Sip (+Speed Boost)",
-      "refill": "Refill Steaming Coffee"
-    },
-    "trashCan": {
-      "toss": "Throw Paper Ball",
-      "score": "Basket Score: {{score}}"
-    },
-    "poster": {
-      "inspect": "Inspect Wall Poster",
-      "return": "Return to Room"
-    }
-  },
-  "getStarted": "Get started",
-  "editPrompt": "Edit <1>src/App.tsx</1> and save to test <3>HMR</3>",
-  "count": "Count is {{count}}",
-  "docs": {
-    "title": "Documentation",
-    "subtitle": "Your questions, answered",
-    "exploreVite": "Explore Vite",
-    "learnMore": "Learn more"
-  },
-  "social": {
-    "title": "Connect with us",
-    "subtitle": "Join the Vite community"
-  }
+	"language": {
+		"select": "Language",
+		"en": "English",
+		"fr": "Français",
+		"ja": "日本語",
+		"mg": "Malagasy"
+	},
+	"controls": {
+		"walk": "to walk",
+		"walkWithHeight": "to walk (Height: {{height}}m)",
+		"look": "Drag to look around",
+		"keys": {
+			"wasd": "W A S D",
+			"arrows": "Arrows",
+			"space": "SPACE",
+			"esc": "ESC"
+		},
+		"hints": {
+			"sit": "Click chair to sit down",
+			"stand": "Press SPACE to stand up",
+			"interact": "Click to interact",
+			"escToExit": "Press ESC to return"
+		}
+	},
+	"menu": {
+		"hero": {
+			"label": "Hero",
+			"description": "Developer introduction & bio"
+		},
+		"technicalSkills": {
+			"label": "Technical Skills",
+			"description": "Core proficiencies & tech stack"
+		},
+		"featuredProjects": {
+			"label": "Featured Projects",
+			"description": "Selected key works & live demos"
+		},
+		"recommendedProjects": {
+			"label": "Recommended Projects",
+			"description": "Open source contributions & libraries"
+		},
+		"professionalExperiences": {
+			"label": "Professional Experiences",
+			"description": "Career history & milestones"
+		},
+		"contact": {
+			"label": "Contact",
+			"description": "Get in touch & resume"
+		}
+	},
+	"sections": {
+		"hero": {
+			"greeting": "Hello, I am a",
+			"title": "Creative Full-Stack & 3D Web Developer",
+			"bio": "Building immersive digital experiences combining high-performance modern web architectures with interactive 3D graphics and clean software design.",
+			"ctaProjects": "Explore Projects",
+			"ctaContact": "Get in Touch",
+			"status": "Available for opportunities"
+		},
+		"skills": {
+			"title": "Technical Skills",
+			"subtitle": "Core competencies, frameworks, and modern technologies I leverage daily.",
+			"categories": {
+				"frontend": "Frontend Development",
+				"threeD": "3D & WebGL Graphics",
+				"backend": "Backend & Cloud Architecture",
+				"devops": "DevOps & CI/CD",
+				"tools": "Engineering Workflow & Tooling"
+			}
+		},
+		"featuredProjects": {
+			"title": "Featured Projects",
+			"subtitle": "Selected software engineering and interactive 3D projects built from concept to production.",
+			"viewDemo": "Live Preview",
+			"sourceCode": "Source Code",
+			"techStack": "Tech Stack"
+		},
+		"recommendedProjects": {
+			"title": "Recommended Projects",
+			"subtitle": "Curated open-source repositories, developer experiments, and utility packages.",
+			"visitRepo": "View on GitHub",
+			"stars": "Stars",
+			"forks": "Forks"
+		},
+		"experiences": {
+			"title": "Professional Experiences",
+			"subtitle": "My journey as a software engineer delivering scalable applications and digital products.",
+			"present": "Present"
+		},
+		"contact": {
+			"title": "Get in Touch",
+			"subtitle": "Interested in collaborating, hiring, or discussing a creative project? Reach out anytime.",
+			"emailLabel": "Email Address",
+			"copyEmail": "Copy Email",
+			"copied": "Copied to clipboard!",
+			"downloadResume": "Download Resume (PDF)",
+			"socialLinks": "Social Networks"
+		}
+	},
+	"interactions": {
+		"chair": {
+			"sit": "Sit Down",
+			"stand": "Stand Up"
+		},
+		"light": {
+			"toggle": "Toggle Lamp",
+			"turnOn": "Turn Lamp On",
+			"turnOff": "Turn Lamp Off",
+			"preset": "Color Preset"
+		},
+		"headset": {
+			"wear": "Wear Headset",
+			"remove": "Remove Headset",
+			"lofi": "Lo-Fi Radio Active"
+		},
+		"laptop": {
+			"open": "Open Laptop Lid",
+			"close": "Close Laptop Lid",
+			"media": "Music Player"
+		},
+		"drawer": {
+			"open": "Open Drawer",
+			"close": "Close Drawer",
+			"resume": "Secret Resume Found"
+		},
+		"fridge": {
+			"open": "Open Mini-Fridge",
+			"close": "Close Mini-Fridge",
+			"drink": "Energy Drink Collected"
+		},
+		"mug": {
+			"drink": "Take a Sip (+Speed Boost)",
+			"refill": "Refill Steaming Coffee"
+		},
+		"trashCan": {
+			"toss": "Throw Paper Ball",
+			"score": "Basket Score: {{score}}"
+		},
+		"poster": {
+			"inspect": "Inspect Wall Poster",
+			"return": "Return to Room"
+		}
+	},
+	"getStarted": "Get started",
+	"editPrompt": "Edit <1>src/App.tsx</1> and save to test <3>HMR</3>",
+	"count": "Count is {{count}}",
+	"docs": {
+		"title": "Documentation",
+		"subtitle": "Your questions, answered",
+		"exploreVite": "Explore Vite",
+		"learnMore": "Learn more"
+	},
+	"social": {
+		"title": "Connect with us",
+		"subtitle": "Join the Vite community"
+	}
 }

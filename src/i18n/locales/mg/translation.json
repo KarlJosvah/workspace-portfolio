@@ -1,158 +1,158 @@
 {
-  "language": {
-    "select": "Fiteny",
-    "en": "English",
-    "fr": "Français",
-    "ja": "日本語",
-    "mg": "Malagasy"
-  },
-  "controls": {
-    "walk": "handehanana",
-    "walkWithHeight": "handehanana (Haavo: {{height}}m)",
-    "look": "Tariho mba hijery manodidina",
-    "keys": {
-      "wasd": "W A S D",
-      "arrows": "Zana-tsipìka",
-      "space": "ESPACE",
-      "esc": "ECHAP"
-    },
-    "hints": {
-      "sit": "Kitiho ny seza mba hipetrahana",
-      "stand": "Tsindrio ny ESPACE mba hitsanganana",
-      "interact": "Kitiho mba hifandray",
-      "escToExit": "Tsindrio ny ECHAP mba hiverenana"
-    }
-  },
-  "menu": {
-    "hero": {
-      "label": "Fandraisana",
-      "description": "Fampahafantarana ny mpamorona & tantara fohy"
-    },
-    "technicalSkills": {
-      "label": "Fahaiza-manao",
-      "description": "Ireo fahaizana ara-teknika & fitaovana"
-    },
-    "featuredProjects": {
-      "label": "Tetikasa Nisongadina",
-      "description": "Ireo asa voafantina & fampisehoana mivantana"
-    },
-    "recommendedProjects": {
-      "label": "Tetikasa Naroso",
-      "description": "Fandraisana anjara open-source & fitaovana"
-    },
-    "professionalExperiences": {
-      "label": "Traikefa Ara-kasa",
-      "description": "Lalana nodiavina & dingana lehibe"
-    },
-    "contact": {
-      "label": "Fifandraisana",
-      "description": "Mifandraisa & maka ny CV"
-    }
-  },
-  "sections": {
-    "hero": {
-      "greeting": "Manao ahoana, izaho dia",
-      "title": "Mpamorona Tranonkala Full-Stack & 3D",
-      "bio": "Mamorona traikefa nomerika manaitra amin'ny alalan'ny fampifangaroana rafitra web matanjaka sy maoderina miaraka amin'ny sary 3D ifanakalozana.",
-      "ctaProjects": "Hijery ireo Tetikasa",
-      "ctaContact": "Hifandray Aminay",
-      "status": "Vonona handray fiaraha-miasa vaovao"
-    },
-    "skills": {
-      "title": "Fahaiza-manao Ara-teknika",
-      "subtitle": "Ireo haitao sy fitaovana maoderina ampiasaiko isan'andro.",
-      "categories": {
-        "frontend": "Famolavolana Frontend",
-        "threeD": "Sary 3D & WebGL",
-        "backend": "Rafitra Backend & Cloud",
-        "devops": "DevOps & CI/CD",
-        "tools": "Fitaovana & Fomba Fiasa"
-      }
-    },
-    "featuredProjects": {
-      "title": "Tetikasa Nisongadina",
-      "subtitle": "Ireo tetikasa rindrambaiko sy asa 3D ifanakalozana natsangana hatramin'ny voalohany.",
-      "viewDemo": "Hijery Mivantana",
-      "sourceCode": "Kaody Loharano",
-      "techStack": "Haitao Nampiasaina"
-    },
-    "recommendedProjects": {
-      "title": "Tetikasa Naroso",
-      "subtitle": "Ireo fizarana rindrambaiko malalaka, andrana ary fitaovana mahasoa.",
-      "visitRepo": "Hijery ao amin'ny GitHub",
-      "stars": "Kintana",
-      "forks": "Fizarana (Forks)"
-    },
-    "experiences": {
-      "title": "Traikefa Ara-kasa",
-      "subtitle": "Ny lalana nodiaviko amin'ny maha-injenieran'ny rindrambaiko mamorona vokatra matanjaka.",
-      "present": "Ankehitriny"
-    },
-    "contact": {
-      "title": "Mifandraisa Aminay",
-      "subtitle": "Manana tetikasa, tolotr'asa, na te hiara-hiasa? Aza misalasala mifandray.",
-      "emailLabel": "Adiresy Mailaka",
-      "copyEmail": "Handika ny Mailaka",
-      "copied": "Voadika tao amin'ny fitehirizana!",
-      "downloadResume": "Haka ny CV (PDF)",
-      "socialLinks": "Tambajotra Sosialy"
-    }
-  },
-  "interactions": {
-    "chair": {
-      "sit": "Mipetraha",
-      "stand": "Mitsangàna"
-    },
-    "light": {
-      "toggle": "Famonoana/Fandrehetana Jiro",
-      "turnOn": "Ampireheto ny Jiro",
-      "turnOff": "Vonoy ny Jiro",
-      "preset": "Loko Voafidy"
-    },
-    "headset": {
-      "wear": "Ataovy ny Headset",
-      "remove": "Esory ny Headset",
-      "lofi": "Radio Lo-Fi Mandeha"
-    },
-    "laptop": {
-      "open": "Sokafy ny Solosaina",
-      "close": "Akatony ny Solosaina",
-      "media": "Fandefasana Hira"
-    },
-    "drawer": {
-      "open": "Sokafy ny Vatasarihana",
-      "close": "Akatony ny Vatasarihana",
-      "resume": "Hita ny CV Miafina"
-    },
-    "fridge": {
-      "open": "Sokafy ny Vata Fampangatsiahana",
-      "close": "Akatony ny Vata Fampangatsiahana",
-      "drink": "Zava-pisotro Mangatsiaka Voaray"
-    },
-    "mug": {
-      "drink": "Misotroa Kafe (+Haingam-pandeha)",
-      "refill": "Fenoina Kafe Mafana"
-    },
-    "trashCan": {
-      "toss": "Atsipazo ny Taratasy",
-      "score": "Isa Azonao: {{score}}"
-    },
-    "poster": {
-      "inspect": "Zahao ny Sary",
-      "return": "Miverena amin'ny Efitrano"
-    }
-  },
-  "getStarted": "Manomboka",
-  "editPrompt": "Ovay ny <1>src/App.tsx</1> ary tehirizo mba hitsapana ny <3>HMR</3>",
-  "count": "Ny isa dia {{count}}",
-  "docs": {
-    "title": "Torolalana",
-    "subtitle": "Ireo fanontanianao, voavaly",
-    "exploreVite": "Zahao ny Vite",
-    "learnMore": "Hamantatra bebe kokoa"
-  },
-  "social": {
-    "title": "Mifandraisa aminay",
-    "subtitle": "Midira ao amin'ny vondrom-piarahamonina Vite"
-  }
+	"language": {
+		"select": "Fiteny",
+		"en": "English",
+		"fr": "Français",
+		"ja": "日本語",
+		"mg": "Malagasy"
+	},
+	"controls": {
+		"walk": "handehanana",
+		"walkWithHeight": "handehanana (Haavo: {{height}}m)",
+		"look": "Tariho mba hijery manodidina",
+		"keys": {
+			"wasd": "W A S D",
+			"arrows": "Zana-tsipìka",
+			"space": "ESPACE",
+			"esc": "ECHAP"
+		},
+		"hints": {
+			"sit": "Kitiho ny seza mba hipetrahana",
+			"stand": "Tsindrio ny ESPACE mba hitsanganana",
+			"interact": "Kitiho mba hifandray",
+			"escToExit": "Tsindrio ny ECHAP mba hiverenana"
+		}
+	},
+	"menu": {
+		"hero": {
+			"label": "Fandraisana",
+			"description": "Fampahafantarana ny mpamorona & tantara fohy"
+		},
+		"technicalSkills": {
+			"label": "Fahaiza-manao",
+			"description": "Ireo fahaizana ara-teknika & fitaovana"
+		},
+		"featuredProjects": {
+			"label": "Tetikasa Nisongadina",
+			"description": "Ireo asa voafantina & fampisehoana mivantana"
+		},
+		"recommendedProjects": {
+			"label": "Tetikasa Naroso",
+			"description": "Fandraisana anjara open-source & fitaovana"
+		},
+		"professionalExperiences": {
+			"label": "Traikefa Ara-kasa",
+			"description": "Lalana nodiavina & dingana lehibe"
+		},
+		"contact": {
+			"label": "Fifandraisana",
+			"description": "Mifandraisa & maka ny CV"
+		}
+	},
+	"sections": {
+		"hero": {
+			"greeting": "Manao ahoana, izaho dia",
+			"title": "Mpamorona Tranonkala Full-Stack & 3D",
+			"bio": "Mamorona traikefa nomerika manaitra amin'ny alalan'ny fampifangaroana rafitra web matanjaka sy maoderina miaraka amin'ny sary 3D ifanakalozana.",
+			"ctaProjects": "Hijery ireo Tetikasa",
+			"ctaContact": "Hifandray Aminay",
+			"status": "Vonona handray fiaraha-miasa vaovao"
+		},
+		"skills": {
+			"title": "Fahaiza-manao Ara-teknika",
+			"subtitle": "Ireo haitao sy fitaovana maoderina ampiasaiko isan'andro.",
+			"categories": {
+				"frontend": "Famolavolana Frontend",
+				"threeD": "Sary 3D & WebGL",
+				"backend": "Rafitra Backend & Cloud",
+				"devops": "DevOps & CI/CD",
+				"tools": "Fitaovana & Fomba Fiasa"
+			}
+		},
+		"featuredProjects": {
+			"title": "Tetikasa Nisongadina",
+			"subtitle": "Ireo tetikasa rindrambaiko sy asa 3D ifanakalozana natsangana hatramin'ny voalohany.",
+			"viewDemo": "Hijery Mivantana",
+			"sourceCode": "Kaody Loharano",
+			"techStack": "Haitao Nampiasaina"
+		},
+		"recommendedProjects": {
+			"title": "Tetikasa Naroso",
+			"subtitle": "Ireo fizarana rindrambaiko malalaka, andrana ary fitaovana mahasoa.",
+			"visitRepo": "Hijery ao amin'ny GitHub",
+			"stars": "Kintana",
+			"forks": "Fizarana (Forks)"
+		},
+		"experiences": {
+			"title": "Traikefa Ara-kasa",
+			"subtitle": "Ny lalana nodiaviko amin'ny maha-injenieran'ny rindrambaiko mamorona vokatra matanjaka.",
+			"present": "Ankehitriny"
+		},
+		"contact": {
+			"title": "Mifandraisa Aminay",
+			"subtitle": "Manana tetikasa, tolotr'asa, na te hiara-hiasa? Aza misalasala mifandray.",
+			"emailLabel": "Adiresy Mailaka",
+			"copyEmail": "Handika ny Mailaka",
+			"copied": "Voadika tao amin'ny fitehirizana!",
+			"downloadResume": "Haka ny CV (PDF)",
+			"socialLinks": "Tambajotra Sosialy"
+		}
+	},
+	"interactions": {
+		"chair": {
+			"sit": "Mipetraha",
+			"stand": "Mitsangàna"
+		},
+		"light": {
+			"toggle": "Famonoana/Fandrehetana Jiro",
+			"turnOn": "Ampireheto ny Jiro",
+			"turnOff": "Vonoy ny Jiro",
+			"preset": "Loko Voafidy"
+		},
+		"headset": {
+			"wear": "Ataovy ny Headset",
+			"remove": "Esory ny Headset",
+			"lofi": "Radio Lo-Fi Mandeha"
+		},
+		"laptop": {
+			"open": "Sokafy ny Solosaina",
+			"close": "Akatony ny Solosaina",
+			"media": "Fandefasana Hira"
+		},
+		"drawer": {
+			"open": "Sokafy ny Vatasarihana",
+			"close": "Akatony ny Vatasarihana",
+			"resume": "Hita ny CV Miafina"
+		},
+		"fridge": {
+			"open": "Sokafy ny Vata Fampangatsiahana",
+			"close": "Akatony ny Vata Fampangatsiahana",
+			"drink": "Zava-pisotro Mangatsiaka Voaray"
+		},
+		"mug": {
+			"drink": "Misotroa Kafe (+Haingam-pandeha)",
+			"refill": "Fenoina Kafe Mafana"
+		},
+		"trashCan": {
+			"toss": "Atsipazo ny Taratasy",
+			"score": "Isa Azonao: {{score}}"
+		},
+		"poster": {
+			"inspect": "Zahao ny Sary",
+			"return": "Miverena amin'ny Efitrano"
+		}
+	},
+	"getStarted": "Manomboka",
+	"editPrompt": "Ovay ny <1>src/App.tsx</1> ary tehirizo mba hitsapana ny <3>HMR</3>",
+	"count": "Ny isa dia {{count}}",
+	"docs": {
+		"title": "Torolalana",
+		"subtitle": "Ireo fanontanianao, voavaly",
+		"exploreVite": "Zahao ny Vite",
+		"learnMore": "Hamantatra bebe kokoa"
+	},
+	"social": {
+		"title": "Mifandraisa aminay",
+		"subtitle": "Midira ao amin'ny vondrom-piarahamonina Vite"
+	}
 }

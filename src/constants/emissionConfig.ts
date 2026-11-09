@@ -23,7 +23,7 @@ export type GlowMaterials = Record<EmissionTier, THREE.MeshStandardMaterial>;
  * Reuses the same underlying texture buffer in GPU memory with zero texture overhead.
  */
 export function createGlowMaterials(
-	baseMaterial: THREE.MeshStandardMaterial,
+	baseMaterial: THREE.MeshStandardMaterial
 ): GlowMaterials {
 	const createTier = (intensity: number) => {
 		const mat = baseMaterial.clone();

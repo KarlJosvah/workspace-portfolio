@@ -25,7 +25,7 @@ export function LangSwitchWrapper() {
 
 	const toggleLanguage = () => {
 		const currentIndex = supportedLanguages.findIndex(
-			(l) => l.code === currentLanguage.code,
+			(l) => l.code === currentLanguage.code
 		);
 		const nextIndex = (currentIndex + 1) % supportedLanguages.length;
 		void i18n.changeLanguage(supportedLanguages[nextIndex].code);
@@ -48,7 +48,9 @@ export function LangSwitchWrapper() {
 					aria-hidden="true"
 					className="lang-flag-toggle"
 				/>
-				<span className="lang-current-label">{currentLanguage.name}</span>
+				<span className="lang-current-label">
+					{currentLanguage.name}
+				</span>
 			</button>
 			<div
 				className="lang-options"
@@ -59,9 +61,7 @@ export function LangSwitchWrapper() {
 					<button
 						key={lang.code}
 						type="button"
-						className={`lang-option-btn ${
-							lang.code === currentLanguage.code ? "active" : ""
-						}`}
+						className={`lang-option-btn ${lang.code === currentLanguage.code ? "active" : ""}`}
 						onClick={() => void i18n.changeLanguage(lang.code)}
 						title={lang.name}
 						aria-label={lang.name}

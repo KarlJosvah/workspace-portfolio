@@ -29,14 +29,20 @@ export function FeaturedProjectsSection() {
 
 	return (
 		<div className="text-overlay-content">
-			<h1 className="text-overlay-title">{t("sections.featuredProjects.title")}.</h1>
-			<p className="text-overlay-subtitle">{t("sections.featuredProjects.subtitle")}</p>
+			<h1 className="text-overlay-title">
+				{t("sections.featuredProjects.title")}.
+			</h1>
+			<p className="text-overlay-subtitle">
+				{t("sections.featuredProjects.subtitle")}
+			</p>
 
 			<div className="text-overlay-list">
 				{PROJECTS.map((project) => (
 					<div key={project.id} className="text-group-item">
 						<div className="text-item-header">
-							<h3 className="text-group-heading">{project.title}</h3>
+							<h3 className="text-group-heading">
+								{project.title}
+							</h3>
 							<div className="text-item-links">
 								{project.demoUrl && (
 									<a
@@ -45,7 +51,10 @@ export function FeaturedProjectsSection() {
 										rel="noopener noreferrer"
 										className="text-link-sm"
 									>
-										{t("sections.featuredProjects.viewDemo")} ↗
+										{t(
+											"sections.featuredProjects.viewDemo"
+										)}{" "}
+										↗
 									</a>
 								)}
 								{project.sourceUrl && (
@@ -55,7 +64,10 @@ export function FeaturedProjectsSection() {
 										rel="noopener noreferrer"
 										className="text-link-sm"
 									>
-										{t("sections.featuredProjects.sourceCode")} ↗
+										{t(
+											"sections.featuredProjects.sourceCode"
+										)}{" "}
+										↗
 									</a>
 								)}
 							</div>

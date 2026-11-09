@@ -18,7 +18,7 @@ export interface CameraWaypoint {
  */
 export function computeLookAtRotation(
 	cameraPos: [number, number, number],
-	targetPos: [number, number, number],
+	targetPos: [number, number, number]
 ): { yaw: number; pitch: number } {
 	const dx = targetPos[0] - cameraPos[0];
 	const dy = targetPos[1] - cameraPos[1];
@@ -34,7 +34,7 @@ export function computeLookAtRotation(
  */
 export function resolveTargetPosition(
 	target: THREE.Object3D | [number, number, number],
-	offset: [number, number, number] = [0, 0, 0],
+	offset: [number, number, number] = [0, 0, 0]
 ): [number, number, number] {
 	if (Array.isArray(target)) {
 		return [
@@ -65,7 +65,7 @@ export function resolveTargetPosition(
 export function createWaypoint(
 	position: [number, number, number],
 	target: THREE.Object3D | [number, number, number],
-	offset: [number, number, number] = [0, 0, 0],
+	offset: [number, number, number] = [0, 0, 0]
 ): CameraWaypoint {
 	const targetPos = resolveTargetPosition(target, offset);
 	const { yaw, pitch } = computeLookAtRotation(position, targetPos);
@@ -119,7 +119,7 @@ export const WAYPOINT_TARGET_MESHES: Record<
  */
 export function resolveWaypointForSection(
 	section: MenuType,
-	sceneOrNodes: THREE.Object3D | Record<string, THREE.Object3D>,
+	sceneOrNodes: THREE.Object3D | Record<string, THREE.Object3D>
 ): CameraWaypoint | null {
 	if (section === MenuType.Hero) return null;
 	const config = WAYPOINT_TARGET_MESHES[section];
@@ -142,7 +142,7 @@ export function resolveWaypointForSection(
  * Creates dynamic waypoints bound to a set of GLTF nodes.
  */
 export function createWaypointsFromNodes(
-	nodes: Record<string, THREE.Object3D>,
+	nodes: Record<string, THREE.Object3D>
 ): Record<MenuType, CameraWaypoint | null> {
 	const resolve = (section: Exclude<MenuType, typeof MenuType.Hero>) => {
 		const config = WAYPOINT_TARGET_MESHES[section];
@@ -158,7 +158,9 @@ export function createWaypointsFromNodes(
 		[MenuType.TechnicalSkills]: resolve(MenuType.TechnicalSkills),
 		[MenuType.FeaturedProjects]: resolve(MenuType.FeaturedProjects),
 		[MenuType.RecommendedProjects]: resolve(MenuType.RecommendedProjects),
-		[MenuType.ProfessionalExperiences]: resolve(MenuType.ProfessionalExperiences),
+		[MenuType.ProfessionalExperiences]: resolve(
+			MenuType.ProfessionalExperiences
+		),
 		[MenuType.Contact]: resolve(MenuType.Contact),
 	};
 }
@@ -170,22 +172,22 @@ export const CAMERA_WAYPOINTS: Record<MenuType, CameraWaypoint | null> = {
 	[MenuType.Hero]: null, // Free walk, no forced waypoint
 	[MenuType.TechnicalSkills]: createWaypoint(
 		[-1.55, SEATED_EYE_HEIGHT, 1.15],
-		[-2.29, 0.74, -0.19],
+		[-2.29, 0.74, -0.19]
 	),
 	[MenuType.FeaturedProjects]: createWaypoint(
 		[-0.85, SEATED_EYE_HEIGHT, 1.25],
-		[-0.656, 0.848, -0.162], // Updated Monitor.001 location
+		[-0.656, 0.848, -0.162] // Updated Monitor.001 location
 	),
 	[MenuType.RecommendedProjects]: createWaypoint(
 		[-0.75, SEATED_EYE_HEIGHT, 1.2],
-		[0.034, 0.73, 0.542],
+		[0.034, 0.73, 0.542]
 	),
 	[MenuType.ProfessionalExperiences]: createWaypoint(
 		[-0.9, SEATED_EYE_HEIGHT, 1.35],
-		[0.13, 0.68, 1.182],
+		[0.13, 0.68, 1.182]
 	),
 	[MenuType.Contact]: createWaypoint(
 		[-1.0, SEATED_EYE_HEIGHT, 1.15],
-		[-1.544, 0.82, -0.025],
+		[-1.544, 0.82, -0.025]
 	),
 };
