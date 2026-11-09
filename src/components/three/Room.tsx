@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
@@ -24,9 +24,12 @@ export type GLTFResult = GLTF & {
 		WingsofFreedomRight: THREE.Mesh;
 		WingsofFreedomLeft: THREE.Mesh;
 		Ceiling: THREE.Mesh;
+		LEDCeiling : THREE.Mesh;
 		Wall: THREE.Mesh;
-		DeskDrawer: THREE.Mesh;
 		Desk: THREE.Mesh;
+		DeskDrawer001: THREE.Mesh;
+		DeskDrawer002: THREE.Mesh;
+		DeskDrawer003: THREE.Mesh;
 		LED001: THREE.Mesh;
 		LED002: THREE.Mesh;
 		LED003: THREE.Mesh;
@@ -56,38 +59,6 @@ export type GLTFResult = GLTF & {
 		ChessChair002: THREE.Mesh;
 		ChessChair001: THREE.Mesh;
 		CarpetChess: THREE.Mesh;
-		ChessWhiteRook001: THREE.Mesh;
-		ChessWhiteKnight001: THREE.Mesh;
-		ChessWhiteBishop001: THREE.Mesh;
-		ChessWhiteQueen: THREE.Mesh;
-		ChessWhiteKing: THREE.Mesh;
-		ChessWhitePawn001: THREE.Mesh;
-		ChessWhiteRook002: THREE.Mesh;
-		ChessWhiteKnight002: THREE.Mesh;
-		ChessWhiteBishop002: THREE.Mesh;
-		ChessWhitePawn002: THREE.Mesh;
-		ChessWhitePawn003: THREE.Mesh;
-		ChessWhitePawn004: THREE.Mesh;
-		ChessWhitePawn005: THREE.Mesh;
-		ChessWhitePawn006: THREE.Mesh;
-		ChessWhitePawn007: THREE.Mesh;
-		ChessWhitePawn008: THREE.Mesh;
-		ChessWhiteRook003: THREE.Mesh;
-		ChessBlackKnight001: THREE.Mesh;
-		ChessBlackBishop001: THREE.Mesh;
-		ChessWhiteQueen001: THREE.Mesh;
-		ChessBlackKing: THREE.Mesh;
-		ChessBlackPawn001: THREE.Mesh;
-		ChessWhiteRook004: THREE.Mesh;
-		ChessBlackKnight002: THREE.Mesh;
-		ChessBlackBishop002: THREE.Mesh;
-		ChessBlackPawn002: THREE.Mesh;
-		ChessBlackPawn003: THREE.Mesh;
-		ChessBlackPawn004: THREE.Mesh;
-		ChessBlackPawn005: THREE.Mesh;
-		ChessBlackPawn006: THREE.Mesh;
-		ChessBlackPawn007: THREE.Mesh;
-		ChessBlackPawn008: THREE.Mesh;
 		Shelves: THREE.Mesh;
 		LED014: THREE.Mesh;
 		LED015: THREE.Mesh;
@@ -235,24 +206,69 @@ export function WallClock({ nodes, glowMaterials }: RoomSubComponentProps) {
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.ledStrips}
+					material={glowMaterials.wallArt}
 				/>
 			))}
 			{hours.map((node) => (
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.ledStrips}
+					material={glowMaterials.wallArt}
 				/>
 			))}
 			{seconds.map((node) => (
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.ledStrips}
+					material={glowMaterials.wallArt}
 				/>
 			))}
 		</RoomMesh>
+	);
+}
+
+interface TriangleLEDArrays {
+	all: THREE.Mesh[];
+	cyan: THREE.Mesh[];
+	white: THREE.Mesh[];
+}
+
+/**
+ * Dynamically discovers triangular wall LED panels (Nanoleaf-style modular tiles)
+ * and organizes them into arrays by color or as a unified collection.
+ */
+function getTriangleWallLEDs(nodes: GLTFResult["nodes"]): TriangleLEDArrays {
+	const all = (Object.values(nodes) as THREE.Mesh[]).filter(
+		(n) => n?.name && /^LED\.?Triangle/i.test(n.name),
+	);
+
+	return {
+		all,
+		cyan: all.filter((n) => /cyan/i.test(n.name)),
+		white: all.filter((n) => /white/i.test(n.name)),
+	};
+}
+
+export function TriangleWallLEDs({
+	nodes,
+	glowMaterials,
+}: RoomSubComponentProps) {
+	const { all: triangleLEDs } = useMemo(
+		() => getTriangleWallLEDs(nodes),
+		[nodes],
+	);
+
+	return (
+		<group name="TriangleWallLEDs">
+			{triangleLEDs.map((node) => (
+				<RoomMesh
+					key={node.name}
+					node={node}
+					material={glowMaterials.lamp}
+					castShadow
+				/>
+			))}
+		</group>
 	);
 }
 
@@ -265,6 +281,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<RoomMesh node={nodes.Floor} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.Wall} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.Ceiling} material={glowMaterials.neonSigns} receiveShadow />
+			<RoomMesh node={nodes.LEDCeiling} material={glowMaterials.subtle} receiveShadow />
 			<RoomMesh node={nodes.CarpetDesk} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.CarpetChess} material={glowMaterials.standard} receiveShadow />
 			<RoomMesh node={nodes.WingsofFreedomRight} material={glowMaterials.wallArt} castShadow receiveShadow />
@@ -279,6 +296,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<RoomMesh node={nodes.CeilingLamp003} material={glowMaterials.lamp} castShadow receiveShadow />
 			<RoomMesh node={nodes.CeilingLamp004} material={glowMaterials.lamp} castShadow receiveShadow />
 			<WallClock nodes={nodes} glowMaterials={glowMaterials} />
+			<TriangleWallLEDs nodes={nodes} glowMaterials={glowMaterials} />
 		</group>
 	);
 }
@@ -289,8 +307,10 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 	return (
 		<group name="DeskStation">
-			<RoomMesh node={nodes.DeskDrawer} material={glowMaterials.standard} castShadow receiveShadow>
-				<RoomMesh node={nodes.Desk} material={glowMaterials.standard} castShadow receiveShadow />
+			<RoomMesh node={nodes.Desk} material={glowMaterials.standard} castShadow receiveShadow>
+				<RoomMesh node={nodes.DeskDrawer001} material={glowMaterials.standard} castShadow receiveShadow />
+				<RoomMesh node={nodes.DeskDrawer002} material={glowMaterials.standard} castShadow receiveShadow />
+				<RoomMesh node={nodes.DeskDrawer003} material={glowMaterials.standard} castShadow receiveShadow />
 				<RoomMesh node={nodes.LED001} material={glowMaterials.ledStrips} castShadow />
 				<RoomMesh node={nodes.LED002} material={glowMaterials.ledStrips} castShadow />
 				<RoomMesh node={nodes.LED003} material={glowMaterials.ledStrips} castShadow />
@@ -371,53 +391,64 @@ export function RoomFurniture({ nodes, glowMaterials }: RoomSubComponentProps) {
 
 /* -------------------------------------------------------------
  * 6. Interactive Chess Corner (Table, Board, Chairs & 32 Pieces)
- * ------------------------------------------------------------*/
+ * -------------------------------------------------------------*/
+interface ChessPieceArrays {
+	all: THREE.Mesh[];
+	white: THREE.Mesh[];
+	black: THREE.Mesh[];
+}
+
+/**
+ * Dynamically resolves all chess piece meshes from the ChessBoard parent node,
+ * falling back to scene graph search if needed.
+ */
+function getChessPieces(nodes: GLTFResult["nodes"]): ChessPieceArrays {
+	const board = nodes.ChessBoard;
+	const children = (board?.children ?? []) as THREE.Mesh[];
+	const source =
+		children.length > 0
+			? children
+			: (Object.values(nodes) as THREE.Mesh[]).filter(
+					(n) => n?.name && /^Chess\.?(White|Black)/i.test(n.name),
+			  );
+
+	return {
+		all: source,
+		white: source.filter((p) => /white/i.test(p.name)),
+		black: source.filter((p) => /black/i.test(p.name)),
+	};
+}
+
 export function ChessArea({ nodes, glowMaterials }: RoomSubComponentProps) {
+	const { all: chessPieces } = useMemo(
+		() => getChessPieces(nodes),
+		[nodes],
+	);
+
 	return (
 		<group name="ChessArea">
-			<RoomMesh node={nodes.ChessBoard} material={glowMaterials.subtle} castShadow receiveShadow />
+			<RoomMesh
+				node={nodes.ChessBoard}
+				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			>
+				{chessPieces.map((piece) => (
+					<RoomMesh
+						key={piece.name}
+						node={piece}
+						material={glowMaterials.standard}
+						castShadow
+					/>
+				))}
+			</RoomMesh>
 			<RoomMesh node={nodes.ChessTable} material={glowMaterials.standard} castShadow receiveShadow />
 			<RoomMesh node={nodes.ChessChair002} material={glowMaterials.standard} castShadow receiveShadow />
 			<RoomMesh node={nodes.ChessChair001} material={glowMaterials.standard} castShadow receiveShadow />
-			<RoomMesh node={nodes.ChessWhiteRook001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteKnight001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteBishop001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteQueen} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteKing} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteRook002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteKnight002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteBishop002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn003} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn004} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn005} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn006} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn007} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhitePawn008} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteRook003} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackKnight001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackBishop001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteQueen001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackKing} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn001} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessWhiteRook004} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackKnight002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackBishop002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn002} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn003} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn004} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn005} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn006} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn007} material={glowMaterials.standard} castShadow />
-			<RoomMesh node={nodes.ChessBlackPawn008} material={glowMaterials.standard} castShadow />
 		</group>
 	);
 }
 
-/* -------------------------------------------------------------
- * 7. Gaming & Entertainment Wall (TV Console, TV with Backlight, Soundbar, Remote, Game Shelves, PlayStation Collection, Nintendo Switch & LED Signs)
- * ------------------------------------------------------------*/
 export function GamingConsoleZone({
 	nodes,
 	glowMaterials,
@@ -439,7 +470,7 @@ export function GamingConsoleZone({
 				<RoomMesh node={nodes.LED008} material={glowMaterials.ledStrips} castShadow />
 				<RoomMesh node={nodes.LED009} material={glowMaterials.ledStrips} castShadow />
 			</RoomMesh>
-			<RoomMesh node={nodes.MysteryBox} material={glowMaterials.neonSigns} castShadow receiveShadow />
+			<RoomMesh node={nodes.MysteryBox} material={glowMaterials.lamp} castShadow receiveShadow />
 			<RoomMesh node={nodes.Speaker003} material={glowMaterials.pcAccents} castShadow />
 			<RoomMesh node={nodes.TVRemote} material={glowMaterials.standard} castShadow />
 			<RoomMesh node={nodes.PSGameShelve} material={glowMaterials.standard} castShadow receiveShadow />
