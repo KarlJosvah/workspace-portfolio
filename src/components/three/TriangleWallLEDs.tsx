@@ -40,7 +40,7 @@ export function TriangleWallLEDs({
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.lamp}
+					material={glowMaterials.wallArt}
 					castShadow
 				/>
 			))}

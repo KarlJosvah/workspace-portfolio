@@ -51,21 +51,21 @@ export function WallClock({ nodes, glowMaterials }: RoomSubComponentProps) {
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.wallArt}
+					material={glowMaterials.neonSigns}
 				/>
 			))}
 			{hours.map((node) => (
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.wallArt}
+					material={glowMaterials.neonSigns}
 				/>
 			))}
 			{seconds.map((node) => (
 				<RoomMesh
 					key={node.name}
 					node={node}
-					material={glowMaterials.wallArt}
+					material={glowMaterials.neonSigns}
 				/>
 			))}
 		</RoomMesh>

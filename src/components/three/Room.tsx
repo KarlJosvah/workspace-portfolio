@@ -37,7 +37,7 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 			/>
 			<RoomMesh
 				node={nodes.Ceiling}
-				material={glowMaterials.neonSigns}
+				material={glowMaterials.lamp}
 				receiveShadow
 			/>
 			<RoomMesh
@@ -276,23 +276,23 @@ export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 			/>
 			<RoomMesh
 				node={nodes.MCHotBar}
-				material={glowMaterials.screen}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			>
 				<RoomMesh
 					node={nodes.MCHeart}
-					material={glowMaterials.screen}
+					material={glowMaterials.standard}
 					castShadow
 				/>
 				<RoomMesh
 					node={nodes.MCHunger}
-					material={glowMaterials.screen}
+					material={glowMaterials.standard}
 					castShadow
 				/>
 				<RoomMesh
 					node={nodes.MCXPBar}
-					material={glowMaterials.screen}
+					material={glowMaterials.standard}
 					castShadow
 				/>
 			</RoomMesh>
@@ -479,7 +479,7 @@ export function GamingConsoleZone({
 			/>
 			<RoomMesh
 				node={nodes.Speaker003}
-				material={glowMaterials.pcAccents}
+				material={glowMaterials.subtle}
 				castShadow
 			/>
 			<RoomMesh
@@ -563,7 +563,7 @@ export function GamingConsoleZone({
 			/>
 			<RoomMesh
 				node={nodes.SwitchTablet}
-				material={glowMaterials.screen}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			/>

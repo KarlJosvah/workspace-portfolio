@@ -10,7 +10,7 @@ export const EMISSION_LEVELS = {
 	screen: 2.0, // Monitor & laptop displays
 	lamp: 2.2, // All basic lamps that should light the room
 	pcAccents: 3.5, // PC tower internal cyber glow
-	wallArt: 4.5, // Wings of Freedom wall plaque
+	wallArt: 2.3, // Wings of Freedom wall plaque
 	neonSigns: 5.0, // PlayStation neon wall symbols
 	ledStrips: 1.2, // Ambient LED edge strips & screen bias lights
 } as const;
