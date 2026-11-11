@@ -28,6 +28,11 @@ export function ControlsHint({ playerHeight = 1.75 }: ControlsHintProps) {
 			<span className="controls-desc">
 				{t("controls.look", "Drag to look around")}
 			</span>
+			<span className="controls-dot">•</span>
+			<span className="controls-key">F</span>
+			<span className="controls-desc">
+				{t("controls.fps", "FPS")}
+			</span>
 		</div>
 	);
 }

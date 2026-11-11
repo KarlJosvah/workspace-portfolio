@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { useGLTF, useHelper } from "@react-three/drei";
+import { Stats, useGLTF, useHelper } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
 import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
@@ -16,6 +16,7 @@ const CAMERA_CONFIG = {
 
 interface SceneProps {
 	activeSection?: MenuType | null;
+	showStats?: boolean;
 }
 
 interface RoomLightingProps {
@@ -170,10 +171,16 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 	);
 }
 
-export function Scene({ activeSection = null }: SceneProps) {
+export function Scene({
+	activeSection = null,
+	showStats: controlledShowStats,
+}: SceneProps) {
 	const [showHelpers, setShowHelpers] = useState(false);
+	const [internalShowStats, setInternalShowStats] = useState(false);
+	const showStats = controlledShowStats ?? internalShowStats;
+	const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
-	// Toggle light helpers visibility with the `L` key
+	// Toggle light helpers visibility with `L` and FPS performance stats with `F` or `P`
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			const target = e.target as HTMLElement | null;
@@ -189,6 +196,17 @@ export function Scene({ activeSection = null }: SceneProps) {
 			if (e.key === "l" || e.key === "L") {
 				setShowHelpers((prev) => !prev);
 			}
+
+			if (e.key === "f" || e.key === "F" || e.key === "p" || e.key === "P") {
+				setInternalShowStats((prev) => !prev);
+				const renderer = rendererRef.current;
+				if (renderer) {
+					console.log("Draw Calls:", renderer.info.render.calls);
+					console.log("Triangles:", renderer.info.render.triangles);
+					console.log("Geometries in Memory:", renderer.info.memory.geometries);
+					console.log("Textures in Memory:", renderer.info.memory.textures);
+				}
+			}
 		};
 
 		window.addEventListener("keydown", handleKeyDown);
@@ -200,6 +218,9 @@ export function Scene({ activeSection = null }: SceneProps) {
 	return (
 		<Canvas
 			shadows
+			onCreated={({ gl }) => {
+				rendererRef.current = gl;
+			}}
 			camera={{
 				position: CAMERA_CONFIG.INITIAL_POSITION,
 				fov: CAMERA_CONFIG.FOV,
@@ -208,6 +229,9 @@ export function Scene({ activeSection = null }: SceneProps) {
 			}}
 			className="three-canvas"
 		>
+			{/* FPS performance indicator (stats.js panel) */}
+			{showStats && <Stats className="fps-stats" showPanel={0} />}
+
 			<Suspense fallback={null}>
 				<RoomLighting showHelpers={showHelpers} />
 				<Room />
