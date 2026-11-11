@@ -14,6 +14,27 @@ const CAMERA_CONFIG = {
 	WALK_SPEED: 3.5,
 };
 
+/**
+ * Tunable performance configuration parameters.
+ * Adjust these values directly to balance visual fidelity and framerate.
+ */
+const PERFORMANCE_CONFIG = {
+	/** Capped device pixel ratio [min, max] — prevents 4K/Retina framebuffer slowdowns */
+	DPR: [1, 1.5] as [number, number],
+	/** Request high-performance dedicated GPU on dual-GPU laptops */
+	POWER_PREFERENCE: "high-performance" as const,
+	/** Shadow map resolution in pixels (512 is 4x lighter in VRAM/fill-rate than 1024) */
+	SHADOW_MAP_SIZE: 512,
+	/** Set to "demand" for 0% idle GPU usage, or "always" for continuous rendering */
+	FRAMELOOP: "always" as "always" | "demand",
+};
+
+/**
+ * 1-based indices of ceiling lamps configured to cast dynamic shadows.
+ * Only lamps listed here will have castShadow={true} (e.g. [1, 3] = Ceiling.Lamp.001 and Ceiling.Lamp.003).
+ */
+const SHADOW_CASTING_CEILING_LAMPS: readonly number[] = [1, 3];
+
 interface SceneProps {
 	activeSection?: MenuType | null;
 	showStats?: boolean;
@@ -26,6 +47,7 @@ interface RoomLightingProps {
 interface CeilingLampSpotLightProps {
 	node: THREE.Mesh;
 	showHelpers: boolean;
+	castShadow: boolean;
 }
 
 /**
@@ -36,12 +58,21 @@ interface CeilingLampSpotLightProps {
 function CeilingLampSpotLight({
 	node,
 	showHelpers,
+	castShadow,
 }: CeilingLampSpotLightProps) {
 	const lightRef = useRef<THREE.SpotLight>(null);
 
-	// Position light flush with bottom face of fixture (y - 0.015)
+	// Static shadow optimization: update shadow map once on mount, then freeze autoUpdate
+	useEffect(() => {
+		if (lightRef.current && castShadow) {
+			lightRef.current.shadow.autoUpdate = false;
+			lightRef.current.shadow.needsUpdate = true;
+		}
+	}, [castShadow]);
+
+	// Position light below fixture
 	const lightPosition: [number, number, number] = useMemo(
-		() => [node.position.x, node.position.y - 0.015, node.position.z],
+		() => [node.position.x, node.position.y - 0.12, node.position.z],
 		[node.position.x, node.position.y, node.position.z]
 	);
 
@@ -71,9 +102,9 @@ function CeilingLampSpotLight({
 				penumbra={0.8}
 				distance={8}
 				decay={2}
-				castShadow
-				shadow-mapSize-width={1024}
-				shadow-mapSize-height={1024}
+				castShadow={castShadow}
+				shadow-mapSize-width={PERFORMANCE_CONFIG.SHADOW_MAP_SIZE}
+				shadow-mapSize-height={PERFORMANCE_CONFIG.SHADOW_MAP_SIZE}
 				shadow-bias={-0.0001}
 			/>
 		</>
@@ -97,6 +128,14 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 				a.name.localeCompare(b.name, undefined, { numeric: true })
 			);
 	}, [nodes]);
+
+	// Static shadow optimization for desk lamp: freeze after initial render
+	useEffect(() => {
+		if (deskLampRef.current) {
+			deskLampRef.current.shadow.autoUpdate = false;
+			deskLampRef.current.shadow.needsUpdate = true;
+		}
+	}, []);
 
 	// Dedicated target for the desk lamp spotLight aiming toward the chair and desk workspace
 	const [lampTarget] = useState(() => {
@@ -125,14 +164,22 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 			{/* Ambient fill light for base indoor illumination */}
 			<ambientLight intensity={0.85} color="#e3f2fd" />
 
-			{/* Downward wide-angle spotlights dynamically placed for each ceiling lamp fixture */}
-			{ceilingLampNodes.map((node) => (
-				<CeilingLampSpotLight
-					key={node.name}
-					node={node}
-					showHelpers={showHelpers}
-				/>
-			))}
+			{/* Downward wide-angle spotlights for ceiling lamp fixtures (selective shadows) */}
+			{ceilingLampNodes.map((node, index) => {
+				const lampNumber =
+					parseInt(node.name.replace(/\D/g, ""), 10) || index + 1;
+				const shouldCastShadow =
+					SHADOW_CASTING_CEILING_LAMPS.includes(lampNumber);
+
+				return (
+					<CeilingLampSpotLight
+						key={node.name}
+						node={node}
+						showHelpers={showHelpers}
+						castShadow={shouldCastShadow}
+					/>
+				);
+			})}
 
 			{/*
 			  Desk lamp directional SpotLight:
@@ -153,8 +200,8 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 				distance={5}
 				decay={2}
 				castShadow
-				shadow-mapSize-width={1024}
-				shadow-mapSize-height={1024}
+				shadow-mapSize-width={PERFORMANCE_CONFIG.SHADOW_MAP_SIZE}
+				shadow-mapSize-height={PERFORMANCE_CONFIG.SHADOW_MAP_SIZE}
 				shadow-bias={-0.0001}
 			/>
 
@@ -218,6 +265,14 @@ export function Scene({
 	return (
 		<Canvas
 			shadows
+			dpr={PERFORMANCE_CONFIG.DPR}
+			frameloop={PERFORMANCE_CONFIG.FRAMELOOP}
+			gl={{
+				powerPreference: PERFORMANCE_CONFIG.POWER_PREFERENCE,
+				antialias: false,
+				stencil: false,
+				depth: true,
+			}}
 			onCreated={({ gl }) => {
 				rendererRef.current = gl;
 			}}
@@ -238,7 +293,7 @@ export function Scene({
 			</Suspense>
 
 			{/* Bloom post-processing for high-emission palette glow */}
-			<EffectComposer>
+			<EffectComposer multisampling={0}>
 				<Bloom
 					luminanceThreshold={1.0}
 					luminanceSmoothing={0.25}

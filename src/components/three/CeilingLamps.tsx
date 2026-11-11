@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import * as THREE from "three";
-import { RoomMesh } from "./RoomMesh.tsx";
+import { Instances, Instance } from "@react-three/drei";
 import type { GLTFResult, RoomSubComponentProps } from "./roomTypes.ts";
 
 /**
@@ -18,6 +18,10 @@ function getCeilingLamps(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 		);
 }
 
+/**
+ * Optimized Instanced Mesh for all ceiling lamps.
+ * Collapses 12 individual mesh draw calls into a single instanced draw call.
+ */
 export function CeilingLamps({
 	nodes,
 	glowMaterials,
@@ -27,17 +31,27 @@ export function CeilingLamps({
 		[nodes]
 	);
 
+	if (ceilingLamps.length === 0) return null;
+
+	const baseGeometry = ceilingLamps[0].geometry;
+
 	return (
 		<group name="CeilingLamps">
-			{ceilingLamps.map((node) => (
-				<RoomMesh
-					key={node.name}
-					node={node}
-					material={glowMaterials.lamp}
-					castShadow
-					receiveShadow
-				/>
-			))}
+			<Instances
+				geometry={baseGeometry}
+				material={glowMaterials.lamp}
+				castShadow
+				receiveShadow
+			>
+				{ceilingLamps.map((node) => (
+					<Instance
+						key={node.name}
+						position={node.position}
+						rotation={node.rotation}
+						scale={node.scale}
+					/>
+				))}
+			</Instances>
 		</group>
 	);
 }

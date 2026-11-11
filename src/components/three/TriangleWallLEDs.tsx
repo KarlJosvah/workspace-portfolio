@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import * as THREE from "three";
-import { RoomMesh } from "./RoomMesh.tsx";
+import { Instances, Instance } from "@react-three/drei";
 import type { GLTFResult, RoomSubComponentProps } from "./roomTypes.ts";
 
 interface TriangleLEDArrays {
@@ -25,25 +25,53 @@ function getTriangleWallLEDs(nodes: GLTFResult["nodes"]): TriangleLEDArrays {
 	};
 }
 
+/**
+ * Optimized Instanced Mesh for modular triangular LED wall panels.
+ * Collapses 30+ individual mesh draw calls into 2 instanced draw calls (Cyan & White).
+ */
 export function TriangleWallLEDs({
 	nodes,
 	glowMaterials,
 }: RoomSubComponentProps) {
-	const { all: triangleLEDs } = useMemo(
+	const { cyan, white } = useMemo(
 		() => getTriangleWallLEDs(nodes),
 		[nodes]
 	);
 
 	return (
 		<group name="TriangleWallLEDs">
-			{triangleLEDs.map((node) => (
-				<RoomMesh
-					key={node.name}
-					node={node}
+			{cyan.length > 0 && (
+				<Instances
+					geometry={cyan[0].geometry}
 					material={glowMaterials.wallArt}
 					castShadow
-				/>
-			))}
+				>
+					{cyan.map((node) => (
+						<Instance
+							key={node.name}
+							position={node.position}
+							rotation={node.rotation}
+							scale={node.scale}
+						/>
+					))}
+				</Instances>
+			)}
+			{white.length > 0 && (
+				<Instances
+					geometry={white[0].geometry}
+					material={glowMaterials.wallArt}
+					castShadow
+				>
+					{white.map((node) => (
+						<Instance
+							key={node.name}
+							position={node.position}
+							rotation={node.rotation}
+							scale={node.scale}
+						/>
+					))}
+				</Instances>
+			)}
 		</group>
 	);
 }
