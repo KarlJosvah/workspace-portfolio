@@ -1,4 +1,4 @@
-﻿import { useMemo } from "react";
+import { useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
 import { createGlowMaterials } from "@/constants/emissionConfig.ts";
@@ -10,6 +10,7 @@ import {
 import { RoomMesh } from "./RoomMesh.tsx";
 import { WallClock } from "./WallClock.tsx";
 import { TriangleWallLEDs } from "./TriangleWallLEDs.tsx";
+import { CeilingLamps } from "./CeilingLamps.tsx";
 import { ChessArea } from "./ChessPieces.tsx";
 
 // Re-export outsourced components and types for consumers
@@ -17,6 +18,7 @@ export { MODEL_URL, type GLTFResult, type RoomSubComponentProps };
 export { RoomMesh } from "./RoomMesh.tsx";
 export { WallClock } from "./WallClock.tsx";
 export { TriangleWallLEDs } from "./TriangleWallLEDs.tsx";
+export { CeilingLamps } from "./CeilingLamps.tsx";
 export { ChessArea, ChessPieces } from "./ChessPieces.tsx";
 
 /* -------------------------------------------------------------
@@ -93,29 +95,30 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 				/>
 			</RoomMesh>
 			<RoomMesh
-				node={nodes.CeilingLamp001}
-				material={glowMaterials.lamp}
+				node={nodes.AC}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			/>
 			<RoomMesh
-				node={nodes.CeilingLamp002}
-				material={glowMaterials.lamp}
+				node={nodes.Radiator}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			/>
 			<RoomMesh
-				node={nodes.CeilingLamp003}
-				material={glowMaterials.lamp}
+				node={nodes.BasketBall}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			/>
 			<RoomMesh
-				node={nodes.CeilingLamp004}
-				material={glowMaterials.lamp}
+				node={nodes.Molecules}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			/>
+			<CeilingLamps nodes={nodes} glowMaterials={glowMaterials} />
 			<WallClock nodes={nodes} glowMaterials={glowMaterials} />
 			<TriangleWallLEDs nodes={nodes} glowMaterials={glowMaterials} />
 		</group>

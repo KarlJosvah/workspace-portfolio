@@ -87,16 +87,14 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 
 	// Dynamically discover all ceiling lamp fixtures from GLB nodes
 	const ceilingLampNodes = useMemo(() => {
-		const lamps = [
-			nodes.CeilingLamp001,
-			nodes.CeilingLamp002,
-			nodes.CeilingLamp003,
-			nodes.CeilingLamp004,
-		].filter(Boolean);
-		if (lamps.length > 0) return lamps;
-		return Object.values(nodes).filter((node): node is THREE.Mesh =>
-			Boolean(node?.name?.startsWith("CeilingLamp"))
-		);
+		return (Object.values(nodes) as THREE.Mesh[])
+			.filter(
+				(node): node is THREE.Mesh =>
+					Boolean(node?.name && /^Ceiling\.?Lamp/i.test(node.name))
+			)
+			.sort((a, b) =>
+				a.name.localeCompare(b.name, undefined, { numeric: true })
+			);
 	}, [nodes]);
 
 	// Dedicated target for the desk lamp spotLight aiming toward the chair and desk workspace
