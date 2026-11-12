@@ -12,6 +12,8 @@ import { WallClock } from "./WallClock.tsx";
 import { TriangleWallLEDs } from "./TriangleWallLEDs.tsx";
 import { CeilingLamps } from "./CeilingLamps.tsx";
 import { ChessArea } from "./ChessPieces.tsx";
+import { MonitorScreen } from "./MonitorScreen.tsx";
+import { FeaturedProjectsSection } from "@/sections/panels/FeaturedProjectsSection.tsx";
 
 // Re-export outsourced components and types for consumers
 export { MODEL_URL, type GLTFResult, type RoomSubComponentProps };
@@ -20,6 +22,7 @@ export { WallClock } from "./WallClock.tsx";
 export { TriangleWallLEDs } from "./TriangleWallLEDs.tsx";
 export { CeilingLamps } from "./CeilingLamps.tsx";
 export { ChessArea, ChessPieces } from "./ChessPieces.tsx";
+export { MonitorScreen } from "./MonitorScreen.tsx";
 
 /* -------------------------------------------------------------
  * 1. Room Architecture & Structure (Floor, Walls, Ceiling, Rugs & Wall Art)
@@ -237,7 +240,11 @@ export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 				material={glowMaterials.screen}
 				castShadow
 				receiveShadow
-			/>
+			>
+				<MonitorScreen>
+					<FeaturedProjectsSection />
+				</MonitorScreen>
+			</RoomMesh>
 			<RoomMesh
 				node={nodes.Monitor002}
 				material={glowMaterials.screen}
