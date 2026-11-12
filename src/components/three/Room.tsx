@@ -14,6 +14,7 @@ import { CeilingLamps } from "./CeilingLamps.tsx";
 import { ChessArea } from "./ChessPieces.tsx";
 import { MonitorScreen } from "./MonitorScreen.tsx";
 import { FeaturedProjectsSection } from "@/sections/panels/FeaturedProjectsSection.tsx";
+import { MenuType } from "@/constants/menuConfig.ts";
 
 // Re-export outsourced components and types for consumers
 export { MODEL_URL, type GLTFResult, type RoomSubComponentProps };
@@ -226,7 +227,17 @@ export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 /* -------------------------------------------------------------
  * 3. Computer Setup & Monitors (PC Tower, Triple Monitors, Laptop)
  * ------------------------------------------------------------*/
-export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
+export interface ComputerSetupProps extends RoomSubComponentProps {
+	activeSection?: MenuType | null;
+	onExitSection?: () => void;
+}
+
+export function ComputerSetup({
+	nodes,
+	glowMaterials,
+	activeSection,
+	onExitSection,
+}: ComputerSetupProps) {
 	return (
 		<group name="ComputerSetup">
 			<RoomMesh
@@ -241,9 +252,11 @@ export function ComputerSetup({ nodes, glowMaterials }: RoomSubComponentProps) {
 				castShadow
 				receiveShadow
 			>
-				<MonitorScreen>
-					<FeaturedProjectsSection />
-				</MonitorScreen>
+				{activeSection === MenuType.FeaturedProjects && (
+					<MonitorScreen onClose={onExitSection}>
+						<FeaturedProjectsSection />
+					</MonitorScreen>
+				)}
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.Monitor002}
@@ -632,7 +645,12 @@ export function GamingConsoleZone({
 /* -------------------------------------------------------------
  * Composite Room Component
  * ------------------------------------------------------------*/
-export function Room(props: ThreeElements["group"]) {
+export type RoomProps = ThreeElements["group"] & {
+	activeSection?: MenuType | null;
+	onExitSection?: () => void;
+};
+
+export function Room({ activeSection, onExitSection, ...props }: RoomProps = {}) {
 	const { nodes, materials } = useGLTF(MODEL_URL) as unknown as GLTFResult;
 
 	// Create cloned materials for each emission tier
@@ -644,7 +662,12 @@ export function Room(props: ThreeElements["group"]) {
 		<group {...props} dispose={null}>
 			<RoomStructure nodes={nodes} glowMaterials={glowMaterials} />
 			<DeskStation nodes={nodes} glowMaterials={glowMaterials} />
-			<ComputerSetup nodes={nodes} glowMaterials={glowMaterials} />
+			<ComputerSetup
+				nodes={nodes}
+				glowMaterials={glowMaterials}
+				activeSection={activeSection}
+				onExitSection={onExitSection}
+			/>
 			<AudioEquipment nodes={nodes} glowMaterials={glowMaterials} />
 			<RoomFurniture nodes={nodes} glowMaterials={glowMaterials} />
 			<ChessArea nodes={nodes} glowMaterials={glowMaterials} />

@@ -8,6 +8,7 @@ export interface MonitorScreenProps {
 	position?: [number, number, number];
 	rotation?: [number, number, number];
 	distanceFactor?: number;
+	onClose?: () => void;
 }
 
 export function MonitorScreen({
@@ -16,6 +17,7 @@ export function MonitorScreen({
 	position = [-0.0025, 0, 0.015],
 	rotation = [0, -0.2291, 0],
 	distanceFactor = 0.415,
+	onClose,
 }: MonitorScreenProps) {
 	return (
 		<Html
@@ -29,7 +31,14 @@ export function MonitorScreen({
 			<div className="monitor-screen-container">
 				<div className="monitor-screen-header">
 					<div className="monitor-screen-dots">
-						<span className="monitor-screen-dot red" />
+						<span
+							className="monitor-screen-dot red"
+							role="button"
+							tabIndex={0}
+							onClick={onClose}
+							title="Close (Esc)"
+							style={{ cursor: onClose ? "pointer" : "default" }}
+						/>
 						<span className="monitor-screen-dot yellow" />
 						<span className="monitor-screen-dot green" />
 					</div>

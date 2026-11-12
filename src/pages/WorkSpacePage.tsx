@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Scene from "@/components/three/Scene.tsx";
 import Header from "@/sections/Header.tsx";
 import SideMenu from "@/sections/SideMenu.tsx";
@@ -21,10 +21,27 @@ export function WorkSpacePage() {
 		setActiveSection(null);
 	}, []);
 
+	// Global Escape listener to unfocus section from anywhere
+	useEffect(() => {
+		if (activeSection === null) return;
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") {
+				setActiveSection(null);
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [activeSection]);
+
 	return (
 		<main className="workspace-container">
 			{/* Fullscreen 3D Room — always interactive */}
-			<Scene activeSection={activeSection} />
+			<Scene
+				activeSection={activeSection}
+				onExitSection={handleClose}
+			/>
 
 			{/* Top bar */}
 			<Header />

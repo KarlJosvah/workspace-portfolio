@@ -5,9 +5,6 @@ import "@/components/ui/overlay/SectionOverlay.css";
 
 const HeroSection = lazy(() => import("@/sections/panels/HeroSection.tsx"));
 const SkillsSection = lazy(() => import("@/sections/panels/SkillsSection.tsx"));
-const FeaturedProjectsSection = lazy(
-	() => import("@/sections/panels/FeaturedProjectsSection.tsx")
-);
 const RecommendedProjectsSection = lazy(
 	() => import("@/sections/panels/RecommendedProjectsSection.tsx")
 );
@@ -18,10 +15,10 @@ const ContactSection = lazy(
 	() => import("@/sections/panels/ContactSection.tsx")
 );
 
-const SECTION_MAP: Record<MenuType, React.ComponentType> = {
+const SECTION_MAP: Partial<Record<MenuType, React.ComponentType>> = {
 	[MenuType.Hero]: HeroSection,
 	[MenuType.TechnicalSkills]: SkillsSection,
-	[MenuType.FeaturedProjects]: FeaturedProjectsSection,
+	// FeaturedProjects is rendered in 3D directly on Monitor001
 	[MenuType.RecommendedProjects]: RecommendedProjectsSection,
 	[MenuType.ProfessionalExperiences]: ExperiencesSection,
 	[MenuType.Contact]: ContactSection,
@@ -46,7 +43,8 @@ export function SectionOverlay({
 		return () => window.removeEventListener("keydown", onKey);
 	}, [activeSection, onClose]);
 
-	const Section = activeSection !== null ? SECTION_MAP[activeSection] : null;
+	const Section =
+		activeSection !== null ? (SECTION_MAP[activeSection] ?? null) : null;
 
 	return (
 		/*
@@ -55,7 +53,7 @@ export function SectionOverlay({
 		 */
 		<div className="section-overlay">
 			<AnimatePresence mode="wait">
-				{activeSection !== null && Section !== null && (
+				{Section !== null && (
 					<motion.div
 						key={activeSection}
 						className="section-overlay-inner"

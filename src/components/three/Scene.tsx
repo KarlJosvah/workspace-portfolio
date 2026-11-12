@@ -16,6 +16,7 @@ const CAMERA_CONFIG = {
 
 interface SceneProps {
 	activeSection?: MenuType | null;
+	onExitSection?: () => void;
 	showStats?: boolean;
 }
 
@@ -173,6 +174,7 @@ function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 
 export function Scene({
 	activeSection = null,
+	onExitSection,
 	showStats: controlledShowStats,
 }: SceneProps) {
 	const [showHelpers, setShowHelpers] = useState(false);
@@ -234,7 +236,7 @@ export function Scene({
 
 			<Suspense fallback={null}>
 				<RoomLighting showHelpers={showHelpers} />
-				<Room />
+				<Room activeSection={activeSection} onExitSection={onExitSection} />
 			</Suspense>
 
 			{/* Bloom post-processing for high-emission palette glow */}
@@ -254,6 +256,7 @@ export function Scene({
 				initialYaw={0}
 				initialPitch={-0.12}
 				activeSection={activeSection}
+				onExitSection={onExitSection}
 			/>
 		</Canvas>
 	);

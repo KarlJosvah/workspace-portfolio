@@ -21,6 +21,8 @@ export interface SmoothCameraControllerProps {
 	initialPitch?: number;
 	/** Current active menu section to glide towards */
 	activeSection?: MenuType | null;
+	/** Callback when user walks out or cancels focus to return to standing */
+	onExitSection?: () => void;
 }
 
 // Temporary vectors to avoid allocations inside useFrame loop
@@ -44,8 +46,20 @@ export function SmoothCameraController({
 	initialYaw = 0,
 	initialPitch = -0.12,
 	activeSection = null,
+	onExitSection,
 }: SmoothCameraControllerProps) {
 	const { camera, gl, scene } = useThree();
+
+	const onExitSectionRef = useRef(onExitSection);
+	const activeSectionRef = useRef(activeSection);
+
+	useEffect(() => {
+		onExitSectionRef.current = onExitSection;
+	}, [onExitSection]);
+
+	useEffect(() => {
+		activeSectionRef.current = activeSection;
+	}, [activeSection]);
 
 	// Orientation state (Yaw & Pitch)
 	const targetYaw = useRef(initialYaw);
@@ -132,6 +146,15 @@ export function SmoothCameraController({
 			}
 
 			const key = e.key.toLowerCase();
+
+			// Pressing Escape exits the active section and stands up
+			if (e.key === "Escape") {
+				if (activeSectionRef.current !== null) {
+					onExitSectionRef.current?.();
+				}
+				return;
+			}
+
 			if (
 				key === "w" ||
 				key === "a" ||
@@ -149,6 +172,11 @@ export function SmoothCameraController({
 					isTransitioning.current = false;
 					targetYaw.current = currentYaw.current;
 					targetPitch.current = currentPitch.current;
+				}
+
+				// If currently focused on a section, walking out unfocuses and stands up
+				if (activeSectionRef.current !== null) {
+					onExitSectionRef.current?.();
 				}
 			}
 		};
@@ -333,6 +361,17 @@ export function SmoothCameraController({
 				camera.position.y,
 				height,
 				Math.min(1, delta * 3)
+			);
+		} else if (
+			!isTransitioning.current &&
+			activeSection === null &&
+			Math.abs(camera.position.y - height) > 0.005
+		) {
+			// When standing up without walking (e.g. Esc pressed or active menu button re-clicked)
+			camera.position.y = THREE.MathUtils.lerp(
+				camera.position.y,
+				height,
+				Math.min(1, delta * 4)
 			);
 		}
 	});
