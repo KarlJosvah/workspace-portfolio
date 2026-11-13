@@ -8,15 +8,18 @@ export interface MonitorScreenProps {
 	position?: [number, number, number];
 	rotation?: [number, number, number];
 	distanceFactor?: number;
+	/** CSS pixel height of the screen container. Width is always 1024px. */
+	screenHeight?: number;
 	onClose?: () => void;
 }
 
 export function MonitorScreen({
 	children,
-	title = "Featured Projects — Terminal",
+	title = "— Terminal",
 	position = [-0.0025, 0, 0.015],
 	rotation = [0, -0.2291, 0],
 	distanceFactor = 0.415,
+	screenHeight = 554,
 	onClose,
 }: MonitorScreenProps) {
 	return (
@@ -28,7 +31,10 @@ export function MonitorScreen({
 			distanceFactor={distanceFactor}
 			className="monitor-html-host"
 		>
-			<div className="monitor-screen-container">
+			<div
+				className="monitor-screen-container"
+				style={{ height: `${screenHeight}px` }}
+			>
 				<div className="monitor-screen-header">
 					<div className="monitor-screen-dots">
 						<span

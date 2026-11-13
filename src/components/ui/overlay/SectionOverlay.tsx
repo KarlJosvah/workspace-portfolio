@@ -5,23 +5,18 @@ import "@/components/ui/overlay/SectionOverlay.css";
 
 const HeroSection = lazy(() => import("@/sections/panels/HeroSection.tsx"));
 const SkillsSection = lazy(() => import("@/sections/panels/SkillsSection.tsx"));
-const RecommendedProjectsSection = lazy(
-	() => import("@/sections/panels/RecommendedProjectsSection.tsx")
-);
-const ExperiencesSection = lazy(
-	() => import("@/sections/panels/ExperiencesSection.tsx")
-);
-const ContactSection = lazy(
-	() => import("@/sections/panels/ContactSection.tsx")
-);
 
+/**
+ * Sections mapped here render in the left-side HUD overlay.
+ * Sections omitted here are rendered directly in 3D on their respective monitor/laptop mesh.
+ *   - FeaturedProjects     → Monitor001
+ *   - RecommendedProjects  → Monitor002
+ *   - ProfessionalExperiences → LapTop
+ *   - Contact              → Monitor003
+ */
 const SECTION_MAP: Partial<Record<MenuType, React.ComponentType>> = {
 	[MenuType.Hero]: HeroSection,
 	[MenuType.TechnicalSkills]: SkillsSection,
-	// FeaturedProjects is rendered in 3D directly on Monitor001
-	[MenuType.RecommendedProjects]: RecommendedProjectsSection,
-	[MenuType.ProfessionalExperiences]: ExperiencesSection,
-	[MenuType.Contact]: ContactSection,
 };
 
 interface SectionOverlayProps {

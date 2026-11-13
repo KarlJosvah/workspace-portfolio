@@ -106,7 +106,7 @@ export const WAYPOINT_TARGET_MESHES: Record<
 	},
 	[MenuType.ProfessionalExperiences]: {
 		position: [-0.9, SEATED_EYE_HEIGHT, 1.35],
-		meshName: "LapTop",
+		meshName: "LapTop.Screen",
 	},
 	[MenuType.Contact]: {
 		position: [-1.0, SEATED_EYE_HEIGHT, 1.15],
@@ -127,9 +127,18 @@ export function resolveWaypointForSection(
 
 	let mesh: THREE.Object3D | undefined;
 	if (sceneOrNodes instanceof THREE.Object3D) {
-		mesh = sceneOrNodes.getObjectByName(config.meshName);
+		mesh =
+			sceneOrNodes.getObjectByName(config.meshName) ??
+			(config.meshName === "LapTop.Screen"
+				? sceneOrNodes.getObjectByName("LapTopScreen") ??
+					sceneOrNodes.getObjectByName("LapTop.Body")
+				: undefined);
 	} else {
-		mesh = sceneOrNodes[config.meshName];
+		mesh =
+			sceneOrNodes[config.meshName] ??
+			(config.meshName === "LapTop.Screen"
+				? sceneOrNodes["LapTopScreen"] ?? sceneOrNodes["LapTop.Body"]
+				: undefined);
 	}
 
 	if (mesh) {
@@ -184,7 +193,7 @@ export const CAMERA_WAYPOINTS: Record<MenuType, CameraWaypoint | null> = {
 	),
 	[MenuType.ProfessionalExperiences]: createWaypoint(
 		[-0.9, SEATED_EYE_HEIGHT, 1.35],
-		[0.13, 0.68, 1.182]
+		[0.201, 0.624, 1.208]
 	),
 	[MenuType.Contact]: createWaypoint(
 		[-1.0, SEATED_EYE_HEIGHT, 1.15],

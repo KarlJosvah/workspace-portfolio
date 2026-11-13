@@ -39,7 +39,8 @@ export type GLTFResult = GLTF & {
 		HeadSet003: THREE.Mesh;
 		Mug: THREE.Mesh;
 		Rubik: THREE.Mesh;
-		LapTop: THREE.Mesh;
+		LapTopBody: THREE.Mesh;
+		LapTopScreen: THREE.Mesh;
 		CoolingPad: THREE.Mesh;
 		Monitor002: THREE.Mesh;
 		Monitor001: THREE.Mesh;
