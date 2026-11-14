@@ -1,11 +1,11 @@
-import { RoomMesh } from "../utils/RoomMesh.tsx";
-import { MonitorScreen } from "../components/MonitorScreen.tsx";
+import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
+import { MonitorScreen } from "@/three/components/MonitorScreen.tsx";
 import { FeaturedProjectsSection } from "@/sections/panels/FeaturedProjectsSection.tsx";
 import { RecommendedProjectsSection } from "@/sections/panels/RecommendedProjectsSection.tsx";
 import { ExperiencesSection } from "@/sections/panels/ExperiencesSection.tsx";
 import { ContactSection } from "@/sections/panels/ContactSection.tsx";
 import { MenuType } from "@/constants/menuConfig.ts";
-import type { RoomSubComponentProps } from "../utils/roomTypes.ts";
+import type { RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
 
 /* -------------------------------------------------------------
  * 3. Computer Setup & Monitors (PC Tower, Triple Monitors, Laptop)

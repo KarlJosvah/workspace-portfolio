@@ -6,30 +6,30 @@ import {
 	MODEL_URL,
 	type GLTFResult,
 	type RoomSubComponentProps,
-} from "./utils/roomTypes.ts";
-import { RoomStructure } from "./section/RoomStructure.tsx";
-import { DeskStation } from "./section/DeskStation.tsx";
-import { ComputerSetup } from "./section/ComputerSetup.tsx";
-import { AudioEquipment } from "./section/AudioEquipment.tsx";
-import { RoomFurniture } from "./section/RoomFurniture.tsx";
-import { ChessArea } from "./section/ChessPieces.tsx";
-import { GamingConsoleZone } from "./section/GamingConsoleZone.tsx";
+} from "@/three/utils/roomTypes.ts";
+import { RoomStructure } from "@/three/section/RoomStructure.tsx";
+import { DeskStation } from "@/three/section/DeskStation.tsx";
+import { ComputerSetup } from "@/three/section/ComputerSetup.tsx";
+import { AudioEquipment } from "@/three/section/AudioEquipment.tsx";
+import { RoomFurniture } from "@/three/section/RoomFurniture.tsx";
+import { ChessArea } from "@/three/section/ChessPieces.tsx";
+import { GamingConsoleZone } from "@/three/section/GamingConsoleZone.tsx";
 import type { MenuType } from "@/constants/menuConfig.ts";
 
 // Re-export outsourced components and types for consumers
 export { MODEL_URL, type GLTFResult, type RoomSubComponentProps };
-export { RoomMesh } from "./utils/RoomMesh.tsx";
-export { WallClock } from "./components/WallClock.tsx";
-export { TriangleWallLEDs } from "./components/TriangleWallLEDs.tsx";
-export { CeilingLamps } from "./components/CeilingLamps.tsx";
-export { ChessArea, ChessPieces } from "./section/ChessPieces.tsx";
-export { MonitorScreen } from "./components/MonitorScreen.tsx";
-export { RoomStructure } from "./section/RoomStructure.tsx";
-export { DeskStation } from "./section/DeskStation.tsx";
-export { ComputerSetup, type ComputerSetupProps } from "./section/ComputerSetup.tsx";
-export { AudioEquipment } from "./section/AudioEquipment.tsx";
-export { RoomFurniture } from "./section/RoomFurniture.tsx";
-export { GamingConsoleZone } from "./section/GamingConsoleZone.tsx";
+export { RoomMesh } from "@/three/utils/RoomMesh.tsx";
+export { WallClock } from "@/three/components/WallClock.tsx";
+export { TriangleWallLEDs } from "@/three/components/TriangleWallLEDs.tsx";
+export { CeilingLamps } from "@/three/components/CeilingLamps.tsx";
+export { ChessArea, ChessPieces } from "@/three/section/ChessPieces.tsx";
+export { MonitorScreen } from "@/three/components/MonitorScreen.tsx";
+export { RoomStructure } from "@/three/section/RoomStructure.tsx";
+export { DeskStation } from "@/three/section/DeskStation.tsx";
+export { ComputerSetup, type ComputerSetupProps } from "@/three/section/ComputerSetup.tsx";
+export { AudioEquipment } from "@/three/section/AudioEquipment.tsx";
+export { RoomFurniture } from "@/three/section/RoomFurniture.tsx";
+export { GamingConsoleZone } from "@/three/section/GamingConsoleZone.tsx";
 
 /* -------------------------------------------------------------
  * Composite Room Component

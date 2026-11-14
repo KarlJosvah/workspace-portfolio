@@ -1,8 +1,8 @@
-import { RoomMesh } from "../utils/RoomMesh.tsx";
-import { CeilingLamps } from "../components/CeilingLamps.tsx";
-import { WallClock } from "../components/WallClock.tsx";
-import { TriangleWallLEDs } from "../components/TriangleWallLEDs.tsx";
-import type { RoomSubComponentProps } from "../utils/roomTypes.ts";
+import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
+import { CeilingLamps } from "@/three/components/CeilingLamps.tsx";
+import { WallClock } from "@/three/components/WallClock.tsx";
+import { TriangleWallLEDs } from "@/three/components/TriangleWallLEDs.tsx";
+import type { RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
 
 /* -------------------------------------------------------------
  * 1. Room Architecture & Structure (Floor, Walls, Ceiling, Rugs & Wall Art)
