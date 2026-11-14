@@ -3,8 +3,8 @@ import { Canvas } from "@react-three/fiber";
 import { Stats, useGLTF, useHelper } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import * as THREE from "three";
-import SmoothCameraController from "@/components/three/SmoothCameraController.tsx";
-import Room, { MODEL_URL, type GLTFResult } from "@/components/three/Room.tsx";
+import SmoothCameraController from "./utils/SmoothCameraController.tsx";
+import Room, { MODEL_URL, type GLTFResult } from "./Room.tsx";
 import { MenuType } from "@/constants/menuConfig.ts";
 
 const CAMERA_CONFIG = {

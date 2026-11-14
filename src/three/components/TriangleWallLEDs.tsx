@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import * as THREE from "three";
-import { RoomMesh } from "./RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "./roomTypes.ts";
+import { RoomMesh } from "../utils/RoomMesh.tsx";
+import type { GLTFResult, RoomSubComponentProps } from "../utils/roomTypes.ts";
 
 interface TriangleLEDArrays {
 	all: THREE.Mesh[];

@@ -1,5 +1,5 @@
-import { RoomMesh } from "./RoomMesh.tsx";
-import type { RoomSubComponentProps } from "./roomTypes.ts";
+import { RoomMesh } from "../utils/RoomMesh.tsx";
+import type { RoomSubComponentProps } from "../utils/roomTypes.ts";
 
 /* -------------------------------------------------------------
  * 5. Room Storage & Appliances (Shelves with LED strips, Mini-Fridge)

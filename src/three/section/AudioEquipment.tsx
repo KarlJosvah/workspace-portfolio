@@ -1,5 +1,5 @@
-import { RoomMesh } from "./RoomMesh.tsx";
-import type { RoomSubComponentProps } from "./roomTypes.ts";
+import { RoomMesh } from "../utils/RoomMesh.tsx";
+import type { RoomSubComponentProps } from "../utils/roomTypes.ts";
 
 /* -------------------------------------------------------------
  * 4. Audio & Headset Equipment (Speakers, Headsets, Stand)

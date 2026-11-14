@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type * as THREE from "three";
-import { RoomMesh } from "./RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "./roomTypes.ts";
+import { RoomMesh } from "../utils/RoomMesh.tsx";
+import type { GLTFResult, RoomSubComponentProps } from "../utils/roomTypes.ts";
 
 /**
  * Dynamically discovers PS5 and Xbox controllers from the GLB nodes.

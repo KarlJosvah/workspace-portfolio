@@ -6,30 +6,30 @@ import {
 	MODEL_URL,
 	type GLTFResult,
 	type RoomSubComponentProps,
-} from "./roomTypes.ts";
-import { RoomStructure } from "./RoomStructure.tsx";
-import { DeskStation } from "./DeskStation.tsx";
-import { ComputerSetup } from "./ComputerSetup.tsx";
-import { AudioEquipment } from "./AudioEquipment.tsx";
-import { RoomFurniture } from "./RoomFurniture.tsx";
-import { ChessArea } from "./ChessPieces.tsx";
-import { GamingConsoleZone } from "./GamingConsoleZone.tsx";
+} from "./utils/roomTypes.ts";
+import { RoomStructure } from "./section/RoomStructure.tsx";
+import { DeskStation } from "./section/DeskStation.tsx";
+import { ComputerSetup } from "./section/ComputerSetup.tsx";
+import { AudioEquipment } from "./section/AudioEquipment.tsx";
+import { RoomFurniture } from "./section/RoomFurniture.tsx";
+import { ChessArea } from "./section/ChessPieces.tsx";
+import { GamingConsoleZone } from "./section/GamingConsoleZone.tsx";
 import type { MenuType } from "@/constants/menuConfig.ts";
 
 // Re-export outsourced components and types for consumers
 export { MODEL_URL, type GLTFResult, type RoomSubComponentProps };
-export { RoomMesh } from "./RoomMesh.tsx";
-export { WallClock } from "./WallClock.tsx";
-export { TriangleWallLEDs } from "./TriangleWallLEDs.tsx";
-export { CeilingLamps } from "./CeilingLamps.tsx";
-export { ChessArea, ChessPieces } from "./ChessPieces.tsx";
-export { MonitorScreen } from "./MonitorScreen.tsx";
-export { RoomStructure } from "./RoomStructure.tsx";
-export { DeskStation } from "./DeskStation.tsx";
-export { ComputerSetup, type ComputerSetupProps } from "./ComputerSetup.tsx";
-export { AudioEquipment } from "./AudioEquipment.tsx";
-export { RoomFurniture } from "./RoomFurniture.tsx";
-export { GamingConsoleZone } from "./GamingConsoleZone.tsx";
+export { RoomMesh } from "./utils/RoomMesh.tsx";
+export { WallClock } from "./components/WallClock.tsx";
+export { TriangleWallLEDs } from "./components/TriangleWallLEDs.tsx";
+export { CeilingLamps } from "./components/CeilingLamps.tsx";
+export { ChessArea, ChessPieces } from "./section/ChessPieces.tsx";
+export { MonitorScreen } from "./components/MonitorScreen.tsx";
+export { RoomStructure } from "./section/RoomStructure.tsx";
+export { DeskStation } from "./section/DeskStation.tsx";
+export { ComputerSetup, type ComputerSetupProps } from "./section/ComputerSetup.tsx";
+export { AudioEquipment } from "./section/AudioEquipment.tsx";
+export { RoomFurniture } from "./section/RoomFurniture.tsx";
+export { GamingConsoleZone } from "./section/GamingConsoleZone.tsx";
 
 /* -------------------------------------------------------------
  * Composite Room Component

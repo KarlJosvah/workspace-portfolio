@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import Scene from "@/components/three/Scene.tsx";
+import Scene from "@/three/Scene.tsx";
 import Header from "@/sections/Header.tsx";
 import SideMenu from "@/sections/SideMenu.tsx";
 import ControlsHint from "@/components/ui/ControlsHint.tsx";
