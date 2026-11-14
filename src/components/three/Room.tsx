@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import type { ThreeElements } from "@react-three/fiber";
 import { createGlowMaterials } from "@/constants/emissionConfig.ts";
@@ -269,6 +270,12 @@ export function ComputerSetup({
 					</MonitorScreen>
 				)}
 			</RoomMesh>
+			<RoomMesh
+				node={nodes.WebCam}
+				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			/>
 
 			{/*
 			 * ── Monitor002 → Recommended Projects ──
@@ -336,13 +343,13 @@ export function ComputerSetup({
 			 * position = [-0.0098, 0.0012, -0.0036] (center + 5mm normal offset)
 			 */}
 			<RoomMesh
-				node={(nodes.LapTopBody ?? nodes["LapTop.Body"] ?? nodes.LapTop)!}
+				node={nodes.LapTopBody}
 				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			>
 				<RoomMesh
-					node={(nodes.LapTopScreen ?? nodes["LapTop.Screen"])!}
+					node={nodes.LapTopScreen}
 					material={glowMaterials.screen}
 					castShadow
 					receiveShadow
@@ -376,6 +383,18 @@ export function ComputerSetup({
 				node={nodes.Mouse}
 				material={glowMaterials.subtle}
 				castShadow
+			/>
+			<RoomMesh
+				node={nodes.USBFflash}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.HardDisk}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
 			/>
 			<RoomMesh
 				node={nodes.Light}
@@ -504,6 +523,21 @@ export function RoomFurniture({ nodes, glowMaterials }: RoomSubComponentProps) {
 	);
 }
 
+/**
+ * Dynamically discovers PS5 and Xbox controllers from the GLB nodes.
+ * Matches names like "PS5.Controller.001", "Xbox.Controller.001", sorted numerically.
+ */
+function getGameControllers(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	return (Object.values(nodes) as THREE.Mesh[])
+		.filter(
+			(node): node is THREE.Mesh =>
+				Boolean(node?.name && /(?:PS5|Xbox)[._]?Controller/i.test(node.name))
+		)
+		.sort((a, b) =>
+			a.name.localeCompare(b.name, undefined, { numeric: true })
+		);
+}
+
 /* -------------------------------------------------------------
  * 6. Gaming & Entertainment Wall (TV Console, TV with Backlight, Soundbar, Remote, Game Shelves, PlayStation Collection, Nintendo Switch & LED Signs)
  * ------------------------------------------------------------*/
@@ -511,6 +545,11 @@ export function GamingConsoleZone({
 	nodes,
 	glowMaterials,
 }: RoomSubComponentProps) {
+	const gameControllers = useMemo(
+		() => getGameControllers(nodes),
+		[nodes]
+	);
+
 	return (
 		<group name="GamingConsoleZone">
 			<RoomMesh
@@ -657,6 +696,27 @@ export function GamingConsoleZone({
 				castShadow
 				receiveShadow
 			/>
+			<RoomMesh
+				node={nodes.XboxX}
+				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.ControllerHanger}
+				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			/>
+			{gameControllers.map((node) => (
+				<RoomMesh
+					key={node.name}
+					node={node}
+					material={glowMaterials.subtle}
+					castShadow
+					receiveShadow
+				/>
+			))}
 			<RoomMesh
 				node={nodes.SwitchSupport}
 				material={glowMaterials.standard}

@@ -48,6 +48,9 @@ export type GLTFResult = GLTF & {
 		Keyboard: THREE.Mesh;
 		Mouse: THREE.Mesh;
 		PCTower: THREE.Mesh;
+		WebCam: THREE.Mesh;
+		USBFflash: THREE.Mesh;
+		HardDisk: THREE.Mesh;
 		DeskMat: THREE.Mesh;
 		ChessBoard: THREE.Mesh;
 		ChessTable: THREE.Mesh;
@@ -88,6 +91,16 @@ export type GLTFResult = GLTF & {
 		PS3: THREE.Mesh;
 		PS4: THREE.Mesh;
 		PS5: THREE.Mesh;
+		XboxX: THREE.Mesh;
+		ControllerHanger: THREE.Mesh;
+		PS5Controller001: THREE.Mesh;
+		PS5Controller002: THREE.Mesh;
+		PS5Controller003: THREE.Mesh;
+		PS5Controller004: THREE.Mesh;
+		XboxController001: THREE.Mesh;
+		XboxController002: THREE.Mesh;
+		XboxController003: THREE.Mesh;
+		XboxController004: THREE.Mesh;
 		SwitchSupport: THREE.Mesh;
 		SwitchDock: THREE.Mesh;
 		SwitchTablet: THREE.Mesh;
