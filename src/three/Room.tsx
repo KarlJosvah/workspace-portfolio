@@ -12,7 +12,7 @@ import { DeskStation } from "@/three/section/DeskStation.tsx";
 import { ComputerSetup } from "@/three/section/ComputerSetup.tsx";
 import { AudioEquipment } from "@/three/section/AudioEquipment.tsx";
 import { RoomFurniture } from "@/three/section/RoomFurniture.tsx";
-import { ChessArea } from "@/three/section/ChessPieces.tsx";
+import { ChessArea } from "@/three/section/ChessArea.tsx";
 import { GamingConsoleZone } from "@/three/section/GamingConsoleZone.tsx";
 import type { MenuType } from "@/constants/menuConfig.ts";
 
@@ -22,7 +22,7 @@ export { RoomMesh } from "@/three/utils/RoomMesh.tsx";
 export { WallClock } from "@/three/components/WallClock.tsx";
 export { TriangleWallLEDs } from "@/three/components/TriangleWallLEDs.tsx";
 export { CeilingLamps } from "@/three/components/CeilingLamps.tsx";
-export { ChessArea, ChessPieces } from "@/three/section/ChessPieces.tsx";
+export { ChessArea, ChessPieces } from "@/three/section/ChessArea.tsx";
 export { MonitorScreen } from "@/three/components/MonitorScreen.tsx";
 export { RoomStructure } from "@/three/section/RoomStructure.tsx";
 export { DeskStation } from "@/three/section/DeskStation.tsx";
