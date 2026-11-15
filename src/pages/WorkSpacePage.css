@@ -9,6 +9,12 @@
 	background: var(--bg-canvas);
 }
 
+.scene-container {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
 .three-canvas {
 	width: 100% !important;
 	height: 100% !important;

@@ -21,6 +21,11 @@ export function ComputerSetup({
 	activeSection,
 	onExitSection,
 }: ComputerSetupProps) {
+	const isFeaturedActive = activeSection === MenuType.FeaturedProjects;
+	const isRecommendedActive = activeSection === MenuType.RecommendedProjects;
+	const isContactActive = activeSection === MenuType.Contact;
+	const isExperiencesActive = activeSection === MenuType.ProfessionalExperiences;
+
 	return (
 		<group name="ComputerSetup">
 			<RoomMesh
@@ -39,9 +44,9 @@ export function ComputerSetup({
 			>
 				<RoomMesh
 					node={nodes.MonitorScreen001}
-					material={glowMaterials.screen}
+					material={isFeaturedActive ? glowMaterials.standard : glowMaterials.screen}
 				>
-					{activeSection === MenuType.FeaturedProjects && (
+					{isFeaturedActive && (
 						<MonitorScreen
 							screenNode={nodes.MonitorScreen001}
 							title="Featured Projects — Terminal"
@@ -69,9 +74,9 @@ export function ComputerSetup({
 			>
 				<RoomMesh
 					node={nodes.MonitorScreen002}
-					material={glowMaterials.screen}
+					material={isRecommendedActive ? glowMaterials.standard : glowMaterials.screen}
 				>
-					{activeSection === MenuType.RecommendedProjects && (
+					{isRecommendedActive && (
 						<MonitorScreen
 							screenNode={nodes.MonitorScreen002}
 							title="Recommended Projects — Terminal"
@@ -92,9 +97,9 @@ export function ComputerSetup({
 			>
 				<RoomMesh
 					node={nodes.MonitorScreen003}
-					material={glowMaterials.screen}
+					material={isContactActive ? glowMaterials.standard : glowMaterials.screen}
 				>
-					{activeSection === MenuType.Contact && (
+					{isContactActive && (
 						<MonitorScreen
 							screenNode={nodes.MonitorScreen003}
 							title="Contact — Terminal"
@@ -121,11 +126,11 @@ export function ComputerSetup({
 				/>
 				<RoomMesh
 					node={nodes.LapTopScreen}
-					material={glowMaterials.screen}
+					material={isExperiencesActive ? glowMaterials.standard : glowMaterials.screen}
 					castShadow
 					receiveShadow
 				>
-					{activeSection === MenuType.ProfessionalExperiences && (
+					{isExperiencesActive && (
 						<MonitorScreen
 							screenNode={nodes.LapTopScreen}
 							title="Experiences — Terminal"

@@ -38,10 +38,12 @@ export function WorkSpacePage() {
 	return (
 		<main className="workspace-container">
 			{/* Fullscreen 3D Room — always interactive */}
-			<Scene
-				activeSection={activeSection}
-				onExitSection={handleClose}
-			/>
+			<div className="scene-container">
+				<Scene
+					activeSection={activeSection}
+					onExitSection={handleClose}
+				/>
+			</div>
 
 			{/* Top bar */}
 			<Header />

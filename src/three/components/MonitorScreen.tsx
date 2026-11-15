@@ -15,6 +15,8 @@ export interface MonitorScreenProps {
 	screenHeight?: number;
 	/** Offset in meters along the face normal to prevent z-fighting with the 3D screen mesh. Default is 0.003 (3mm). */
 	normalOffset?: number;
+	/** Drei Html zIndexRange. Default is [20, 0] so HUD overlays (SideMenu, Header) stay above the 3D terminal. */
+	zIndexRange?: [number, number];
 	onClose?: () => void;
 }
 
@@ -99,6 +101,7 @@ export function MonitorScreen({
 	distanceFactor,
 	screenHeight,
 	normalOffset = 0.003,
+	zIndexRange = [20, 0],
 	onClose,
 }: MonitorScreenProps) {
 	const derived = useMemo(() => {
@@ -115,6 +118,7 @@ export function MonitorScreen({
 		<Html
 			transform
 			occlude
+			zIndexRange={zIndexRange}
 			position={finalPosition}
 			rotation={finalRotation}
 			distanceFactor={finalDistanceFactor}
