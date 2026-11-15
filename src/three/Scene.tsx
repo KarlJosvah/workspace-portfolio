@@ -5,7 +5,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import type * as THREE from "three";
 import SmoothCameraController from "@/three/utils/SmoothCameraController.tsx";
 import Room from "@/three/Room.tsx";
-import { RoomLighting } from "@/three/section/RoomLighting.tsx";
+import { RoomLighting } from "@/three/sections/RoomLighting.tsx";
 import { MenuType } from "@/constants/menuConfig.ts";
 
 const CAMERA_CONFIG = {
