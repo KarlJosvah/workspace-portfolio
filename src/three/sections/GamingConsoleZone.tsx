@@ -73,10 +73,14 @@ export function GamingConsoleZone({
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.Monitor004}
-				material={glowMaterials.screen}
+				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
 			>
+				<RoomMesh
+					node={nodes.MonitorScreen004}
+					material={glowMaterials.screen}
+				/>
 				<RoomMesh
 					node={nodes.LED006}
 					material={glowMaterials.ledStrips}

@@ -40,11 +40,15 @@ export type GLTFResult = GLTF & {
 		Mug: THREE.Mesh;
 		Rubik: THREE.Mesh;
 		LapTopBody: THREE.Mesh;
+		LapTopLid: THREE.Mesh;
 		LapTopScreen: THREE.Mesh;
 		CoolingPad: THREE.Mesh;
 		Monitor002: THREE.Mesh;
+		MonitorScreen002: THREE.Mesh;
 		Monitor001: THREE.Mesh;
+		MonitorScreen001: THREE.Mesh;
 		Monitor003: THREE.Mesh;
+		MonitorScreen003: THREE.Mesh;
 		Keyboard: THREE.Mesh;
 		Mouse: THREE.Mesh;
 		PCTower: THREE.Mesh;
@@ -76,6 +80,7 @@ export type GLTFResult = GLTF & {
 		LED005: THREE.Mesh;
 		MysteryBox: THREE.Mesh;
 		Monitor004: THREE.Mesh;
+		MonitorScreen004: THREE.Mesh;
 		LED006: THREE.Mesh;
 		LED007: THREE.Mesh;
 		LED008: THREE.Mesh;
