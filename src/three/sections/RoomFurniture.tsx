@@ -60,6 +60,12 @@ export function RoomFurniture({ nodes, glowMaterials }: RoomSubComponentProps) {
 					castShadow
 				/>
 			</RoomMesh>
+			<RoomMesh
+				node={nodes.Molecules}
+				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			/>
 		</group>
 	);
 }

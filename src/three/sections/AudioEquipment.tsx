@@ -26,7 +26,7 @@ export function AudioEquipment({
 				castShadow
 			/>
 			<RoomMesh
-				node={nodes.HeadSet003}
+				node={nodes.HeadSet001}
 				material={glowMaterials.subtle}
 				castShadow
 			/>

@@ -26,11 +26,6 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 				receiveShadow
 			/>
 			<RoomMesh
-				node={nodes.LEDCeiling}
-				material={glowMaterials.subtle}
-				receiveShadow
-			/>
-			<RoomMesh
 				node={nodes.CarpetDesk}
 				material={glowMaterials.standard}
 				receiveShadow
@@ -79,24 +74,6 @@ export function RoomStructure({ nodes, glowMaterials }: RoomSubComponentProps) {
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.AC}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.Radiator}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.BasketBall}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.Molecules}
 				material={glowMaterials.standard}
 				castShadow
 				receiveShadow

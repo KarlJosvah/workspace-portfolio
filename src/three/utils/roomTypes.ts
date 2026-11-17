@@ -36,7 +36,7 @@ export type GLTFResult = GLTF & {
 		TrashCan: THREE.Mesh;
 		Coaster: THREE.Mesh;
 		HeadSetHolder: THREE.Mesh;
-		HeadSet003: THREE.Mesh;
+		HeadSet001: THREE.Mesh;
 		Mug: THREE.Mesh;
 		Rubik: THREE.Mesh;
 		LapTopBody: THREE.Mesh;
@@ -91,6 +91,7 @@ export type GLTFResult = GLTF & {
 		LedPSCircle: THREE.Mesh;
 		LedPSCross: THREE.Mesh;
 		LedPSSquare: THREE.Mesh;
+		GIElements: THREE.Mesh;
 		PS1: THREE.Mesh;
 		PS2: THREE.Mesh;
 		PS3: THREE.Mesh;

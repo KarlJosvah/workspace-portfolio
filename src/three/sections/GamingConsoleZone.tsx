@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import type * as THREE from "three";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+import type {
+	GLTFResult,
+	RoomSubComponentProps,
+} from "@/three/utils/roomTypes.ts";
 
 /**
  * Dynamically discovers PS5 and Xbox controllers from the GLB nodes.
@@ -9,9 +12,10 @@ import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.
  */
 function getGameControllers(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 	return (Object.values(nodes) as THREE.Mesh[])
-		.filter(
-			(node): node is THREE.Mesh =>
-				Boolean(node?.name && /(?:PS5|Xbox)[._]?Controller/i.test(node.name))
+		.filter((node): node is THREE.Mesh =>
+			Boolean(
+				node?.name && /(?:PS5|Xbox)[._]?Controller/i.test(node.name)
+			)
 		)
 		.sort((a, b) =>
 			a.name.localeCompare(b.name, undefined, { numeric: true })
@@ -25,10 +29,7 @@ export function GamingConsoleZone({
 	nodes,
 	glowMaterials,
 }: RoomSubComponentProps) {
-	const gameControllers = useMemo(
-		() => getGameControllers(nodes),
-		[nodes]
-	);
+	const gameControllers = useMemo(() => getGameControllers(nodes), [nodes]);
 
 	return (
 		<group name="GamingConsoleZone">
@@ -147,6 +148,11 @@ export function GamingConsoleZone({
 			/>
 			<RoomMesh
 				node={nodes.LedPSSquare}
+				material={glowMaterials.neonSigns}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GIElements}
 				material={glowMaterials.neonSigns}
 				castShadow
 			/>
