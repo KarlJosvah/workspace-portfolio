@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
 import { MonitorScreen } from "@/three/components/MonitorScreen.tsx";
 import { FeaturedProjectsSection } from "@/sections/panels/FeaturedProjectsSection.tsx";
@@ -15,16 +16,53 @@ export interface ComputerSetupProps extends RoomSubComponentProps {
 	onExitSection?: () => void;
 }
 
+const MONITOR_SECTIONS = new Set<MenuType>([
+	MenuType.FeaturedProjects,
+	MenuType.RecommendedProjects,
+	MenuType.Contact,
+	MenuType.ProfessionalExperiences,
+]);
+
 export function ComputerSetup({
 	nodes,
 	glowMaterials,
 	activeSection,
 	onExitSection,
 }: ComputerSetupProps) {
-	const isFeaturedActive = activeSection === MenuType.FeaturedProjects;
-	const isRecommendedActive = activeSection === MenuType.RecommendedProjects;
-	const isContactActive = activeSection === MenuType.Contact;
-	const isExperiencesActive = activeSection === MenuType.ProfessionalExperiences;
+	// Track previous activeSection to update openScreens during render when props change
+	const [prevSection, setPrevSection] = useState(activeSection);
+	const [openScreens, setOpenScreens] = useState<Set<MenuType>>(() => new Set());
+
+	if (prevSection !== activeSection) {
+		setPrevSection(activeSection);
+		const isStanding = !activeSection || activeSection === MenuType.Hero;
+		if (isStanding) {
+			setOpenScreens(new Set());
+		} else if (MONITOR_SECTIONS.has(activeSection)) {
+			setOpenScreens((prev) => {
+				if (prev.has(activeSection)) return prev;
+				const next = new Set(prev);
+				next.add(activeSection);
+				return next;
+			});
+		}
+	}
+
+	const handleCloseScreen = (section: MenuType) => {
+		setOpenScreens((prev) => {
+			const next = new Set(prev);
+			next.delete(section);
+			return next;
+		});
+		if (activeSection === section) {
+			onExitSection?.();
+		}
+	};
+
+	const isFeaturedOpen = openScreens.has(MenuType.FeaturedProjects);
+	const isRecommendedOpen = openScreens.has(MenuType.RecommendedProjects);
+	const isContactOpen = openScreens.has(MenuType.Contact);
+	const isExperiencesOpen = openScreens.has(MenuType.ProfessionalExperiences);
 
 	return (
 		<group name="ComputerSetup">
@@ -44,13 +82,13 @@ export function ComputerSetup({
 			>
 				<RoomMesh
 					node={nodes.MonitorScreen001}
-					material={isFeaturedActive ? glowMaterials.standard : glowMaterials.screen}
+					material={isFeaturedOpen ? glowMaterials.standard : glowMaterials.screen}
 				>
-					{isFeaturedActive && (
+					{isFeaturedOpen && (
 						<MonitorScreen
 							screenNode={nodes.MonitorScreen001}
 							title="Featured Projects — Terminal"
-							onClose={onExitSection}
+							onClose={() => handleCloseScreen(MenuType.FeaturedProjects)}
 						>
 							<FeaturedProjectsSection />
 						</MonitorScreen>
@@ -74,13 +112,13 @@ export function ComputerSetup({
 			>
 				<RoomMesh
 					node={nodes.MonitorScreen002}
-					material={isRecommendedActive ? glowMaterials.standard : glowMaterials.screen}
+					material={isRecommendedOpen ? glowMaterials.standard : glowMaterials.screen}
 				>
-					{isRecommendedActive && (
+					{isRecommendedOpen && (
 						<MonitorScreen
 							screenNode={nodes.MonitorScreen002}
 							title="Recommended Projects — Terminal"
-							onClose={onExitSection}
+							onClose={() => handleCloseScreen(MenuType.RecommendedProjects)}
 						>
 							<RecommendedProjectsSection />
 						</MonitorScreen>
@@ -97,13 +135,13 @@ export function ComputerSetup({
 			>
 				<RoomMesh
 					node={nodes.MonitorScreen003}
-					material={isContactActive ? glowMaterials.standard : glowMaterials.screen}
+					material={isContactOpen ? glowMaterials.standard : glowMaterials.screen}
 				>
-					{isContactActive && (
+					{isContactOpen && (
 						<MonitorScreen
 							screenNode={nodes.MonitorScreen003}
 							title="Contact — Terminal"
-							onClose={onExitSection}
+							onClose={() => handleCloseScreen(MenuType.Contact)}
 						>
 							<ContactSection />
 						</MonitorScreen>
@@ -126,15 +164,15 @@ export function ComputerSetup({
 				/>
 				<RoomMesh
 					node={nodes.LapTopScreen}
-					material={isExperiencesActive ? glowMaterials.standard : glowMaterials.screen}
+					material={isExperiencesOpen ? glowMaterials.standard : glowMaterials.screen}
 					castShadow
 					receiveShadow
 				>
-					{isExperiencesActive && (
+					{isExperiencesOpen && (
 						<MonitorScreen
 							screenNode={nodes.LapTopScreen}
 							title="Experiences — Terminal"
-							onClose={onExitSection}
+							onClose={() => handleCloseScreen(MenuType.ProfessionalExperiences)}
 						>
 							<ExperiencesSection />
 						</MonitorScreen>
