@@ -58,7 +58,11 @@ export function Room({ activeSection, onExitSection, ...props }: RoomProps = {})
 				onExitSection={onExitSection}
 			/>
 			<AudioEquipment nodes={nodes} glowMaterials={glowMaterials} />
-			<RoomFurniture nodes={nodes} glowMaterials={glowMaterials} />
+			<RoomFurniture
+				nodes={nodes}
+				glowMaterials={glowMaterials}
+				materials={materials}
+			/>
 			<ChessArea nodes={nodes} glowMaterials={glowMaterials} />
 			<GamingConsoleZone nodes={nodes} glowMaterials={glowMaterials} />
 		</group>

@@ -3,7 +3,7 @@ import type { ThreeElements } from "@react-three/fiber";
 
 export type RoomMeshProps = ThreeElements["mesh"] & {
 	node: THREE.Mesh;
-	material?: THREE.Material;
+	material?: THREE.Material | THREE.Material[];
 };
 
 /**
@@ -24,7 +24,7 @@ export function RoomMesh({
 		<mesh
 			name={name ?? node.name}
 			geometry={node.geometry}
-			material={material}
+			material={material ?? node.material}
 			position={position ?? node.position}
 			rotation={rotation ?? node.rotation}
 			scale={scale ?? node.scale}

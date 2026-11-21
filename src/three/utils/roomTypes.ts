@@ -126,14 +126,25 @@ export type GLTFResult = GLTF & {
 		AVR001: THREE.Mesh;
 		AVR002: THREE.Mesh;
 		Rocket: THREE.Mesh;
+		Snorlax: THREE.Mesh;
+		Kunai: THREE.Mesh;
+		KunaiRope: THREE.Mesh;
+		PaperBomb: THREE.Mesh;
+		FumaShuriken: THREE.Mesh;
+		Shuriken: THREE.Mesh;
+		AnbuMask: THREE.Mesh;
 		[key: string]: THREE.Mesh;
 	};
 	materials: {
 		Imphezia: THREE.MeshStandardMaterial;
+		snorlax: THREE.MeshStandardMaterial;
+		PaperBomb: THREE.MeshStandardMaterial;
+		[key: string]: THREE.Material;
 	};
 };
 
 export interface RoomSubComponentProps {
 	nodes: GLTFResult["nodes"];
 	glowMaterials: GlowMaterials;
+	materials?: GLTFResult["materials"];
 }
