@@ -127,11 +127,16 @@ export type GLTFResult = GLTF & {
 		AVR002: THREE.Mesh;
 		Rocket: THREE.Mesh;
 		Snorlax: THREE.Mesh;
-		Kunai: THREE.Mesh;
+		Kunai001: THREE.Mesh;
+		Kunai002: THREE.Mesh;
 		KunaiRope: THREE.Mesh;
 		PaperBomb: THREE.Mesh;
 		FumaShuriken: THREE.Mesh;
-		Shuriken: THREE.Mesh;
+		Shuriken001: THREE.Mesh;
+		Shuriken002: THREE.Mesh;
+		Shuriken003: THREE.Mesh;
+		Shuriken004: THREE.Mesh;
+		Shuriken005: THREE.Mesh;
 		AnbuMask: THREE.Mesh;
 		[key: string]: THREE.Mesh;
 	};
