@@ -84,7 +84,7 @@ export function Scene({
 			{showStats && <Stats className="fps-stats" showPanel={0} />}
 
 			<Suspense fallback={null}>
-				<RoomLighting showHelpers={showHelpers} />
+				<RoomLighting showHelpers={showHelpers} shadowLamps={"all"} />
 				<Room activeSection={activeSection} onExitSection={onExitSection} />
 			</Suspense>
 

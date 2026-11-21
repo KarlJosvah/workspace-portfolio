@@ -4,11 +4,37 @@ import * as THREE from "three";
 import { CeilingLampSpotLight } from "@/three/components/CeilingLampSpotLight.tsx";
 import { MODEL_URL, type GLTFResult } from "@/three/utils/roomTypes.ts";
 
-export interface RoomLightingProps {
-	showHelpers?: boolean;
+/**
+ * Ceiling lamp IDs (1 to 12) configured to cast real-time shadows.
+ * - Pick any individual lamp numbers: e.g. [1, 2, 3, 4] or [1, 5, 8, 11]
+ * - "all": every ceiling lamp casts shadows
+ * - []: no ceiling lamp casts shadows (maximum FPS)
+ */
+const DEFAULT_SHADOW_LAMPS: number[] | "all" = [1, 2, 3, 4];
+
+/**
+ * Checks whether a given ceiling lamp mesh node should cast a shadow based on its numeric suffix.
+ */
+function shouldLampCastShadow(
+	nodeName: string,
+	config: number[] | "all"
+): boolean {
+	if (config === "all") return true;
+	const match = nodeName.match(/\d+$/);
+	if (!match) return false;
+	const id = parseInt(match[0], 10);
+	return config.includes(id);
 }
 
-export function RoomLighting({ showHelpers = false }: RoomLightingProps) {
+export interface RoomLightingProps {
+	showHelpers?: boolean;
+	shadowLamps?: number[] | "all";
+}
+
+export function RoomLighting({
+	showHelpers = false,
+	shadowLamps = DEFAULT_SHADOW_LAMPS,
+}: RoomLightingProps) {
 	const { nodes } = useGLTF(MODEL_URL) as unknown as GLTFResult;
 
 	const deskLampRef = useRef<THREE.SpotLight>(null);
@@ -17,9 +43,8 @@ export function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 	// Dynamically discover all ceiling lamp fixtures from GLB nodes
 	const ceilingLampNodes = useMemo(() => {
 		return (Object.values(nodes) as THREE.Mesh[])
-			.filter(
-				(node): node is THREE.Mesh =>
-					Boolean(node?.name && /^Ceiling\.?Lamp/i.test(node.name))
+			.filter((node): node is THREE.Mesh =>
+				Boolean(node?.name && /^Ceiling\.?Lamp/i.test(node.name))
 			)
 			.sort((a, b) =>
 				a.name.localeCompare(b.name, undefined, { numeric: true })
@@ -59,6 +84,7 @@ export function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 					key={node.name}
 					node={node}
 					showHelpers={showHelpers}
+					castShadow={shouldLampCastShadow(node.name, shadowLamps)}
 				/>
 			))}
 
@@ -83,7 +109,8 @@ export function RoomLighting({ showHelpers = false }: RoomLightingProps) {
 				castShadow
 				shadow-mapSize-width={1024}
 				shadow-mapSize-height={1024}
-				shadow-bias={-0.0001}
+				shadow-bias={-0.00005}
+				shadow-normalBias={0.03}
 			/>
 
 			{/* PC Tower subtle cyber blue glow matching palette */}

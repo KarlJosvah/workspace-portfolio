@@ -5,6 +5,7 @@ import * as THREE from "three";
 export interface CeilingLampSpotLightProps {
 	node: THREE.Mesh;
 	showHelpers: boolean;
+	castShadow?: boolean;
 }
 
 /**
@@ -15,6 +16,7 @@ export interface CeilingLampSpotLightProps {
 export function CeilingLampSpotLight({
 	node,
 	showHelpers,
+	castShadow = true,
 }: CeilingLampSpotLightProps) {
 	const lightRef = useRef<THREE.SpotLight>(null);
 
@@ -50,10 +52,11 @@ export function CeilingLampSpotLight({
 				penumbra={0.8}
 				distance={8}
 				decay={2}
-				castShadow
+				castShadow={castShadow}
 				shadow-mapSize-width={1024}
 				shadow-mapSize-height={1024}
-				shadow-bias={-0.0001}
+				shadow-bias={-0.00005}
+				shadow-normalBias={0.03}
 			/>
 		</>
 	);
