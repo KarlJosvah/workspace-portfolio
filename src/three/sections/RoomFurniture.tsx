@@ -104,8 +104,6 @@ export function RoomFurniture({
 				castShadow
 				receiveShadow
 			/>
-
-			{/* ── Shurikens (dynamic) ─────────────────────────── */}
 			{shurikens.map((shuriken) => (
 				<RoomMesh
 					key={shuriken.name}
@@ -115,8 +113,6 @@ export function RoomFurniture({
 					receiveShadow
 				/>
 			))}
-
-			{/* ── Kunais (dynamic, children resolved per-mesh) ── */}
 			{kunais.map((kunai) => (
 				<RoomMesh
 					key={kunai.name}
@@ -174,6 +170,60 @@ export function RoomFurniture({
 			>
 				<RoomMesh
 					node={nodes.SwordSupport}
+					material={glowMaterials.standard}
+					castShadow
+					receiveShadow
+				/>
+			</RoomMesh>
+			<RoomMesh
+				node={nodes.Canvas}
+				material={materials?.Canvas}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.CRARobotCube001}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.CRAStage}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			>
+				<RoomMesh
+					node={nodes.CRAStageFloor}
+					material={materials?.CRAStageFloor}
+					receiveShadow
+				/>
+				<RoomMesh
+					node={nodes.CRAStageWall}
+					material={materials?.CRAStageWall}
+					castShadow
+					receiveShadow
+				/>
+				<RoomMesh
+					node={nodes.CRACrate}
+					material={materials?.CRACrate}
+					castShadow
+					receiveShadow
+				/>
+				<RoomMesh
+					node={nodes.CRARoboCanon}
+					material={glowMaterials.standard}
+					castShadow
+					receiveShadow
+				/>
+				<RoomMesh
+					node={nodes.CRARobotCube002}
+					material={glowMaterials.standard}
+					castShadow
+					receiveShadow
+				/>
+				<RoomMesh
+					node={nodes.CRARobotCube003}
 					material={glowMaterials.standard}
 					castShadow
 					receiveShadow

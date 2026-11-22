@@ -94,10 +94,8 @@ export type GLTFResult = GLTF & {
 		Celestia: THREE.Mesh;
 		CelestiaStructures: THREE.Mesh;
 		MarionetteNotebook: THREE.Mesh;
-		// Fatui Delusions (attached to Speaker001 / Speaker002)
 		FatuiDelusionElectro: THREE.Mesh;
 		FatuiDelusionPyro: THREE.Mesh;
-		// Gnosis collectibles (chess area)
 		GnosisPyro: THREE.Mesh;
 		GnosisHydro: THREE.Mesh;
 		GnosisGeo: THREE.Mesh;
@@ -105,9 +103,17 @@ export type GLTFResult = GLTF & {
 		GnosisDendro: THREE.Mesh;
 		GnosisCryo: THREE.Mesh;
 		GnosisAnemo: THREE.Mesh;
-		// Sword (wall zone)
 		SwordSupport: THREE.Mesh;
 		SwordProps: THREE.Mesh;
+		Canvas: THREE.Mesh;
+		CRARobotCube001: THREE.Mesh;
+		CRAStage: THREE.Mesh;
+		CRACrate: THREE.Mesh;
+		CRARoboCanon: THREE.Mesh;
+		CRARobotCube002: THREE.Mesh;
+		CRARobotCube003: THREE.Mesh;
+		CRAStageFloor: THREE.Mesh;
+		CRAStageWall: THREE.Mesh;
 		[key: string]: THREE.Mesh;
 	};
 	materials: {
@@ -115,7 +121,6 @@ export type GLTFResult = GLTF & {
 		snorlax: THREE.MeshStandardMaterial;
 		PaperBomb: THREE.MeshStandardMaterial;
 		MarionetteNotebook: THREE.MeshStandardMaterial;
-		// Note: GLB material names have typos — kept verbatim to match runtime keys
 		FatuiDelusionEletro: THREE.MeshStandardMaterial;
 		FatuiDelustionPyro: THREE.MeshStandardMaterial;
 		GnosisPyro: THREE.MeshStandardMaterial;
@@ -125,6 +130,10 @@ export type GLTFResult = GLTF & {
 		GnosisDendro: THREE.MeshStandardMaterial;
 		GnosisCryo: THREE.MeshStandardMaterial;
 		GnosisAnemo: THREE.MeshStandardMaterial;
+		Canvas: THREE.MeshStandardMaterial;
+		CRACrate: THREE.MeshStandardMaterial;
+		CRAStageFloor: THREE.MeshStandardMaterial;
+		CRAStageWall: THREE.MeshStandardMaterial;
 		[key: string]: THREE.Material;
 	};
 };

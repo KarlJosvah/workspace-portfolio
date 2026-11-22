@@ -79,8 +79,6 @@ export function ChessArea({ nodes, glowMaterials, materials }: RoomSubComponentP
 				castShadow
 				receiveShadow
 			/>
-
-			{/* ── Gnosis collectibles ──────────────────────────── */}
 			<RoomMesh
 				node={nodes.GnosisPyro}
 				material={materials?.GnosisPyro}
