@@ -50,7 +50,7 @@ export function ChessPieces({ nodes, glowMaterials }: RoomSubComponentProps) {
 	);
 }
 
-export function ChessArea({ nodes, glowMaterials }: RoomSubComponentProps) {
+export function ChessArea({ nodes, glowMaterials, materials }: RoomSubComponentProps) {
 	return (
 		<group name="ChessArea">
 			<RoomMesh
@@ -78,6 +78,43 @@ export function ChessArea({ nodes, glowMaterials }: RoomSubComponentProps) {
 				material={glowMaterials.standard}
 				castShadow
 				receiveShadow
+			/>
+
+			{/* ── Gnosis collectibles ──────────────────────────── */}
+			<RoomMesh
+				node={nodes.GnosisPyro}
+				material={materials?.GnosisPyro}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GnosisHydro}
+				material={materials?.GnosisHydro}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GnosisGeo}
+				material={materials?.GnosisGeo}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GnosisElectro}
+				material={materials?.GnosisElectro}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GnosisDendro}
+				material={materials?.GnosisDendro}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GnosisCryo}
+				material={materials?.GnosisCryo}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.GnosisAnemo}
+				material={materials?.GnosisAnemo}
+				castShadow
 			/>
 		</group>
 	);

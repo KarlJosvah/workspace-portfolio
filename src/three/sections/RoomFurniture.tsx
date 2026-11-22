@@ -166,6 +166,19 @@ export function RoomFurniture({
 				castShadow
 				receiveShadow
 			/>
+			<RoomMesh
+				node={nodes.SwordProps}
+				material={glowMaterials.wallArt}
+				castShadow
+				receiveShadow
+			>
+				<RoomMesh
+					node={nodes.SwordSupport}
+					material={glowMaterials.standard}
+					castShadow
+					receiveShadow
+				/>
+			</RoomMesh>
 		</group>
 	);
 }

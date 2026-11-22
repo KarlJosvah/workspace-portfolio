@@ -64,13 +64,13 @@ export function Room({
 				activeSection={activeSection}
 				onExitSection={onExitSection}
 			/>
-			<AudioEquipment nodes={nodes} glowMaterials={glowMaterials} />
+			<AudioEquipment nodes={nodes} glowMaterials={glowMaterials} materials={materials} />
 			<RoomFurniture
 				nodes={nodes}
 				glowMaterials={glowMaterials}
 				materials={materials}
 			/>
-			<ChessArea nodes={nodes} glowMaterials={glowMaterials} />
+			<ChessArea nodes={nodes} glowMaterials={glowMaterials} materials={materials} />
 			<GamingConsoleZone nodes={nodes} glowMaterials={glowMaterials} />
 		</group>
 	);

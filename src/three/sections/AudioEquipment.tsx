@@ -7,6 +7,7 @@ import type { RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
 export function AudioEquipment({
 	nodes,
 	glowMaterials,
+	materials,
 }: RoomSubComponentProps) {
 	return (
 		<group name="AudioEquipment">
@@ -14,12 +15,24 @@ export function AudioEquipment({
 				node={nodes.Speaker001}
 				material={glowMaterials.standard}
 				castShadow
-			/>
+			>
+				<RoomMesh
+					node={nodes.FatuiDelusionElectro}
+					material={materials?.FatuiDelusionEletro}
+					castShadow
+				/>
+			</RoomMesh>
 			<RoomMesh
 				node={nodes.Speaker002}
 				material={glowMaterials.standard}
 				castShadow
-			/>
+			>
+				<RoomMesh
+					node={nodes.FatuiDelusionPyro}
+					material={materials?.FatuiDelustionPyro}
+					castShadow
+				/>
+			</RoomMesh>
 			<RoomMesh
 				node={nodes.HeadSetHolder}
 				material={glowMaterials.standard}
