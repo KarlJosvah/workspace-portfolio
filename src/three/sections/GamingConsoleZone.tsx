@@ -22,6 +22,65 @@ function getGameControllers(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 		);
 }
 
+/**
+ * Dynamically discovers Nintendo Switch Joy-Con meshes from the GLB nodes.
+ * Matches names like "Switch.Joy.Con.Left", "SwitchJoyConRight001", etc.
+ */
+function getSwitchJoyCons(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	return (Object.values(nodes) as THREE.Mesh[])
+		.filter((node): node is THREE.Mesh =>
+			Boolean(node?.name && /^Switch\.?Joy\.?Con/i.test(node.name))
+		)
+		.sort((a, b) =>
+			a.name.localeCompare(b.name, undefined, { numeric: true })
+		);
+}
+
+/**
+ * Dynamically discovers LED strip meshes mounted on the TV console shelf.
+ */
+function getConsoleLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	const consoleMesh = nodes.ShelveConsole;
+	const children = (consoleMesh?.children ?? []) as THREE.Mesh[];
+	return (
+		children.length > 0
+			? children.filter((c) => /^LED/i.test(c.name))
+			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
+					/^LED\.?01[0-3]/i.test(n.name)
+				)
+	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
+/**
+ * Dynamically discovers LED strip meshes mounted on upper shelf 001.
+ */
+function getShelve001LEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	const shelve = nodes.Shelve001;
+	const children = (shelve?.children ?? []) as THREE.Mesh[];
+	return (
+		children.length > 0
+			? children.filter((c) => /^LED/i.test(c.name))
+			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
+					/^LED\.?005/i.test(n.name)
+				)
+	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
+/**
+ * Dynamically discovers LED backlight strip meshes mounted on the main TV (Monitor004).
+ */
+function getTVLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	const tv = nodes.Monitor004;
+	const children = (tv?.children ?? []) as THREE.Mesh[];
+	return (
+		children.length > 0
+			? children.filter((c) => /^LED/i.test(c.name))
+			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
+					/^LED\.?00[6-9]/i.test(n.name)
+				)
+	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
 /* -------------------------------------------------------------
  * 6. Gaming & Entertainment Wall (TV Console, TV with Backlight, Soundbar, Remote, Game Shelves, PlayStation Collection, Nintendo Switch & LED Signs)
  * ------------------------------------------------------------*/
@@ -30,6 +89,10 @@ export function GamingConsoleZone({
 	glowMaterials,
 }: RoomSubComponentProps) {
 	const gameControllers = useMemo(() => getGameControllers(nodes), [nodes]);
+	const switchJoyCons = useMemo(() => getSwitchJoyCons(nodes), [nodes]);
+	const consoleLEDs = useMemo(() => getConsoleLEDs(nodes), [nodes]);
+	const shelve001LEDs = useMemo(() => getShelve001LEDs(nodes), [nodes]);
+	const tvLEDs = useMemo(() => getTVLEDs(nodes), [nodes]);
 
 	return (
 		<group name="GamingConsoleZone">
@@ -39,26 +102,14 @@ export function GamingConsoleZone({
 				castShadow
 				receiveShadow
 			>
-				<RoomMesh
-					node={nodes.LED010}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED011}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED012}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED013}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
+				{consoleLEDs.map((led) => (
+					<RoomMesh
+						key={led.name}
+						node={led}
+						material={glowMaterials.ledStrips}
+						castShadow
+					/>
+				))}
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.Shelve001}
@@ -66,11 +117,14 @@ export function GamingConsoleZone({
 				castShadow
 				receiveShadow
 			>
-				<RoomMesh
-					node={nodes.LED005}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
+				{shelve001LEDs.map((led) => (
+					<RoomMesh
+						key={led.name}
+						node={led}
+						material={glowMaterials.ledStrips}
+						castShadow
+					/>
+				))}
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.Monitor004}
@@ -82,26 +136,14 @@ export function GamingConsoleZone({
 					node={nodes.MonitorScreen004}
 					material={glowMaterials.screen}
 				/>
-				<RoomMesh
-					node={nodes.LED006}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED007}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED008}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED009}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
+				{tvLEDs.map((led) => (
+					<RoomMesh
+						key={led.name}
+						node={led}
+						material={glowMaterials.ledStrips}
+						castShadow
+					/>
+				))}
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.MysteryBox}
@@ -225,42 +267,15 @@ export function GamingConsoleZone({
 				castShadow
 				receiveShadow
 			/>
-			<RoomMesh
-				node={nodes.SwitchJoyConRight}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.SwitchJoyConLeft}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.SwitchJoyConRight001}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.SwitchJoyConLeft001}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.SwitchJoyConRight002}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
-			<RoomMesh
-				node={nodes.SwitchJoyConLeft002}
-				material={glowMaterials.standard}
-				castShadow
-				receiveShadow
-			/>
+			{switchJoyCons.map((node) => (
+				<RoomMesh
+					key={node.name}
+					node={node}
+					material={glowMaterials.standard}
+					castShadow
+					receiveShadow
+				/>
+			))}
 			<RoomMesh
 				node={nodes.AVR002}
 				material={glowMaterials.standard}

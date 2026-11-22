@@ -41,6 +41,21 @@ function getKunaiChildMaterial(
 	return glowMaterials.standard; // rope or any other accessory
 }
 
+/**
+ * Dynamically discovers LED strip meshes mounted on the storage shelves.
+ */
+function getShelfLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	const shelves = nodes.Shelves;
+	const children = (shelves?.children ?? []) as THREE.Mesh[];
+	return (
+		children.length > 0
+			? children.filter((c) => /^LED/i.test(c.name))
+			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
+					/^LED\.?0(1[4-9]|2[0-1])/i.test(n.name)
+				)
+	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
 /* ---------------------------------------------------------------
  * 5. Room Storage & Appliances
  * -------------------------------------------------------------- */
@@ -51,6 +66,7 @@ export function RoomFurniture({
 }: RoomSubComponentProps) {
 	const shurikens = useMemo(() => getShurikens(nodes), [nodes]);
 	const kunais = useMemo(() => getKunais(nodes), [nodes]);
+	const shelfLEDs = useMemo(() => getShelfLEDs(nodes), [nodes]);
 
 	return (
 		<group name="RoomFurniture">
@@ -72,46 +88,14 @@ export function RoomFurniture({
 				castShadow
 				receiveShadow
 			>
-				<RoomMesh
-					node={nodes.LED014}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED015}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED016}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED017}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED018}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED019}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED020}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED021}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
+				{shelfLEDs.map((led) => (
+					<RoomMesh
+						key={led.name}
+						node={led}
+						material={glowMaterials.ledStrips}
+						castShadow
+					/>
+				))}
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.AnbuMask}

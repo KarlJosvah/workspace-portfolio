@@ -1,10 +1,29 @@
+import { useMemo } from "react";
+import type * as THREE from "three";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
-import type { RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+
+/**
+ * Dynamically discovers LED strip meshes mounted on the main desk.
+ */
+function getDeskLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	const desk = nodes.Desk;
+	const children = (desk?.children ?? []) as THREE.Mesh[];
+	return (
+		children.length > 0
+			? children.filter((c) => /^LED/i.test(c.name))
+			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
+					/^LED\.?00[1-4]/i.test(n.name)
+				)
+	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
 
 /* -------------------------------------------------------------
  * 2. Desk & Seating (Main Desk, Drawer with Edge LEDs, Mat, Chair, Props)
  * ------------------------------------------------------------*/
 export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
+	const deskLEDs = useMemo(() => getDeskLEDs(nodes), [nodes]);
+
 	return (
 		<group name="DeskStation">
 			<RoomMesh
@@ -31,26 +50,14 @@ export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 					castShadow
 					receiveShadow
 				/>
-				<RoomMesh
-					node={nodes.LED001}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED002}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED003}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
-				<RoomMesh
-					node={nodes.LED004}
-					material={glowMaterials.ledStrips}
-					castShadow
-				/>
+				{deskLEDs.map((led) => (
+					<RoomMesh
+						key={led.name}
+						node={led}
+						material={glowMaterials.ledStrips}
+						castShadow
+					/>
+				))}
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.DeskMat}
