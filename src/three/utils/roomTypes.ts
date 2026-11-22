@@ -90,12 +90,17 @@ export type GLTFResult = GLTF & {
 		Rocket: THREE.Mesh;
 		Snorlax: THREE.Mesh;
 		AnbuMask: THREE.Mesh;
+		TwinsLightWings: THREE.Mesh;
+		Celestia: THREE.Mesh;
+		CelestiaStructures: THREE.Mesh;
+		MarionetteNotebook: THREE.Mesh;
 		[key: string]: THREE.Mesh;
 	};
 	materials: {
 		Imphezia: THREE.MeshStandardMaterial;
 		snorlax: THREE.MeshStandardMaterial;
 		PaperBomb: THREE.MeshStandardMaterial;
+		MarionetteNotebook: THREE.MeshStandardMaterial;
 		[key: string]: THREE.Material;
 	};
 };

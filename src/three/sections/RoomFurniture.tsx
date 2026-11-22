@@ -53,7 +53,9 @@ function getShelfLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
 					/^LED\.?0(1[4-9]|2[0-1])/i.test(n.name)
 				)
-	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+	).sort((a, b) =>
+		a.name.localeCompare(b.name, undefined, { numeric: true })
+	);
 }
 
 /* ---------------------------------------------------------------
@@ -67,7 +69,6 @@ export function RoomFurniture({
 	const shurikens = useMemo(() => getShurikens(nodes), [nodes]);
 	const kunais = useMemo(() => getKunais(nodes), [nodes]);
 	const shelfLEDs = useMemo(() => getShelfLEDs(nodes), [nodes]);
-
 	return (
 		<group name="RoomFurniture">
 			<RoomMesh
@@ -143,6 +144,25 @@ export function RoomFurniture({
 			<RoomMesh
 				node={nodes.Molecules}
 				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.Celestia}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			>
+				<RoomMesh
+					node={nodes.CelestiaStructures}
+					material={glowMaterials.subtle}
+					castShadow
+					receiveShadow
+				/>
+			</RoomMesh>
+			<RoomMesh
+				node={nodes.MarionetteNotebook}
+				material={materials?.MarionetteNotebook}
 				castShadow
 				receiveShadow
 			/>

@@ -48,7 +48,9 @@ function getConsoleLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
 					/^LED\.?01[0-3]/i.test(n.name)
 				)
-	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+	).sort((a, b) =>
+		a.name.localeCompare(b.name, undefined, { numeric: true })
+	);
 }
 
 /**
@@ -63,7 +65,9 @@ function getShelve001LEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
 					/^LED\.?005/i.test(n.name)
 				)
-	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+	).sort((a, b) =>
+		a.name.localeCompare(b.name, undefined, { numeric: true })
+	);
 }
 
 /**
@@ -78,7 +82,9 @@ function getTVLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
 					/^LED\.?00[6-9]/i.test(n.name)
 				)
-	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+	).sort((a, b) =>
+		a.name.localeCompare(b.name, undefined, { numeric: true })
+	);
 }
 
 /* -------------------------------------------------------------
@@ -196,6 +202,11 @@ export function GamingConsoleZone({
 			<RoomMesh
 				node={nodes.GIElements}
 				material={glowMaterials.neonSigns}
+				castShadow
+			/>
+			<RoomMesh
+				node={nodes.TwinsLightWings}
+				material={glowMaterials.subtle}
 				castShadow
 			/>
 			<RoomMesh

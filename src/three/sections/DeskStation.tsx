@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import type * as THREE from "three";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+import type {
+	GLTFResult,
+	RoomSubComponentProps,
+} from "@/three/utils/roomTypes.ts";
 
 /**
  * Dynamically discovers LED strip meshes mounted on the main desk.
@@ -15,7 +18,9 @@ function getDeskLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 			: (Object.values(nodes) as THREE.Mesh[]).filter((n) =>
 					/^LED\.?00[1-4]/i.test(n.name)
 				)
-	).sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+	).sort((a, b) =>
+		a.name.localeCompare(b.name, undefined, { numeric: true })
+	);
 }
 
 /* -------------------------------------------------------------
