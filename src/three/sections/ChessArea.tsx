@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+import type {
+	GLTFResult,
+	RoomSubComponentProps,
+} from "@/three/utils/roomTypes.ts";
 
 interface ChessPieceArrays {
 	all: THREE.Mesh[];

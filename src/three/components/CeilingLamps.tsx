@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+import type {
+	GLTFResult,
+	RoomSubComponentProps,
+} from "@/three/utils/roomTypes.ts";
 
 /**
  * Dynamically discovers all ceiling lamp fixture meshes from the GLB nodes.
@@ -9,23 +12,16 @@ import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.
  */
 function getCeilingLamps(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 	return (Object.values(nodes) as THREE.Mesh[])
-		.filter(
-			(node): node is THREE.Mesh =>
-				Boolean(node?.name && /^Ceiling\.?Lamp/i.test(node.name))
+		.filter((node): node is THREE.Mesh =>
+			Boolean(node?.name && /^Ceiling\.?Lamp/i.test(node.name))
 		)
 		.sort((a, b) =>
 			a.name.localeCompare(b.name, undefined, { numeric: true })
 		);
 }
 
-export function CeilingLamps({
-	nodes,
-	glowMaterials,
-}: RoomSubComponentProps) {
-	const ceilingLamps = useMemo(
-		() => getCeilingLamps(nodes),
-		[nodes]
-	);
+export function CeilingLamps({ nodes, glowMaterials }: RoomSubComponentProps) {
+	const ceilingLamps = useMemo(() => getCeilingLamps(nodes), [nodes]);
 
 	return (
 		<group name="CeilingLamps">

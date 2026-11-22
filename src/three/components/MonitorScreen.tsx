@@ -36,7 +36,11 @@ function deriveScreenGeometry(node: THREE.Mesh, normalOffset: number) {
 	const verts: THREE.Vector3[] = [];
 	const center = new THREE.Vector3();
 	for (let i = 0; i < posAttr.count; i++) {
-		const v = new THREE.Vector3(posAttr.getX(i), posAttr.getY(i), posAttr.getZ(i));
+		const v = new THREE.Vector3(
+			posAttr.getX(i),
+			posAttr.getY(i),
+			posAttr.getZ(i)
+		);
 		verts.push(v);
 		center.add(v);
 	}
@@ -45,13 +49,22 @@ function deriveScreenGeometry(node: THREE.Mesh, normalOffset: number) {
 	// Screen face normal (unit vector pointing out from screen face)
 	const normal =
 		normAttr && normAttr.count > 0
-			? new THREE.Vector3(normAttr.getX(0), normAttr.getY(0), normAttr.getZ(0)).normalize()
+			? new THREE.Vector3(
+					normAttr.getX(0),
+					normAttr.getY(0),
+					normAttr.getZ(0)
+				).normalize()
 			: new THREE.Vector3(0, 0, 1);
 
 	// Screen up direction: project world up [0, 1, 0] onto the screen plane
 	const worldUp = new THREE.Vector3(0, 1, 0);
-	const projUp = worldUp.clone().sub(normal.clone().multiplyScalar(worldUp.dot(normal)));
-	const up = projUp.lengthSq() > 0.0001 ? projUp.normalize() : new THREE.Vector3(0, 0, -1);
+	const projUp = worldUp
+		.clone()
+		.sub(normal.clone().multiplyScalar(worldUp.dot(normal)));
+	const up =
+		projUp.lengthSq() > 0.0001
+			? projUp.normalize()
+			: new THREE.Vector3(0, 0, -1);
 	const right = new THREE.Vector3().crossVectors(up, normal).normalize();
 
 	// Calculate width and height by projecting vertices onto screen basis vectors
@@ -111,7 +124,8 @@ export function MonitorScreen({
 
 	const finalPosition = position ?? derived?.position ?? [0, 0, 0.003];
 	const finalRotation = rotation ?? derived?.rotation ?? [0, 0, 0];
-	const finalDistanceFactor = distanceFactor ?? derived?.distanceFactor ?? 0.415;
+	const finalDistanceFactor =
+		distanceFactor ?? derived?.distanceFactor ?? 0.415;
 	const finalScreenHeight = screenHeight ?? derived?.screenHeight ?? 554;
 
 	return (

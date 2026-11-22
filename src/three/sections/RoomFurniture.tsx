@@ -1,7 +1,10 @@
 import * as THREE from "three";
 import { useMemo } from "react";
 import { RoomMesh } from "@/three/utils/RoomMesh.tsx";
-import type { GLTFResult, RoomSubComponentProps } from "@/three/utils/roomTypes.ts";
+import type {
+	GLTFResult,
+	RoomSubComponentProps,
+} from "@/three/utils/roomTypes.ts";
 import type { GlowMaterials } from "@/constants/emissionConfig.ts";
 
 /* ---------------------------------------------------------------
@@ -11,7 +14,10 @@ import type { GlowMaterials } from "@/constants/emissionConfig.ts";
 /** All shuriken nodes (Fuma.Shuriken + Shuriken.001…N) */
 function getShurikens(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 	return (Object.values(nodes) as THREE.Mesh[]).filter(
-		(n) => n != null && Boolean((n as THREE.Mesh).isMesh) && /shuriken/i.test(n.name),
+		(n) =>
+			n != null &&
+			Boolean((n as THREE.Mesh).isMesh) &&
+			/shuriken/i.test(n.name)
 	);
 }
 
@@ -21,7 +27,7 @@ function getShurikens(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
  */
 function getKunais(nodes: GLTFResult["nodes"]): THREE.Object3D[] {
 	return (Object.values(nodes) as THREE.Object3D[]).filter(
-		(n) => n != null && /^Kunai\.?\d+$/i.test(n.name),
+		(n) => n != null && /^Kunai\.?\d+$/i.test(n.name)
 	);
 }
 
@@ -29,7 +35,7 @@ function getKunais(nodes: GLTFResult["nodes"]): THREE.Object3D[] {
 function getKunaiChildMaterial(
 	child: THREE.Object3D,
 	glowMaterials: GlowMaterials,
-	materials: GLTFResult["materials"] | undefined,
+	materials: GLTFResult["materials"] | undefined
 ): THREE.Material | undefined {
 	if (/bomb/i.test(child.name)) return materials?.PaperBomb;
 	return glowMaterials.standard; // rope or any other accessory
@@ -138,7 +144,11 @@ export function RoomFurniture({
 						<RoomMesh
 							key={child.name}
 							node={child as THREE.Mesh}
-							material={getKunaiChildMaterial(child, glowMaterials, materials)}
+							material={getKunaiChildMaterial(
+								child,
+								glowMaterials,
+								materials
+							)}
 							castShadow
 							receiveShadow
 						/>

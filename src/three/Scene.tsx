@@ -48,14 +48,25 @@ export function Scene({
 				setShowHelpers((prev) => !prev);
 			}
 
-			if (e.key === "f" || e.key === "F" || e.key === "p" || e.key === "P") {
+			if (
+				e.key === "f" ||
+				e.key === "F" ||
+				e.key === "p" ||
+				e.key === "P"
+			) {
 				setInternalShowStats((prev) => !prev);
 				const renderer = rendererRef.current;
 				if (renderer) {
 					console.log("Draw Calls:", renderer.info.render.calls);
 					console.log("Triangles:", renderer.info.render.triangles);
-					console.log("Geometries in Memory:", renderer.info.memory.geometries);
-					console.log("Textures in Memory:", renderer.info.memory.textures);
+					console.log(
+						"Geometries in Memory:",
+						renderer.info.memory.geometries
+					);
+					console.log(
+						"Textures in Memory:",
+						renderer.info.memory.textures
+					);
 				}
 			}
 		};
@@ -85,7 +96,10 @@ export function Scene({
 
 			<Suspense fallback={null}>
 				<RoomLighting showHelpers={showHelpers} shadowLamps={"all"} />
-				<Room activeSection={activeSection} onExitSection={onExitSection} />
+				<Room
+					activeSection={activeSection}
+					onExitSection={onExitSection}
+				/>
 			</Suspense>
 
 			{/* Bloom post-processing for high-emission palette glow */}

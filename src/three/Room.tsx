@@ -26,7 +26,10 @@ export { ChessArea, ChessPieces } from "@/three/sections/ChessArea.tsx";
 export { MonitorScreen } from "@/three/components/MonitorScreen.tsx";
 export { RoomStructure } from "@/three/sections/RoomStructure.tsx";
 export { DeskStation } from "@/three/sections/DeskStation.tsx";
-export { ComputerSetup, type ComputerSetupProps } from "@/three/sections/ComputerSetup.tsx";
+export {
+	ComputerSetup,
+	type ComputerSetupProps,
+} from "@/three/sections/ComputerSetup.tsx";
 export { AudioEquipment } from "@/three/sections/AudioEquipment.tsx";
 export { RoomFurniture } from "@/three/sections/RoomFurniture.tsx";
 export { GamingConsoleZone } from "@/three/sections/GamingConsoleZone.tsx";
@@ -39,7 +42,11 @@ export type RoomProps = ThreeElements["group"] & {
 	onExitSection?: () => void;
 };
 
-export function Room({ activeSection, onExitSection, ...props }: RoomProps = {}) {
+export function Room({
+	activeSection,
+	onExitSection,
+	...props
+}: RoomProps = {}) {
 	const { nodes, materials } = useGLTF(MODEL_URL) as unknown as GLTFResult;
 
 	// Create cloned materials for each emission tier

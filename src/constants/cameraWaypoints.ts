@@ -130,14 +130,14 @@ export function resolveWaypointForSection(
 		mesh =
 			sceneOrNodes.getObjectByName(config.meshName) ??
 			(config.meshName === "LapTop.Screen"
-				? sceneOrNodes.getObjectByName("LapTopScreen") ??
-					sceneOrNodes.getObjectByName("LapTop.Body")
+				? (sceneOrNodes.getObjectByName("LapTopScreen") ??
+					sceneOrNodes.getObjectByName("LapTop.Body"))
 				: undefined);
 	} else {
 		mesh =
 			sceneOrNodes[config.meshName] ??
 			(config.meshName === "LapTop.Screen"
-				? sceneOrNodes["LapTopScreen"] ?? sceneOrNodes["LapTop.Body"]
+				? (sceneOrNodes["LapTopScreen"] ?? sceneOrNodes["LapTop.Body"])
 				: undefined);
 	}
 
