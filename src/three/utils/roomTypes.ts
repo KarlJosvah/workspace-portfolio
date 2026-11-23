@@ -120,6 +120,7 @@ export type GLTFResult = GLTF & {
 		Imphezia: THREE.MeshStandardMaterial;
 		snorlax: THREE.MeshStandardMaterial;
 		PaperBomb: THREE.MeshStandardMaterial;
+		Canvas: THREE.MeshStandardMaterial;
 		MarionetteNotebook: THREE.MeshStandardMaterial;
 		FatuiDelusionEletro: THREE.MeshStandardMaterial;
 		FatuiDelustionPyro: THREE.MeshStandardMaterial;
@@ -130,7 +131,6 @@ export type GLTFResult = GLTF & {
 		GnosisDendro: THREE.MeshStandardMaterial;
 		GnosisCryo: THREE.MeshStandardMaterial;
 		GnosisAnemo: THREE.MeshStandardMaterial;
-		Canvas: THREE.MeshStandardMaterial;
 		CRACrate: THREE.MeshStandardMaterial;
 		CRAStageFloor: THREE.MeshStandardMaterial;
 		CRAStageWall: THREE.MeshStandardMaterial;

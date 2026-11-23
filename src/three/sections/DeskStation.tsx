@@ -100,7 +100,7 @@ export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 			/>
 			<RoomMesh
 				node={nodes.AVR001}
-				material={glowMaterials.standard}
+				material={glowMaterials.lamp}
 				castShadow
 				receiveShadow
 			/>

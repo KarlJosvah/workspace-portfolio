@@ -13,7 +13,7 @@ export function AudioEquipment({
 		<group name="AudioEquipment">
 			<RoomMesh
 				node={nodes.Speaker001}
-				material={glowMaterials.standard}
+				material={glowMaterials.subtle}
 				castShadow
 			>
 				<RoomMesh
@@ -24,7 +24,7 @@ export function AudioEquipment({
 			</RoomMesh>
 			<RoomMesh
 				node={nodes.Speaker002}
-				material={glowMaterials.standard}
+				material={glowMaterials.subtle}
 				castShadow
 			>
 				<RoomMesh

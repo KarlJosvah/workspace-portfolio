@@ -289,7 +289,7 @@ export function GamingConsoleZone({
 			))}
 			<RoomMesh
 				node={nodes.AVR002}
-				material={glowMaterials.standard}
+				material={glowMaterials.lamp}
 				castShadow
 				receiveShadow
 			/>
