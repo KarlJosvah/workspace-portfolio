@@ -188,6 +188,19 @@ export function RoomFurniture({
 				receiveShadow
 			/>
 			<RoomMesh
+				node={nodes.CRAPedestal}
+				material={glowMaterials.subtle}
+				castShadow
+				receiveShadow
+			>
+				<RoomMesh
+					node={nodes.CRARayMkIII}
+					material={glowMaterials.subtle}
+					castShadow
+					receiveShadow
+				/>
+			</RoomMesh>
+			<RoomMesh
 				node={nodes.CRAStage}
 				material={glowMaterials.standard}
 				castShadow

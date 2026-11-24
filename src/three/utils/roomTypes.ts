@@ -106,6 +106,8 @@ export type GLTFResult = GLTF & {
 		SwordSupport: THREE.Mesh;
 		SwordProps: THREE.Mesh;
 		Canvas: THREE.Mesh;
+		CRAPedestal: THREE.Mesh;
+		CRARayMkIII: THREE.Mesh;
 		CRARobotCube001: THREE.Mesh;
 		CRAStage: THREE.Mesh;
 		CRACrate: THREE.Mesh;
