@@ -77,6 +77,12 @@ export function ComputerSetup({
 
 			{/* ── Monitor001 → Featured Projects ── */}
 			<RoomMesh
+				node={nodes.MonitorSupport001}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
 				node={nodes.Monitor001}
 				material={glowMaterials.standard}
 				castShadow
@@ -113,6 +119,12 @@ export function ComputerSetup({
 
 			{/* ── Monitor002 → Recommended Projects ── */}
 			<RoomMesh
+				node={nodes.MonitorSupport002}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
 				node={nodes.Monitor002}
 				material={glowMaterials.standard}
 				castShadow
@@ -141,6 +153,12 @@ export function ComputerSetup({
 			</RoomMesh>
 
 			{/* ── Monitor003 → Contact ── */}
+			<RoomMesh
+				node={nodes.MonitorSupport003}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
 			<RoomMesh
 				node={nodes.Monitor003}
 				material={glowMaterials.standard}

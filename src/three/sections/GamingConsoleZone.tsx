@@ -278,6 +278,18 @@ export function GamingConsoleZone({
 				castShadow
 				receiveShadow
 			/>
+			<RoomMesh
+				node={nodes.SwitchGameSupport}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.Cartridge}
+				material={glowMaterials.standard}
+				castShadow
+				receiveShadow
+			/>
 			{switchJoyCons.map((node) => (
 				<RoomMesh
 					key={node.name}

@@ -38,10 +38,13 @@ export type GLTFResult = GLTF & {
 		CoolingPad: THREE.Mesh;
 		Monitor002: THREE.Mesh;
 		MonitorScreen002: THREE.Mesh;
+		MonitorSupport002: THREE.Mesh;
 		Monitor001: THREE.Mesh;
 		MonitorScreen001: THREE.Mesh;
+		MonitorSupport001: THREE.Mesh;
 		Monitor003: THREE.Mesh;
 		MonitorScreen003: THREE.Mesh;
+		MonitorSupport003: THREE.Mesh;
 		Keyboard: THREE.Mesh;
 		Mouse: THREE.Mesh;
 		PCTower: THREE.Mesh;
@@ -78,6 +81,8 @@ export type GLTFResult = GLTF & {
 		SwitchSupport: THREE.Mesh;
 		SwitchDock: THREE.Mesh;
 		SwitchTablet: THREE.Mesh;
+		SwitchGameSupport: THREE.Mesh;
+		Cartridge: THREE.Mesh;
 		PSGameShelve: THREE.Mesh;
 		PSGameShelveSupport: THREE.Mesh;
 		DigitalAnalogWallClock: THREE.Mesh;
