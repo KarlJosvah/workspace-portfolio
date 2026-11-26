@@ -42,7 +42,7 @@ export function ChessPieces({ nodes, glowMaterials }: RoomSubComponentProps) {
 				<RoomMesh
 					key={piece.name}
 					node={piece}
-					material={glowMaterials.standard}
+					material={glowMaterials.subtle}
 					castShadow
 				/>
 			))}
