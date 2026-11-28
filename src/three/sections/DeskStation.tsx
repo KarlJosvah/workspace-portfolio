@@ -26,7 +26,11 @@ function getDeskLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 /* -------------------------------------------------------------
  * 2. Desk & Seating (Main Desk, Drawer with Edge LEDs, Mat, Chair, Props)
  * ------------------------------------------------------------*/
-export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
+export function DeskStation({
+	nodes,
+	glowMaterials,
+	materials,
+}: RoomSubComponentProps) {
 	const deskLEDs = useMemo(() => getDeskLEDs(nodes), [nodes]);
 
 	return (
@@ -101,6 +105,12 @@ export function DeskStation({ nodes, glowMaterials }: RoomSubComponentProps) {
 			<RoomMesh
 				node={nodes.AVR001}
 				material={glowMaterials.lamp}
+				castShadow
+				receiveShadow
+			/>
+			<RoomMesh
+				node={nodes.PokemonCard}
+				material={materials?.PokemonCard}
 				castShadow
 				receiveShadow
 			/>

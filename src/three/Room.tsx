@@ -57,7 +57,7 @@ export function Room({
 	return (
 		<group {...props} dispose={null}>
 			<RoomStructure nodes={nodes} glowMaterials={glowMaterials} />
-			<DeskStation nodes={nodes} glowMaterials={glowMaterials} />
+			<DeskStation nodes={nodes} glowMaterials={glowMaterials} materials={materials} />
 			<ComputerSetup
 				nodes={nodes}
 				glowMaterials={glowMaterials}

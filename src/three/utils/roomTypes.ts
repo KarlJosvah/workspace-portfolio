@@ -121,6 +121,8 @@ export type GLTFResult = GLTF & {
 		CRARobotCube003: THREE.Mesh;
 		CRAStageFloor: THREE.Mesh;
 		CRAStageWall: THREE.Mesh;
+		PokemonCard: THREE.Mesh;
+		NFSMWPlate: THREE.Mesh;
 		[key: string]: THREE.Mesh;
 	};
 	materials: {
@@ -141,6 +143,8 @@ export type GLTFResult = GLTF & {
 		CRACrate: THREE.MeshStandardMaterial;
 		CRAStageFloor: THREE.MeshStandardMaterial;
 		CRAStageWall: THREE.MeshStandardMaterial;
+		PokemonCard: THREE.MeshStandardMaterial;
+		NFSMWPlate: THREE.MeshStandardMaterial;
 		[key: string]: THREE.Material;
 	};
 };

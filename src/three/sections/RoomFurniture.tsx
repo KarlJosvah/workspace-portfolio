@@ -58,6 +58,19 @@ function getShelfLEDs(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
 	);
 }
 
+/**
+ * All SAO Crystal nodes (SAO.Crystal.Blue.001, SAO.Crystal.Red, etc.).
+ * Discovered dynamically to support all color variants and copies.
+ */
+function getSAOCrystals(nodes: GLTFResult["nodes"]): THREE.Mesh[] {
+	return (Object.values(nodes) as THREE.Mesh[]).filter(
+		(n) =>
+			n != null &&
+			Boolean((n as THREE.Mesh).isMesh) &&
+			/^SAO\.?Crystal/i.test(n.name)
+	);
+}
+
 /* ---------------------------------------------------------------
  * 5. Room Storage & Appliances
  * -------------------------------------------------------------- */
@@ -69,6 +82,7 @@ export function RoomFurniture({
 	const shurikens = useMemo(() => getShurikens(nodes), [nodes]);
 	const kunais = useMemo(() => getKunais(nodes), [nodes]);
 	const shelfLEDs = useMemo(() => getShelfLEDs(nodes), [nodes]);
+	const saoCrystals = useMemo(() => getSAOCrystals(nodes), [nodes]);
 	return (
 		<group name="RoomFurniture">
 			<RoomMesh
@@ -242,6 +256,25 @@ export function RoomFurniture({
 					receiveShadow
 				/>
 			</RoomMesh>
+
+			{/* ── SAO Crystals (dynamic) ─────────────────────────── */}
+			{saoCrystals.map((crystal) => (
+				<RoomMesh
+					key={crystal.name}
+					node={crystal}
+					material={glowMaterials.subtle}
+					castShadow
+					receiveShadow
+				/>
+			))}
+
+			{/* ── NFSMW License Plate ───────────────────────────── */}
+			<RoomMesh
+				node={nodes.NFSMWPlate}
+				material={materials?.NFSMWPlate}
+				castShadow
+				receiveShadow
+			/>
 		</group>
 	);
 }
